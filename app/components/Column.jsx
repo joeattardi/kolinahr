@@ -17,7 +17,7 @@ export default class Column extends React.Component {
     this.setState({
       cards: [
         ...this.state.cards,
-        { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean suscipit nunc ac tempor ultricies. Cras arcu lacus, accumsan nec blandit ut, auctor ut erat.' }
+        { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
       ]
     });
   }
@@ -31,13 +31,18 @@ export default class Column extends React.Component {
       <div className="column">
         <h3>{this.props.name}</h3>
         {this.state.cards.map(this.renderCard)}
-        <button 
+        <button
           title="Add a new card"
           onClick={this.onClickAdd}
-          className="add-button">
-          <i className="fa fa-plus"></i>
+          className="add-button"
+        >
+          <i className="fa fa-plus" />
         </button>
       </div>
     );
   }
 }
+
+Column.propTypes = {
+  name: React.PropTypes.string.isRequired
+};

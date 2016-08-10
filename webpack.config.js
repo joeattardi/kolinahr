@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.resolve(__dirname, 'app', 'index.jsx') 
+    path.resolve(__dirname, 'app', 'index.jsx')
   ],
 
   output: {
@@ -17,6 +17,14 @@ module.exports = {
   },
 
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        exclude: '/node_modules/'
+      }
+    ],
+
     loaders: [
       {
         test: /\.jsx?$/,
