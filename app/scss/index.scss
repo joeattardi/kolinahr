@@ -1,6 +1,8 @@
 $header-background-color: #1F65AA;
 $footer-background-color: #333333;
-$column-background-color: #EEEEEE;
+$column-background-color: #EFEFEF;
+$button-color: #1FA8A8;
+$add-button-color: #FFFFFF;
 
 body {
   font-family: Roboto, sans-serif;
@@ -22,10 +24,44 @@ body {
   margin: 5px;
   background-color: $column-background-color;
   border: 1px solid darken($column-background-color, 5%);
+  text-align: center;
+  width: 20%;
 
   h3 {
     text-align: center;
     margin: 0;
+  }
+
+  .add-button {
+    background-color: $add-button-color; 
+    border: 2px solid darken($add-button-color, 10%);
+    border-radius: 50%;
+    color: darken($add-button-color, 10%);
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: background-color 0.25s;
+    cursor: pointer;
+    box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
+
+    &:hover {
+      color: #000000;
+      transition: color 0.25s;
+    }
+  }
+
+  .card {
+    font-size: 0.8rem;
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    border-radius: 2px;
+    box-shadow: 0px 4px 13px -6px rgba(0,0,0,0.75);
+    width: 90%;
+    text-align: left;
+    padding: 5px;
+    margin: 5px auto;
   }
 }
 
