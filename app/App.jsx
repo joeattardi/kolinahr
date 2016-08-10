@@ -1,13 +1,27 @@
 import React from 'react';
-import logo from './images/logo.png';
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Column from './components/Column';
+import Title from './Components/Title';
 
 export default class App extends React.Component {
   render() {
     return (
-      <header>
-        <img src={logo} />
-        <h1>Kolinahr</h1>
-      </header>
+      <div id="container">
+        <Header />
+        <div className="main-content">
+          <Title title="Logic Model for Fedora Server Planning (Flock 2016)" />
+          <div id="column-container">
+            <Column name="Inputs" /> 
+            <Column name="Activities" /> 
+            <Column name="Outputs" /> 
+            <Column name="Outcomes" /> 
+            <Column name="Impact" />
+          </div>
+        </div>
+        <Footer />
+      </div>
     );
   }
 }
