@@ -26,7 +26,7 @@ module.exports = {
       {
         test: /\.png$/,
         exclude: '/node_modules/',
-        loader: 'file-loader'
+        loader: 'file-loader?name=[name].[ext]'
       },
       {
         test: /\.scss$/,

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import 'file?name=logo.png!./images/logo.png';
 import './scss/index.scss';
+import './images/logo.png';
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
