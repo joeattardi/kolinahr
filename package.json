@@ -14,7 +14,7 @@
     "url": "git+https://github.com/joeattardi/kolinahr.git"
   },
   "author": "Joe Attardi <joe@attardi.net> (http://www.thinksincode.com)",
-  "license": "ISC",
+  "license": "AGPL",
   "bugs": {
     "url": "https://github.com/joeattardi/kolinahr/issues"
   },
