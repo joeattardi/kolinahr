@@ -3,7 +3,7 @@ import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Column from './components/Column';
-import Title from './Components/Title';
+import Title from './components/Title';
 
 export default class App extends React.Component {
   render() {
