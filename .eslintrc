@@ -6,7 +6,15 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jasmine": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      experimentalObjectRestSpread: true
+    }
   },
   "rules": {
     "comma-dangle": 0

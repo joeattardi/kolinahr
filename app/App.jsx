@@ -12,11 +12,11 @@ export default function App() {
       <div className="main-content">
         <Title title="Logic Model for Fedora Server Planning (Flock 2016)" />
         <div id="column-container">
-          <Column name="Inputs" />
-          <Column name="Activities" />
-          <Column name="Outputs" />
-          <Column name="Outcomes" />
-          <Column name="Impact" />
+          <Column stateKey="inputs" name="Inputs" />
+          <Column stateKey="activities" name="Activities" />
+          <Column stateKey="outputs" name="Outputs" />
+          <Column stateKey="outcomes" name="Outcomes" />
+          <Column stateKey="impact" name="Impact" />
         </div>
       </div>
       <Footer />

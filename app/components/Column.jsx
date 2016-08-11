@@ -1,25 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { addCard } from '../actions';
 import Card from './Card';
 
-export default class Column extends React.Component {
+class Column extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      cards: []
-    };
-
     this.onClickAdd = this.onClickAdd.bind(this);
   }
 
   onClickAdd() {
-    this.setState({
-      cards: [
-        ...this.state.cards,
-        { text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
-      ]
-    });
+    this.props.addCard(this.props.stateKey);
   }
 
   renderCard(card) {
@@ -30,7 +22,7 @@ export default class Column extends React.Component {
     return (
       <div className="column">
         <h3>{this.props.name}</h3>
-        {this.state.cards.map(this.renderCard)}
+        {this.props.cards.map(this.renderCard)}
         <button
           title="Add a new card"
           onClick={this.onClickAdd}
@@ -44,5 +36,16 @@ export default class Column extends React.Component {
 }
 
 Column.propTypes = {
-  name: React.PropTypes.string.isRequired
+  name: React.PropTypes.string.isRequired,
+  stateKey: React.PropTypes.string.isRequired,
+  addCard: React.PropTypes.func.isRequired,
+  cards: React.PropTypes.array.isRequired
 };
+
+function mapStateToProps(state, ownProps) {
+  return {
+    cards: state.cards[ownProps.stateKey]
+  };
+}
+
+export default connect(mapStateToProps, { addCard })(Column);
