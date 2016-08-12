@@ -66,6 +66,37 @@ body {
     text-align: left;
     padding: 5px;
     margin: 5px auto;
+    cursor: pointer;
+  }
+
+  .card-wrapper {
+    .modal-container {
+      .modal-header {
+        display: flex;
+        align-items: center;
+
+        padding: 0.5em;
+        background-color: $header-background-color;
+        color: #FFFFFF;
+
+        h4 {
+          flex-grow: 1;
+          margin: 0;
+        }
+
+        button {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          color: #FFFFFF;
+        }
+      }
+
+      .modal-body {
+        padding: 1em;
+        background: $column-background-color;
+      }
+    }
   }
 }
 
