@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addCard } from '../actions';
 import Card from './Card';
 
-class Column extends React.Component {
+export class Column extends React.Component {
   constructor(props) {
     super(props);
     this.onClickAdd = this.onClickAdd.bind(this);

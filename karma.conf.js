@@ -14,7 +14,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/**/*.js'
+      'test/**/*.js',
+      'test/**/*.jsx'
     ],
 
 
@@ -22,12 +23,6 @@ module.exports = function(config) {
     exclude: [
       '**/*.swp'
     ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
 
 
     // test results reporter to use
@@ -65,7 +60,8 @@ module.exports = function(config) {
     webpack: webpackConfig,
 
     preprocessors: {
-      'test/**/*.js': ['webpack']
+      'test/**/*.js': ['webpack'],
+      'test/**/*.jsx': ['webpack']
     },
 
     // Concurrency level

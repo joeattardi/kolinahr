@@ -7,7 +7,7 @@
     "build": "webpack",
     "test": "karma start",
     "start": "npm run build && node server/index.js",
-    "lint": "eslint app/**/*.jsx app/**/*.js server/",
+    "lint": "eslint test/**/*.jsx test/**/*.js app/**/*.jsx app/**/*.js server/",
     "heroku-postbuild": "node_modules/.bin/webpack"
   },
   "repository": {
@@ -47,6 +47,7 @@
     "postcss-loader": "^0.9.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
+    "teaspoon": "^6.4.1",
     "webpack": "^1.13.1"
   },
   "dependencies": {
