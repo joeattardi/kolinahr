@@ -10,7 +10,7 @@ export default function App() {
     <div id="container">
       <Header />
       <div className="main-content">
-        <Title title="Logic Model for Fedora Server Planning (Flock 2016)" />
+        <Title />
         <div id="column-container">
           <Column stateKey="inputs" name="Inputs" />
           <Column stateKey="activities" name="Activities" />
