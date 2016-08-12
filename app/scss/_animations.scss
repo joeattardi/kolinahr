@@ -1,23 +1,5 @@
 $fade-duration: 0.5s;
 
-@-webkit-keyframes fade-in { 
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-@-moz-keyframes fade-in { 
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
 @keyframes fade-in { 
   from {
     opacity: 0;
@@ -32,15 +14,7 @@ $fade-duration: 0.5s;
   opacity: 0;
 
   animation: fade-in ease-in 1;
-  -webkit-animation: fade-in ease-in 1;
-  -moz-animation: fade-in ease-in 1;
-
-  -webkit-animation-duration: $fade-duration;
-  -moz-animation-duration: $fade-duration;
   animation-duration: $fade-duration;
-
-  -webkit-animation-fill-mode: forwards; 
-  -moz-animation-fill-mode: forwards; 
   animation-fill-mode: forwards; 
 }
 
@@ -53,27 +27,7 @@ $fade-duration: 0.5s;
     background: transparent;
   } 
 }
-@-moz-keyframes yellow-fade { 
-  from { 
-    background: yellow;
-  } 
-
-  to { 
-    background: transparent;
-  } 
-}
-@-webkit-keyframes yellow-fade { 
-  from { 
-    background: yellow;
-  } 
-
-  to { 
-    background: transparent;
-  } 
-}
 
 .yellow-fade {
   animation: yellow-fade 1s;
-  -webkit-animation: yellow-fade 1s;
-  -moz-animation: yellow-fade 1s;
 }

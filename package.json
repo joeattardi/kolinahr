@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/joeattardi/kolinahr#readme",
   "devDependencies": {
+    "autoprefixer": "^6.4.0",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
@@ -43,6 +44,7 @@
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-webpack": "^1.8.0",
     "node-sass": "^3.8.0",
+    "postcss-loader": "^0.9.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
