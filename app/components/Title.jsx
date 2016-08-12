@@ -33,6 +33,7 @@ class Title extends React.Component {
 
   saveTitle() {
     this.props.editTitleSave(this.state.title);
+    this.setState({ updated: this.state.title !== this.props.title });
   }
 
   changeTitle(event) {
@@ -43,7 +44,8 @@ class Title extends React.Component {
 
   editTitle() {
     this.setState({
-      title: this.props.title
+      title: this.props.title,
+      updated: false
     });
 
     this.props.editTitle();
@@ -58,8 +60,9 @@ class Title extends React.Component {
   }
 
   renderStaticTitle() {
+    const cls = this.state.updated ? 'yellow-fade' : '';
     return (
-      <div onClick={this.editTitle} id="model-title" title="Click to edit title">
+      <div className={cls} onClick={this.editTitle} id="model-title" title="Click to edit title">
         <h2>{this.props.title}</h2>
         <span className="edit-hint">
           <i className="fa fa-pencil-square-o" />
