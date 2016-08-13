@@ -4,10 +4,10 @@ $header-background-color: #1F65AA;
 $footer-background-color: #333333;
 $column-background-color: #EFEFEF;
 $modal-button-color: #02BEC7;
-$cancel-button-color: #C9302C;
 $delete-button-color: #C9302C;
 $add-button-color: #FFFFFF;
 $button-color: #CED4E0;
+$button-transition-duration: 0.25s;
 
 body {
   font-family: Roboto, sans-serif;
@@ -59,13 +59,13 @@ button {
     height: 2rem;
     margin: 1rem;
     font-size: 1rem;
-    transition: background-color 0.25s;
+    transition: background-color $button-transition-duration;
     box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
     padding: 0.25em;
 
     &:hover {
       color: #000000;
-      transition: color 0.25s;
+      transition: color $button-transition-duration;
     }
   }
 
@@ -153,6 +153,13 @@ button {
       background-color: $delete-button-color;
       border: 1px solid darken($delete-button-color, 5%);
       color: #FFFFFF; 
+      transition: all $button-transition-duration;
+
+      &:hover {
+        background-color: lighten($delete-button-color, 5%);
+        border-color: $delete-button-color;
+        transition: all $button-transition-duration;
+      }
     }
   }
 
@@ -169,16 +176,25 @@ button {
       margin: 1em;
       padding: 0.25em 2em;
       cursor: pointer;
+      transition: all $button-transition-duration;
 
-      &.cancel-button {
-        background-color: $cancel-button-color;
-        border-color: darken($cancel-button-color, 5%);
+      &:hover {
+        background-color: lighten($modal-button-color, 5%);
+        border-color: $modal-button-color;
+        transition: all $button-transition-duration;
       }
 
       &.delete-button {
         background-color: $delete-button-color;
         border-color: darken($delete-button-color, 5%);
+        transition: all $button-transition-duration;
         color: #FFFFFF;
+
+        &:hover {
+          background-color: lighten($delete-button-color, 5%);
+          border-color: $delete-button-color;
+          transition: all $button-transition-duration;
+        }
       }
     }
   }
