@@ -33,6 +33,7 @@ button {
   border-radius: 3px;
   padding: 0.25em 2em;
   font-size: 0.8em;
+  margin: 0.5em;
 }
 
 .column {
@@ -96,15 +97,6 @@ button {
   background: rgba(0, 0, 0, 0.75);
 }
 
-.confirm-delete-modal {
-  width: 400px;
-  margin: 26% auto;
-}
-
-.edit-card-modal {
-  width: 500px;
-  margin: 25% auto;
-}
 
 .modal-container {
 
@@ -199,6 +191,33 @@ button {
     }
   }
 }
+
+.confirm-delete-modal {
+  width: 400px;
+  margin: 26% auto;
+}
+
+.edit-card-modal {
+  width: 500px;
+  margin: 25% auto;
+}
+
+.color-picker-modal {
+  width: 275px;
+  margin: 26% auto;
+
+  .modal-body {
+    text-align: center;
+    display: block;
+
+    button {
+      width: 25px;
+      height: 25px;
+      padding: 0;
+    }
+  }
+}
+
 
 .editable-title {
   button {

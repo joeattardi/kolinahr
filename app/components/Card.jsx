@@ -20,7 +20,11 @@ export default class Card extends React.Component {
   render() {
     return (
       <div className="card-wrapper">
-        <div onClick={this.showModal} className="card fade-in">
+        <div
+          onClick={this.showModal}
+          className="card fade-in"
+          style={{ backgroundColor: this.props.card.color }}
+        >
           {this.props.card.text}
         </div>
         <EditCardModal

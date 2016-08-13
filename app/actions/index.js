@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 
+import { DEFAULT_COLOR, DEFAULT_TEXT } from '../constants';
 import * as types from './types';
 
 export function addCard(column) {
@@ -8,7 +9,8 @@ export function addCard(column) {
     payload: {
       column,
       id: uuid.v4(),
-      text: 'New Card',
+      color: DEFAULT_COLOR,
+      text: DEFAULT_TEXT,
     }
   };
 }

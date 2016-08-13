@@ -1,4 +1,4 @@
-import { VIEW_MODE, EDIT_MODE } from '../../app/constants';
+import { VIEW_MODE, EDIT_MODE, DEFAULT_COLOR } from '../../app/constants';
 import * as actionTypes from '../../app/actions/types';
 import { cardsReducer, titleReducer, titleModeReducer } from '../../app/reducers';
 
@@ -6,7 +6,7 @@ describe('Reducers', () => {
   describe('Card Reducer', () => {
     it('adds a new card in the proper column', () => {
       const expected = {
-        inputs: [{ id: 'abc', text: 'New Card', column: 'inputs' }],
+        inputs: [{ id: 'abc', text: 'New Card', column: 'inputs', color: DEFAULT_COLOR }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -18,6 +18,7 @@ describe('Reducers', () => {
         payload: {
           id: 'abc',
           text: 'New Card',
+          color: DEFAULT_COLOR,
           column: 'inputs'
         }
       };
@@ -27,8 +28,8 @@ describe('Reducers', () => {
 
     it('deletes a card', () => {
       const startState = {
-        inputs: [{ id: 'abc', text: 'Delete Me', column: 'inputs' },
-                 { id: 'def', text: 'Other Card', column: 'inputs' }],
+        inputs: [{ id: 'abc', text: 'Delete Me', column: 'inputs', color: 'red' },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'blue' }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -36,7 +37,7 @@ describe('Reducers', () => {
       };
 
       const expectedState = {
-        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs' }],
+        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs', color: 'blue' }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -47,7 +48,7 @@ describe('Reducers', () => {
         type: actionTypes.DELETE_CARD,
         payload: {
           id: 'abc',
-          column: 'inputs'
+          column: 'inputs',
         }
       };
 
@@ -56,8 +57,8 @@ describe('Reducers', () => {
 
     it('updates a card', () => {
       const startState = {
-        inputs: [{ id: 'abc', text: 'Old Text', column: 'inputs' },
-                 { id: 'def', text: 'Other Card', column: 'inputs' }],
+        inputs: [{ id: 'abc', text: 'Old Text', column: 'inputs', color: 'green' },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -65,8 +66,8 @@ describe('Reducers', () => {
       };
 
       const expectedState = {
-        inputs: [{ id: 'abc', text: 'New Text', column: 'inputs' },
-                 { id: 'def', text: 'Other Card', column: 'inputs' }],
+        inputs: [{ id: 'abc', text: 'New Text', column: 'inputs', color: 'blue' },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -78,6 +79,7 @@ describe('Reducers', () => {
         payload: {
           id: 'abc',
           text: 'New Text',
+          color: 'blue',
           column: 'inputs'
         }
       };
