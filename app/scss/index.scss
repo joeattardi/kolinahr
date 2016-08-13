@@ -3,8 +3,11 @@
 $header-background-color: #1F65AA;
 $footer-background-color: #333333;
 $column-background-color: #EFEFEF;
-$button-color: #1FA8A8;
+$modal-button-color: #02BEC7;
+$cancel-button-color: #C9302C;
+$delete-button-color: #C9302C;
 $add-button-color: #FFFFFF;
+$button-color: #CED4E0;
 
 body {
   font-family: Roboto, sans-serif;
@@ -19,6 +22,17 @@ body {
 
 #column-container {
   display: flex;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  background-color: $button-color;
+  border: 1px solid darken($button-color, 5%);
+  color: darken($button-color, 50%);
+  border-radius: 3px;
+  padding: 0.25em 2em;
+  font-size: 0.8em;
 }
 
 .column {
@@ -45,10 +59,9 @@ body {
     height: 2rem;
     margin: 1rem;
     font-size: 1rem;
-    outline: none;
     transition: background-color 0.25s;
-    cursor: pointer;
     box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
+    padding: 0.25em;
 
     &:hover {
       color: #000000;
@@ -71,6 +84,7 @@ body {
 
   .card-wrapper {
     .modal-container {
+
       .modal-header {
         display: flex;
         align-items: center;
@@ -87,14 +101,56 @@ body {
         button {
           background: transparent;
           border: none;
-          cursor: pointer;
           color: #FFFFFF;
         }
       }
 
       .modal-body {
-        padding: 1em;
+        display: flex;
+        flex-direction: column;
         background: $column-background-color;
+        padding: 1em;
+
+        textarea {
+          font-size: 1em;
+        }
+
+        .modal-row {
+          display: flex;
+          flex-direction: row;
+        }
+
+        .modal-column {
+          display: flex;
+          flex-direction: column;
+          margin: 0.5em;
+        }
+
+        .delete-button {
+          background-color: $delete-button-color;
+          border: 1px solid darken($delete-button-color, 5%);
+          color: #FFFFFF; 
+        }
+      }
+
+      .modal-buttons {
+        background: $column-background-color;
+
+        button {
+          background-color: $modal-button-color;
+          border: 1px solid darken($modal-button-color, 5%);
+          border-radius: 3px;
+          color: #FFFFFF;
+          font-size: 1.1em;
+          margin: 1em;
+          padding: 0.25em 2em;
+          cursor: pointer;
+
+          &.cancel-button {
+            background: $cancel-button-color;
+            border-color: darken($cancel-button-color, 5%);
+          }
+        }
       }
     }
   }

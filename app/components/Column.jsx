@@ -1,21 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addCard } from '../actions';
+import * as actions from '../actions';
 import Card from './Card';
 
 export class Column extends React.Component {
   constructor(props) {
     super(props);
     this.onClickAdd = this.onClickAdd.bind(this);
+    this.renderCard = this.renderCard.bind(this);
   }
 
   onClickAdd() {
     this.props.addCard(this.props.stateKey);
   }
 
+  updateCard(card) {
+    actions.updateCard(card);
+  }
+
   renderCard(card) {
-    return <Card text={card.text} />;
+    return <Card updateCard={this.props.updateCard} key={card.id} card={card} />;
   }
 
   render() {
@@ -39,7 +44,8 @@ Column.propTypes = {
   name: React.PropTypes.string.isRequired,
   stateKey: React.PropTypes.string.isRequired,
   addCard: React.PropTypes.func.isRequired,
-  cards: React.PropTypes.array.isRequired
+  cards: React.PropTypes.array.isRequired,
+  updateCard: React.PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -48,4 +54,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { addCard })(Column);
+export default connect(mapStateToProps, actions)(Column);

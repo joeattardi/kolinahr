@@ -1,28 +1,40 @@
-/* eslint-disable import/prefer-default-export */
-import { ADD_CARD, EDIT_TITLE, EDIT_TITLE_SAVE, EDIT_TITLE_CANCEL } from './types';
+import uuid from 'uuid';
+
+import * as types from './types';
 
 export function addCard(column) {
   return {
-    type: ADD_CARD,
-    payload: column
+    type: types.ADD_CARD,
+    payload: {
+      column,
+      id: uuid.v4(),
+      text: 'New Card',
+    }
+  };
+}
+
+export function updateCard(card) {
+  return {
+    type: types.UPDATE_CARD,
+    payload: card
   };
 }
 
 export function editTitle() {
   return {
-    type: EDIT_TITLE,
+    type: types.EDIT_TITLE,
   };
 }
 
 export function editTitleSave(newTitle) {
   return {
-    type: EDIT_TITLE_SAVE,
+    type: types.EDIT_TITLE_SAVE,
     payload: newTitle
   };
 }
 
 export function editTitleCancel() {
   return {
-    type: EDIT_TITLE_CANCEL
+    type: types.EDIT_TITLE_CANCEL
   };
 }

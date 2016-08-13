@@ -1,5 +1,5 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
-import { ADD_CARD, EDIT_TITLE, EDIT_TITLE_SAVE, EDIT_TITLE_CANCEL } from '../actions/types';
+import * as types from '../actions/types';
 
 const defaultCardsState = {
   inputs: [],
@@ -11,10 +11,21 @@ const defaultCardsState = {
 
 export function cardsReducer(state = defaultCardsState, action) {
   switch (action.type) {
-    case ADD_CARD:
+    case types.ADD_CARD:
       return {
         ...state,
-        ...{ [action.payload]: [...state[action.payload], { text: 'New Card' }] }
+        ...{ [action.payload.column]: [...state[action.payload.column], action.payload] }
+      };
+    case types.UPDATE_CARD:
+      return {
+        ...state,
+        ...{ [action.payload.column]: state[action.payload.column].map(card => {
+          if (card.id === action.payload.id) {
+            return action.payload;
+          }
+
+          return card;
+        }) }
       };
     default:
       return state;
@@ -23,9 +34,9 @@ export function cardsReducer(state = defaultCardsState, action) {
 
 export function titleReducer(state = 'New Logic Model', action) {
   switch (action.type) {
-    case EDIT_TITLE_SAVE:
+    case types.EDIT_TITLE_SAVE:
       return action.payload;
-    case EDIT_TITLE_CANCEL:
+    case types.EDIT_TITLE_CANCEL:
       return state;
     default:
       return state;
@@ -34,10 +45,10 @@ export function titleReducer(state = 'New Logic Model', action) {
 
 export function titleModeReducer(state = VIEW_MODE, action) {
   switch (action.type) {
-    case EDIT_TITLE:
+    case types.EDIT_TITLE:
       return EDIT_MODE;
-    case EDIT_TITLE_SAVE:
-    case EDIT_TITLE_CANCEL:
+    case types.EDIT_TITLE_SAVE:
+    case types.EDIT_TITLE_CANCEL:
       return VIEW_MODE;
     default:
       return state;
