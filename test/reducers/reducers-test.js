@@ -25,6 +25,35 @@ describe('Reducers', () => {
       expect(cardsReducer(undefined, action)).toEqual(expected);
     });
 
+    it('deletes a card', () => {
+      const startState = {
+        inputs: [{ id: 'abc', text: 'Delete Me', column: 'inputs' },
+                 { id: 'def', text: 'Other Card', column: 'inputs' }],
+        activities: [],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const expectedState = {
+        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs' }],
+        activities: [],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const action = {
+        type: actionTypes.DELETE_CARD,
+        payload: {
+          id: 'abc',
+          column: 'inputs'
+        }
+      };
+
+      expect(cardsReducer(startState, action)).toEqual(expectedState);
+    });
+
     it('updates a card', () => {
       const startState = {
         inputs: [{ id: 'abc', text: 'Old Text', column: 'inputs' },

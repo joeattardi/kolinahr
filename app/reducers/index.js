@@ -16,6 +16,13 @@ export function cardsReducer(state = defaultCardsState, action) {
         ...state,
         ...{ [action.payload.column]: [...state[action.payload.column], action.payload] }
       };
+    case types.DELETE_CARD:
+      return {
+        ...state,
+        ...{ [action.payload.column]: state[action.payload.column].filter(card =>
+          card.id !== action.payload.id
+        ) }
+      };
     case types.UPDATE_CARD:
       return {
         ...state,

@@ -20,7 +20,14 @@ export class Column extends React.Component {
   }
 
   renderCard(card) {
-    return <Card updateCard={this.props.updateCard} key={card.id} card={card} />;
+    return (
+      <Card
+        updateCard={this.props.updateCard}
+        deleteCard={this.props.deleteCard}
+        key={card.id}
+        card={card}
+      />
+    );
   }
 
   render() {
@@ -45,7 +52,8 @@ Column.propTypes = {
   stateKey: React.PropTypes.string.isRequired,
   addCard: React.PropTypes.func.isRequired,
   cards: React.PropTypes.array.isRequired,
-  updateCard: React.PropTypes.func.isRequired
+  updateCard: React.PropTypes.func.isRequired,
+  deleteCard: React.PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

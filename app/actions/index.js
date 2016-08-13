@@ -20,6 +20,16 @@ export function updateCard(card) {
   };
 }
 
+export function deleteCard(id, column) {
+  return {
+    type: types.DELETE_CARD,
+    payload: {
+      id,
+      column
+    }
+  };
+}
+
 export function editTitle() {
   return {
     type: types.EDIT_TITLE,

@@ -25,6 +25,7 @@ export default class Card extends React.Component {
         </div>
         <EditCardModal
           updateCard={this.props.updateCard}
+          deleteCard={this.props.deleteCard}
           ref={this.setModal}
           card={this.props.card}
         />
@@ -35,5 +36,6 @@ export default class Card extends React.Component {
 
 Card.propTypes = {
   card: React.PropTypes.object.isRequired,
-  updateCard: React.PropTypes.func.isRequired
+  updateCard: React.PropTypes.func.isRequired,
+  deleteCard: React.PropTypes.func.isRequired
 };
