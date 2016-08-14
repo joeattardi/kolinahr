@@ -1,5 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { DropTarget } from 'react-dnd';
+import { connect as reduxConnect } from 'react-redux';
+import _ from 'lodash';
 
 import * as actions from '../actions';
 import Card from './Card';
@@ -31,7 +33,7 @@ export class Column extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.connectDropTarget(
       <div className="column">
         <h3>{this.props.name}</h3>
         {this.props.cards.map(this.renderCard)}
@@ -53,8 +55,27 @@ Column.propTypes = {
   addCard: React.PropTypes.func.isRequired,
   cards: React.PropTypes.array.isRequired,
   updateCard: React.PropTypes.func.isRequired,
-  deleteCard: React.PropTypes.func.isRequired
+  deleteCard: React.PropTypes.func.isRequired,
+  connectDropTarget: React.PropTypes.func.isRequired
 };
+
+const cardTarget = {
+  hover(targetProps, monitor) {
+    const source = monitor.getItem();
+
+    if (source.column !== targetProps.stateKey) {
+      targetProps.moveCard(source.column, source.id, targetProps.stateKey);
+      source.column = targetProps.stateKey;
+    }
+  },
+};
+
+function dropCollect(connect) {
+  return {
+    connectDropTarget: connect.dropTarget()
+  };
+}
+
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -62,4 +83,9 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, actions)(Column);
+/* eslint-disable new-cap */
+export default _.flow(
+  DropTarget('card', cardTarget, dropCollect),
+  reduxConnect(mapStateToProps, actions)
+)(Column);
+

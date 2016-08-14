@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
@@ -8,6 +10,30 @@ const defaultCardsState = {
   outcomes: [],
   impact: []
 };
+
+function moveCard(state, sourceColumnId, sourceId, targetColumnId, targetId) {
+  const sourceColumn = state[sourceColumnId].slice(0);
+  let targetColumn = state[targetColumnId].slice(0);
+
+  if (sourceColumnId === targetColumnId) {
+    targetColumn = sourceColumn;
+  }
+
+  const sourceIndex = _.findIndex(sourceColumn, card => card.id === sourceId);
+  const targetIndex = _.findIndex(targetColumn, card => card.id === targetId);
+
+  const sourceCard = sourceColumn.splice(sourceIndex, 1)[0];
+  sourceCard.column = targetColumnId;
+  targetColumn.splice(targetIndex, 0, sourceCard);
+
+  return {
+    ...state,
+    ...{
+      [sourceColumnId]: sourceColumn,
+      [targetColumnId]: targetColumn
+    }
+  };
+}
 
 export function cardsReducer(state = defaultCardsState, action) {
   switch (action.type) {
@@ -34,6 +60,9 @@ export function cardsReducer(state = defaultCardsState, action) {
           return card;
         }) }
       };
+    case types.MOVE_CARD:
+      return moveCard(state, action.payload.sourceColumn,
+        action.payload.sourceId, action.payload.targetColumn, action.payload.targetId);
     default:
       return state;
   }

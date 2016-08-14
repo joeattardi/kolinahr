@@ -86,6 +86,69 @@ describe('Reducers', () => {
 
       expect(cardsReducer(startState, action)).toEqual(expectedState);
     });
+
+    it('moves a card to a different column', () => {
+      const startState = {
+        inputs: [{ id: 'abc', text: 'Move Me', column: 'inputs', color: 'green' },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' }],
+        activities: [],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const expectedState = {
+        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' }],
+        activities: [{ id: 'abc', text: 'Move Me', column: 'activities', color: 'green' }],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const action = {
+        type: actionTypes.MOVE_CARD,
+        payload: {
+          sourceColumn: 'inputs',
+          sourceId: 'abc',
+          targetColumn: 'activities',
+          targetId: 'def'
+        }
+      };
+
+      expect(cardsReducer(startState, action)).toEqual(expectedState);
+    });
+
+    it('moves a card within the same column', () => {
+      const startState = {
+        inputs: [{ id: 'abc', text: 'Move Me', column: 'inputs', color: 'green' },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' }],
+        activities: [],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const expectedState = {
+        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs', color: 'yellow' },
+                 { id: 'abc', text: 'Move Me', column: 'inputs', color: 'green' }],
+        activities: [],
+        outputs: [],
+        outcomes: [],
+        impact: []
+      };
+
+      const action = {
+        type: actionTypes.MOVE_CARD,
+        payload: {
+          sourceColumn: 'inputs',
+          sourceId: 'abc',
+          targetColumn: 'inputs',
+          targetId: 'def'
+        }
+      };
+
+      expect(cardsReducer(startState, action)).toEqual(expectedState);
+    });
   });
 
   describe('Title Reducer', () => {

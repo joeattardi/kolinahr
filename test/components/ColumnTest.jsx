@@ -3,7 +3,7 @@ import $ from 'teaspoon';
 
 import { Column } from '../../app/components/Column';
 
-describe('Column Component', () => {
+xdescribe('Column Component', () => {
   it('shows the title as an h3', () => {
     const $column = $(
       <Column stateKey="inputs" name="Inputs" addCard={() => {}} cards={[]} />

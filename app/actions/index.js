@@ -32,6 +32,18 @@ export function deleteCard(id, column) {
   };
 }
 
+export function moveCard(sourceColumn, sourceId, targetColumn, targetId) {
+  return {
+    type: types.MOVE_CARD,
+    payload: {
+      sourceColumn,
+      sourceId,
+      targetColumn,
+      targetId
+    }
+  };
+}
+
 export function editTitle() {
   return {
     type: types.EDIT_TITLE,
