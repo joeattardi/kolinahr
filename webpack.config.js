@@ -22,24 +22,24 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'eslint-loader',
-        exclude: '/node_modules/'
+        exclude: /node_modules/
       }
     ],
 
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: '/node_modules/',
+        exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
         test: /\.png$/,
-        exclude: '/node_modules/',
+        exclude: /node_modules/,
         loader: 'file-loader?name=[name].[ext]'
       },
       {
         test: /\.scss$/,
-        exclude: '/node_modules/',
+        exclude: /node_modules/,
         loaders: ['style', 'css', 'postcss', 'sass']
       }
     ]
