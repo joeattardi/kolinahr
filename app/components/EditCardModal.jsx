@@ -1,7 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-import { COLOR_CHOICES } from '../constants';
+import ColorPickerModal from './ColorPickerModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export default class EditCardModal extends React.Component {
   constructor(props) {
@@ -17,15 +18,17 @@ export default class EditCardModal extends React.Component {
 
     this.setNewColor = this.setNewColor.bind(this);
     this.showColorPicker = this.showColorPicker.bind(this);
-    this.cancelColorPicker = this.cancelColorPicker.bind(this);
+
+    this.setConfirmDeleteModal = this.setConfirmDeleteModal.bind(this);
+    this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this);
+
     this.hideModal = this.hideModal.bind(this);
     this.setModal = this.setModal.bind(this);
     this.cancel = this.cancel.bind(this);
-    this.cancelDelete = this.cancelDelete.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
+    this.setColorPickerModal = this.setColorPickerModal.bind(this);
   }
 
   onTextChange(event) {
@@ -34,37 +37,33 @@ export default class EditCardModal extends React.Component {
     });
   }
 
-  onDeleteClick() {
-    this.setState({ showConfirm: true });
-  }
-
   setModal(modal) {
     this.modal = modal;
   }
 
-  setNewColor(event) {
-    this.setState({
-      color: event.target.style.backgroundColor,
-      showColorPicker: false
-    });
+  setConfirmDeleteModal(modal) {
+    this.confirmDeleteModal = modal;
+  }
+
+  setColorPickerModal(modal) {
+    this.colorPickerModal = modal;
+  }
+
+  setNewColor(color) {
+    this.setState({ color });
   }
 
   confirmDelete() {
-    this.setState({ showConfirm: false });
     this.setState({ show: false });
     this.props.deleteCard(this.props.card.id, this.props.card.column);
   }
 
-  cancelDelete() {
-    this.setState({ showConfirm: false });
-  }
-
-  cancelColorPicker() {
-    this.setState({ showColorPicker: false });
+  showConfirmDeleteModal() {
+    this.confirmDeleteModal.setState({ show: true });
   }
 
   showColorPicker() {
-    this.setState({ showColorPicker: true });
+    this.colorPickerModal.setState({ show: true });
   }
 
   showModal() {
@@ -104,14 +103,13 @@ export default class EditCardModal extends React.Component {
         >
           <div className="modal-header">
             <h4>Edit Card</h4>
-            <button onClick={this.cancel}><i className="fa fa-2x fa-times" /></button>
           </div>
           <div className="modal-body">
             <div className="modal-row">
               <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
               <div className="modal-column">
                 <button
-                  onClick={this.onDeleteClick}
+                  onClick={this.showConfirmDeleteModal}
                   className="delete-button"
                 ><i className="fa fa-trash-o" /> Delete
                 </button>
@@ -129,38 +127,17 @@ export default class EditCardModal extends React.Component {
             <button onClick={this.saveChanges}>Save</button>
           </div>
         </Modal>
-        <Modal
-          className="color-picker-modal modal-container"
-          overlayClassName="modal-overlay"
-          isOpen={this.state.showColorPicker}
-        >
-          <div className="modal-header">
-            <h4>Choose Color</h4>
-          </div>
-          <div className="modal-body">
-            {COLOR_CHOICES.map(color =>
-              <button key={color} onClick={this.setNewColor} style={{ backgroundColor: color }} />)}
-          </div>
-          <div className="modal-buttons">
-            <button onClick={this.cancelColorPicker} className="cancel-button">Cancel</button>
-          </div>
-        </Modal>
-        <Modal
-          className="confirm-delete-modal modal-container"
-          overlayClassName="modal-overlay"
-          isOpen={this.state.showConfirm}
-        >
-          <div className="modal-header">
-            <h4>Delete Card</h4>
-          </div>
-          <div className="modal-body">
-            Are you sure you want to delete this card?
-          </div>
-          <div className="modal-buttons">
-            <button onClick={this.cancelDelete}>Cancel</button>
-            <button className="delete-button" onClick={this.confirmDelete}>Delete</button>
-          </div>
-        </Modal>
+
+        <ConfirmDeleteModal
+          ref={this.setConfirmDeleteModal}
+          onConfirmDelete={this.confirmDelete}
+        />
+
+        <ColorPickerModal
+          color={this.state.color}
+          ref={this.setColorPickerModal}
+          onColorSet={this.setNewColor}
+        />
       </div>
     );
   }
