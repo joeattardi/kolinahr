@@ -11,7 +11,7 @@ export default function configureStore() {
 
   const state = {
     title: 'My New Logic Model',
-    titleMode: 'VIEW',
+    titleMode: 'VIEW_MODE',
     cards: {
       inputs: [
         {
