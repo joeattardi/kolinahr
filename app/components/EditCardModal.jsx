@@ -1,8 +1,25 @@
 import React from 'react';
 import Modal from 'react-modal';
+import _ from 'lodash';
 
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+
+const TITLES = {
+  inputs: 'Inputs',
+  activities: 'Activities',
+  outputs: 'Outputs',
+  outcomes: 'Outcomes',
+  impact: 'Impact'
+};
+
+const SINGULAR = {
+  inputs: 'Input',
+  activities: 'Activity',
+  outputs: 'Output',
+  outcomes: 'Outcome',
+  impact: 'Impact'
+};
 
 export default class EditCardModal extends React.Component {
   constructor(props) {
@@ -11,10 +28,13 @@ export default class EditCardModal extends React.Component {
     this.state = {
       text: props.card.text,
       color: props.card.color,
+      links: props.card.links,
       show: false,
       showConfirm: false,
       showColorPicker: false
     };
+
+    this.renderLink = this.renderLink.bind(this);
 
     this.setNewColor = this.setNewColor.bind(this);
     this.showColorPicker = this.showColorPicker.bind(this);
@@ -91,7 +111,18 @@ export default class EditCardModal extends React.Component {
     });
   }
 
+  renderLink(link) {
+    const linkedCard = _.find(this.props.cards[this.props.linkKey], card => card.id === link);
+    return (
+      <div key={link} className="card-link">
+        <div className="link-name">{linkedCard.text}</div>
+        <button className="delete-button"><i className="fa fa-trash" /></button>
+      </div>
+    );
+  }
+
   render() {
+    const { linkKey } = this.props;
     return (
       <div>
         <Modal
@@ -105,6 +136,7 @@ export default class EditCardModal extends React.Component {
             <h4>Edit Card</h4>
           </div>
           <div className="modal-body">
+            <h5>Card Details</h5>
             <div className="modal-row">
               <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
               <div className="modal-column">
@@ -120,6 +152,13 @@ export default class EditCardModal extends React.Component {
                   <i className="fa fa-paint-brush" /> Color
                 </button>
               </div>
+            </div>
+            <h5>Linked {TITLES[linkKey]}</h5>
+            <div className="modal-row">
+              <button><i className="fa fa-link" /> Link {SINGULAR[linkKey]}</button>
+            </div>
+            <div className="modal-row">
+              {this.state.links.map(this.renderLink)}
             </div>
           </div>
           <div className="modal-buttons">
@@ -146,6 +185,8 @@ export default class EditCardModal extends React.Component {
 EditCardModal.propTypes = {
   card: React.PropTypes.object.isRequired,
   updateCard: React.PropTypes.func.isRequired,
-  deleteCard: React.PropTypes.func.isRequired
+  deleteCard: React.PropTypes.func.isRequired,
+  linkKey: React.PropTypes.string,
+  cards: React.PropTypes.object.isRequired
 };
 

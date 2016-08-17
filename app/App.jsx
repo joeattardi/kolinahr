@@ -17,13 +17,13 @@ class App extends React.Component {
         <div className="main-content">
           <Title />
           <div id="column-container">
-            <Column stateKey="inputs" name="Inputs" />
+            <Column stateKey="inputs" name="Inputs" linkKey="activities" />
             <Canvas left="inputs" right="activities" />
-            <Column stateKey="activities" name="Activities" />
+            <Column stateKey="activities" name="Activities" linkKey="outputs" />
             <Canvas left="activities" right="outputs" />
-            <Column stateKey="outputs" name="Outputs" />
+            <Column stateKey="outputs" name="Outputs" linkKey="outcomes" />
             <Canvas left="outputs" right="outcomes" />
-            <Column stateKey="outcomes" name="Outcomes" />
+            <Column stateKey="outcomes" name="Outcomes" linkKey="impact" />
             <Canvas left="outcomes" right="impact" />
             <Column stateKey="impact" name="Impact" />
           </div>

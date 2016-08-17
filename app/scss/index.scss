@@ -131,6 +131,10 @@ button {
     background: $column-background-color;
     padding: 1em;
 
+    h5 {
+      margin: 0.5em;
+    }
+
     textarea {
       font-size: 1em;
     }
@@ -205,6 +209,16 @@ button {
 .edit-card-modal {
   width: 500px;
   margin: 10% auto;
+
+  .card-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .link-name {
+      flex-grow: 1;
+    }
+  }
 }
 
 .color-picker-modal {

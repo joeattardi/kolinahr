@@ -26,6 +26,7 @@ export class Column extends React.Component {
       <Card
         updateCard={this.props.updateCard}
         deleteCard={this.props.deleteCard}
+        linkKey={this.props.linkKey}
         key={card.id}
         card={card}
       />
@@ -56,7 +57,8 @@ Column.propTypes = {
   cards: React.PropTypes.array.isRequired,
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
-  connectDropTarget: React.PropTypes.func.isRequired
+  connectDropTarget: React.PropTypes.func.isRequired,
+  linkKey: React.PropTypes.string
 };
 
 const cardTarget = {

@@ -35,19 +35,22 @@ export default function configureStore() {
           id: '3',
           text: 'Blah Blah',
           color: '#FFB3EC',
-          column: 'activities'
+          column: 'activities',
+          links: []
         },
         {
           id: '4',
           text: 'Yet Another Card!',
           color: '#75FF98',
-          column: 'activities'
+          column: 'activities',
+          links: []
         },
         {
           id: '5',
           text: 'Derp Derp',
           color: '#FFFFFF',
-          column: 'activities'
+          column: 'activities',
+          links: []
         }
       ],
       outputs: [],

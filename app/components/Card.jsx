@@ -65,6 +65,8 @@ export class Card extends React.Component {
       <div className="card-wrapper">
         {this.renderCard()}
         <EditCardModal
+          linkKey={this.props.linkKey}
+          cards={this.props.cards}
           updateCard={this.props.updateCard}
           deleteCard={this.props.deleteCard}
           ref={this.setModal}
@@ -77,12 +79,14 @@ export class Card extends React.Component {
 
 Card.propTypes = {
   card: React.PropTypes.object.isRequired,
+  cards: React.PropTypes.object.isRequired,
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
   registerOffset: React.PropTypes.func.isRequired,
-  isDragging: React.PropTypes.bool.isRequired
+  isDragging: React.PropTypes.bool.isRequired,
+  linkKey: React.PropTypes.string
 };
 
 const cardSource = {
@@ -125,10 +129,16 @@ function dropCollect(connect) {
   };
 }
 
+function mapStateToProps(state) {
+  return {
+    cards: state.cards
+  };
+}
+
 /* eslint-disable new-cap */
 export default _.flow(
   DragSource('card', cardSource, dragCollect),
   DropTarget('card', cardTarget, dropCollect),
-  reduxConnect(undefined, actions)
+  reduxConnect(mapStateToProps, actions)
 )(Card);
 
