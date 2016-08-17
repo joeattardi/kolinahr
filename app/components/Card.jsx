@@ -44,14 +44,18 @@ export class Card extends React.Component {
   }
 
   renderCard() {
+    const className = this.props.isDragging ? 'card card-dragging' : 'card';
+
     return this.props.connectDragSource(
       <div
         ref={this.setCardElement}
         onClick={this.showModal}
-        className="card"
-        style={{ backgroundColor: this.props.card.color }}
+        className={className}
+        style={{
+          backgroundColor: this.props.card.color }}
       >
         {this.props.card.text}
+        {this.props.isDragging}
       </div>
     );
   }
@@ -77,7 +81,8 @@ Card.propTypes = {
   deleteCard: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
-  registerOffset: React.PropTypes.func.isRequired
+  registerOffset: React.PropTypes.func.isRequired,
+  isDragging: React.PropTypes.bool.isRequired
 };
 
 const cardSource = {
@@ -88,6 +93,10 @@ const cardSource = {
       column: card.column,
       text: card.text
     };
+  },
+
+  isDragging(props, monitor) {
+    return props.card.id === monitor.getItem().id;
   }
 };
 
