@@ -68,6 +68,18 @@ export function cardsReducer(state = defaultCardsState, action) {
   }
 }
 
+export function cardOffsetsReducer(state = {}, action) {
+  switch (action.type) {
+    case types.REGISTER_OFFSET:
+      return {
+        ...state,
+        [action.payload.cardId]: action.payload.offset
+      };
+    default:
+      return state;
+  }
+}
+
 export function titleReducer(state = 'New Logic Model', action) {
   switch (action.type) {
     case types.EDIT_TITLE_SAVE:

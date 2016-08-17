@@ -10,7 +10,29 @@ export class Card extends React.Component {
   constructor(props) {
     super(props);
     this.setModal = this.setModal.bind(this);
+    this.setCardElement = this.setCardElement.bind(this);
     this.showModal = this.showModal.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.registerOffset(this.props.card.id, {
+      top: this.cardElement.offsetTop,
+      left: this.cardElement.offsetLeft,
+      width: this.cardElement.offsetWidth,
+      height: this.cardElement.offsetHeight
+    });
+  }
+
+  componentDidUpdate() {
+    this.props.registerOffset(this.props.card.id, {
+      top: this.cardElement.offsetTop,
+      left: this.cardElement.offsetLeft,
+      width: this.cardElement.offsetWidth,
+      height: this.cardElement.offsetHeight
+    });
+  }
+  setCardElement(element) {
+    this.cardElement = element;
   }
 
   setModal(modal) {
@@ -21,16 +43,23 @@ export class Card extends React.Component {
     this.modal.showModal();
   }
 
+  renderCard() {
+    return this.props.connectDragSource(
+      <div
+        ref={this.setCardElement}
+        onClick={this.showModal}
+        className="card"
+        style={{ backgroundColor: this.props.card.color }}
+      >
+        {this.props.card.text}
+      </div>
+    );
+  }
+
   render() {
-    return this.props.connectDragSource(this.props.connectDropTarget(
+    return this.props.connectDropTarget(
       <div className="card-wrapper">
-        <div
-          onClick={this.showModal}
-          className="card"
-          style={{ backgroundColor: this.props.card.color }}
-        >
-          {this.props.card.text}
-        </div>
+        {this.renderCard()}
         <EditCardModal
           updateCard={this.props.updateCard}
           deleteCard={this.props.deleteCard}
@@ -38,7 +67,7 @@ export class Card extends React.Component {
           card={this.props.card}
         />
       </div>
-    ), { dropEffect: 'move' });
+    );
   }
 }
 
@@ -47,7 +76,8 @@ Card.propTypes = {
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,
-  connectDropTarget: React.PropTypes.func.isRequired
+  connectDropTarget: React.PropTypes.func.isRequired,
+  registerOffset: React.PropTypes.func.isRequired
 };
 
 const cardSource = {

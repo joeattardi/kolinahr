@@ -295,3 +295,14 @@ footer {
     color: #FFFFFF;
   }
 }
+
+.canvas-container {
+  position: relative;
+
+  canvas {
+    position: absolute;
+    left: -12px;
+    margin-top: 5px;
+  }
+}
+

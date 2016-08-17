@@ -1,12 +1,13 @@
 import { createStore, combineReducers, compose } from 'redux';
 
-import { cardsReducer, titleReducer, titleModeReducer } from './reducers';
+import { cardsReducer, titleReducer, titleModeReducer, cardOffsetsReducer } from './reducers';
 
 export default function configureStore() {
   const reducer = combineReducers({
     cards: cardsReducer,
     titleMode: titleModeReducer,
-    title: titleReducer
+    title: titleReducer,
+    cardOffsets: cardOffsetsReducer
   });
 
   const state = {
@@ -18,13 +19,15 @@ export default function configureStore() {
           id: '1',
           text: 'Hello World',
           color: '#FFFFFF',
-          column: 'inputs'
+          column: 'inputs',
+          links: ['3']
         },
         {
           id: '2',
           text: 'Another Card',
           color: '#B3ECFF',
-          column: 'inputs'
+          column: 'inputs',
+          links: ['4']
         }
       ],
       activities: [
@@ -38,6 +41,12 @@ export default function configureStore() {
           id: '4',
           text: 'Yet Another Card!',
           color: '#75FF98',
+          column: 'activities'
+        },
+        {
+          id: '5',
+          text: 'Derp Derp',
+          color: '#FFFFFF',
           column: 'activities'
         }
       ],

@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Column from './components/Column';
 import Title from './components/Title';
+import Canvas from './components/Canvas';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends React.Component {
@@ -17,9 +18,13 @@ class App extends React.Component {
           <Title />
           <div id="column-container">
             <Column stateKey="inputs" name="Inputs" />
+            <Canvas left="inputs" right="activities" />
             <Column stateKey="activities" name="Activities" />
+            <Canvas left="activities" right="outputs" />
             <Column stateKey="outputs" name="Outputs" />
+            <Canvas left="outputs" right="outcomes" />
             <Column stateKey="outcomes" name="Outcomes" />
+            <Canvas left="outcomes" right="impact" />
             <Column stateKey="impact" name="Impact" />
           </div>
         </div>
