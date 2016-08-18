@@ -5,11 +5,35 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props);
 
+    this.drawLines = this.drawLines.bind(this);
     this.setCanvasElement = this.setCanvasElement.bind(this);
     this.setCanvasContainer = this.setCanvasContainer.bind(this);
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.drawLines);
+  }
+
   componentDidUpdate() {
+    this.drawLines();
+  }
+
+
+  getYCoordinate(offset) {
+    /* eslint-disable no-mixed-operators */
+    return offset.top - this.canvasContainer.offsetTop - this.canvasElement.offsetTop +
+      (offset.height / 2);
+  }
+
+  setCanvasElement(element) {
+    this.canvasElement = element;
+  }
+
+  setCanvasContainer(element) {
+    this.canvasContainer = element;
+  }
+
+  drawLines() {
     const ctx = this.canvasElement.getContext('2d');
     ctx.lineWidth = 3;
     ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
@@ -37,20 +61,6 @@ class Canvas extends React.Component {
         });
       }
     });
-  }
-
-  getYCoordinate(offset) {
-    /* eslint-disable no-mixed-operators */
-    return offset.top - this.canvasContainer.offsetTop - this.canvasElement.offsetTop +
-      (offset.height / 2);
-  }
-
-  setCanvasElement(element) {
-    this.canvasElement = element;
-  }
-
-  setCanvasContainer(element) {
-    this.canvasContainer = element;
   }
 
   render() {

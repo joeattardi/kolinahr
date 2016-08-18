@@ -70,22 +70,23 @@ button {
     }
   }
 
-  .card {
-    font-size: 0.8rem;
-    background-color: #FFFFFF;
-    border: 1px solid #AAAAAA;
-    border-radius: 2px;
-    box-shadow: 0px 4px 13px -6px rgba(0,0,0,0.75);
-    width: 90%;
-    text-align: left;
-    padding: 5px;
-    margin: 5px auto;
-    cursor: pointer;
+}
 
-    &.card-dragging {
-      opacity: 0.25;
-      border-style: dashed;
-    }
+.card {
+  font-size: 0.8rem;
+  background-color: #FFFFFF;
+  border: 1px solid #AAAAAA;
+  border-radius: 2px;
+  box-shadow: 0px 4px 13px -6px rgba(0,0,0,0.75);
+  width: 90%;
+  text-align: left;
+  padding: 5px;
+  margin: 5px auto;
+  cursor: pointer;
+
+  &.card-dragging {
+    opacity: 0.25;
+    border-style: dashed;
   }
 }
 
@@ -206,6 +207,20 @@ button {
   margin: 11% auto;
 }
 
+.link-card-modal {
+  width: 300px;
+  margin: 11% auto;
+
+  .card-list {
+    height: 12em;
+    overflow: scroll;
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
 .edit-card-modal {
   width: 500px;
   margin: 10% auto;
@@ -322,6 +337,7 @@ footer {
     position: absolute;
     left: -12px;
     margin-top: 5px;
+    background: #999999;
   }
 }
 

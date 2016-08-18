@@ -9,34 +9,38 @@ import EditCardModal from './EditCardModal';
 export class Card extends React.Component {
   constructor(props) {
     super(props);
+
+    this.registerOffset = this.registerOffset.bind(this);
     this.setModal = this.setModal.bind(this);
     this.setCardElement = this.setCardElement.bind(this);
     this.showModal = this.showModal.bind(this);
   }
 
   componentDidMount() {
-    this.props.registerOffset(this.props.card.id, {
-      top: this.cardElement.offsetTop,
-      left: this.cardElement.offsetLeft,
-      width: this.cardElement.offsetWidth,
-      height: this.cardElement.offsetHeight
-    });
+    this.registerOffset();
+
+    window.addEventListener('resize', this.registerOffset);
   }
 
   componentDidUpdate() {
-    this.props.registerOffset(this.props.card.id, {
-      top: this.cardElement.offsetTop,
-      left: this.cardElement.offsetLeft,
-      width: this.cardElement.offsetWidth,
-      height: this.cardElement.offsetHeight
-    });
+    this.registerOffset();
   }
+
   setCardElement(element) {
     this.cardElement = element;
   }
 
   setModal(modal) {
     this.modal = modal;
+  }
+
+  registerOffset() {
+    this.props.registerOffset(this.props.card.id, {
+      top: this.cardElement.offsetTop,
+      left: this.cardElement.offsetLeft,
+      width: this.cardElement.offsetWidth,
+      height: this.cardElement.offsetHeight
+    });
   }
 
   showModal() {

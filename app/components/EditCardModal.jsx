@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import LinkCardModal from './LinkCardModal';
 
 const TITLES = {
   inputs: 'Inputs',
@@ -42,6 +43,10 @@ export default class EditCardModal extends React.Component {
     this.setConfirmDeleteModal = this.setConfirmDeleteModal.bind(this);
     this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this);
 
+    this.setLinkCardModal = this.setLinkCardModal.bind(this);
+    this.showLinkCardModal = this.showLinkCardModal.bind(this);
+    this.linkCard = this.linkCard.bind(this);
+
     this.hideModal = this.hideModal.bind(this);
     this.setModal = this.setModal.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -69,6 +74,10 @@ export default class EditCardModal extends React.Component {
     this.colorPickerModal = modal;
   }
 
+  setLinkCardModal(modal) {
+    this.linkCardModal = modal;
+  }
+
   setNewColor(color) {
     this.setState({ color });
   }
@@ -86,6 +95,10 @@ export default class EditCardModal extends React.Component {
     this.colorPickerModal.setState({ show: true });
   }
 
+  showLinkCardModal() {
+    this.linkCardModal.setState({ show: true });
+  }
+
   showModal() {
     this.setState({ show: true });
   }
@@ -98,7 +111,8 @@ export default class EditCardModal extends React.Component {
     this.hideModal();
     this.setState({
       text: this.props.card.text,
-      color: this.props.card.color
+      color: this.props.card.color,
+      links: this.props.card.links
     });
   }
 
@@ -107,16 +121,34 @@ export default class EditCardModal extends React.Component {
     this.props.updateCard({
       ...this.props.card,
       text: this.state.text,
-      color: this.state.color
+      color: this.state.color,
+      links: this.state.links
+    });
+  }
+
+  linkCard(cardId) {
+    this.setState({
+      links: [
+        ...this.state.links,
+        cardId
+      ]
+    });
+  }
+
+  deleteLink(link) {
+    this.setState({
+      links: this.state.links.filter(linkId => linkId !== link)
     });
   }
 
   renderLink(link) {
     const linkedCard = _.find(this.props.cards[this.props.linkKey], card => card.id === link);
     return (
-      <div key={link} className="card-link">
-        <div className="link-name">{linkedCard.text}</div>
-        <button className="delete-button"><i className="fa fa-trash" /></button>
+      <div key={link} className="modal-row card-link">
+        <div className="card" style={{backgroundColor: linkedCard.color}}>{linkedCard.text}</div>
+        <button className="delete-button" onClick={() => this.deleteLink(link)}>
+          <i className="fa fa-trash" />
+        </button>
       </div>
     );
   }
@@ -130,7 +162,6 @@ export default class EditCardModal extends React.Component {
           className="edit-card-modal modal-container"
           overlayClassName="modal-overlay"
           ref={this.setModal}
-          onHide={this.onHide}
         >
           <div className="modal-header">
             <h4>Edit Card</h4>
@@ -155,11 +186,9 @@ export default class EditCardModal extends React.Component {
             </div>
             <h5>Linked {TITLES[linkKey]}</h5>
             <div className="modal-row">
-              <button><i className="fa fa-link" /> Link {SINGULAR[linkKey]}</button>
+              <button onClick={this.showLinkCardModal}><i className="fa fa-link" /> Link {SINGULAR[linkKey]}</button>
             </div>
-            <div className="modal-row">
-              {this.state.links.map(this.renderLink)}
-            </div>
+            {this.state.links.map(this.renderLink)}
           </div>
           <div className="modal-buttons">
             <button onClick={this.cancel} className="cancel-button">Cancel</button>
@@ -176,6 +205,13 @@ export default class EditCardModal extends React.Component {
           color={this.state.color}
           ref={this.setColorPickerModal}
           onColorSet={this.setNewColor}
+        />
+
+        <LinkCardModal
+          ref={this.setLinkCardModal}
+          linkType={SINGULAR[linkKey]}
+          onLinkCard={this.linkCard}
+          cards={this.props.cards[this.props.linkKey].filter(card => this.state.links.indexOf(card.id) === -1)}
         />
       </div>
     );

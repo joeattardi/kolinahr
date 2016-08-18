@@ -11,6 +11,7 @@ export function addCard(column) {
       id: uuid.v4(),
       color: DEFAULT_COLOR,
       text: DEFAULT_TEXT,
+      links: []
     }
   };
 }
