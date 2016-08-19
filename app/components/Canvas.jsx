@@ -8,6 +8,9 @@ class Canvas extends React.Component {
     this.drawLines = this.drawLines.bind(this);
     this.setCanvasElement = this.setCanvasElement.bind(this);
     this.setCanvasContainer = this.setCanvasContainer.bind(this);
+
+    this.calcWidth = this.calcWidth.bind(this);
+    this.calcHeight = this.calcHeight.bind(this);
   }
 
   componentDidMount() {
@@ -17,7 +20,6 @@ class Canvas extends React.Component {
   componentDidUpdate() {
     this.drawLines();
   }
-
 
   getYCoordinate(offset) {
     /* eslint-disable no-mixed-operators */
@@ -31,6 +33,30 @@ class Canvas extends React.Component {
 
   setCanvasContainer(element) {
     this.canvasContainer = element;
+  }
+
+  calcWidth() {
+    const { columnOffsets, left, right } = this.props;
+
+    if (columnOffsets[left] && columnOffsets[right]) {
+      const leftOffset = columnOffsets[left];
+      const rightOffset = columnOffsets[right];
+
+      const width = rightOffset.left - (leftOffset.left + leftOffset.width) + 30;
+      return width;
+    }
+
+    return 30;
+  }
+
+  calcHeight() {
+    const { columnOffsets, left, right } = this.props;
+
+    if (columnOffsets[left] && columnOffsets[right]) {
+      return Math.max(columnOffsets[left].height, columnOffsets[right].height);
+    }
+
+    return 500;
   }
 
   drawLines() {
@@ -66,7 +92,7 @@ class Canvas extends React.Component {
   render() {
     return (
       <div ref={this.setCanvasContainer} className="canvas-container">
-        <canvas ref={this.setCanvasElement} width="25" height="500" />
+        <canvas ref={this.setCanvasElement} width={this.calcWidth()} height={this.calcHeight()} />
       </div>
     );
   }
@@ -76,13 +102,15 @@ Canvas.propTypes = {
   left: React.PropTypes.string.isRequired,
   right: React.PropTypes.string.isRequired,
   cardOffsets: React.PropTypes.object.isRequired,
+  columnOffsets: React.PropTypes.object.isRequired,
   cards: React.PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     cards: state.cards,
-    cardOffsets: state.cardOffsets
+    cardOffsets: state.cardOffsets,
+    columnOffsets: state.columnOffsets
   };
 }
 

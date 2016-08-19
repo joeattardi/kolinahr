@@ -11,10 +11,35 @@ export class Column extends React.Component {
     super(props);
     this.onClickAdd = this.onClickAdd.bind(this);
     this.renderCard = this.renderCard.bind(this);
+
+    this.setColumnElement = this.setColumnElement.bind(this);
+    this.registerOffset = this.registerOffset.bind(this);
+  }
+
+  componentDidMount() {
+    this.registerOffset();
+    window.addEventListener('resize', this.registerOffset);
+  }
+
+  componentDidUpdate() {
+    this.registerOffset();
   }
 
   onClickAdd() {
     this.props.addCard(this.props.stateKey);
+  }
+
+  setColumnElement(element) {
+    this.columnElement = element;
+  }
+
+  registerOffset() {
+    this.props.registerColumnOffset(this.props.stateKey, {
+      top: this.columnElement.offsetTop,
+      left: this.columnElement.offsetLeft,
+      width: this.columnElement.offsetWidth,
+      height: this.columnElement.offsetHeight
+    });
   }
 
   updateCard(card) {
@@ -35,7 +60,7 @@ export class Column extends React.Component {
 
   render() {
     return this.props.connectDropTarget(
-      <div className="column">
+      <div ref={this.setColumnElement} className="column">
         <h3>{this.props.name}</h3>
         {this.props.cards.map(this.renderCard)}
         <button
@@ -58,6 +83,7 @@ Column.propTypes = {
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
+  registerColumnOffset: React.PropTypes.func.isRequired,
   linkKey: React.PropTypes.string
 };
 

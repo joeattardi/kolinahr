@@ -45,6 +45,16 @@ export function moveCard(sourceColumn, sourceId, targetColumn, targetId) {
   };
 }
 
+export function registerColumnOffset(columnId, offset) {
+  return {
+    type: types.REGISTER_COLUMN_OFFSET,
+    payload: {
+      columnId,
+      offset
+    }
+  };
+}
+
 export function registerOffset(cardId, offset) {
   return {
     type: types.REGISTER_OFFSET,

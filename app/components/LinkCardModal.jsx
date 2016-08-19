@@ -60,6 +60,7 @@ export default class LinkCardModal extends React.Component {
 }
 
 LinkCardModal.propTypes = {
-  linkType: React.PropTypes.string.isRequired,
-  cards: React.PropTypes.array.isRequired
+  linkType: React.PropTypes.string,
+  cards: React.PropTypes.array.isRequired,
+  onLinkCard: React.PropTypes.func.isRequired
 };

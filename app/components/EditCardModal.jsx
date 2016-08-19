@@ -82,6 +82,12 @@ export default class EditCardModal extends React.Component {
     this.setState({ color });
   }
 
+  getLinkCards() {
+    const { linkKey, cards } = this.props;
+    return linkKey && cards[linkKey] ?
+      cards[linkKey].filter(card => this.state.links.indexOf(card.id) === -1) : [];
+  }
+
   confirmDelete() {
     this.setState({ show: false });
     this.props.deleteCard(this.props.card.id, this.props.card.column);
@@ -106,6 +112,7 @@ export default class EditCardModal extends React.Component {
   hideModal() {
     this.setState({ show: false });
   }
+
 
   cancel() {
     this.hideModal();
@@ -141,11 +148,32 @@ export default class EditCardModal extends React.Component {
     });
   }
 
+  renderLinksSection() {
+    if (this.props.linkKey) {
+      return (
+        <div>
+          <h5>Linked {TITLES[this.props.linkKey]}</h5>
+          <div className="modal-row">
+            <button onClick={this.showLinkCardModal}>
+              <i className="fa fa-link" /> Link {SINGULAR[this.props.linkKey]}
+            </button>
+          </div>
+          {this.state.links.map(this.renderLink)}
+        </div>
+      );
+    }
+
+    return <div />;
+  }
+
   renderLink(link) {
     const linkedCard = _.find(this.props.cards[this.props.linkKey], card => card.id === link);
     return (
       <div key={link} className="modal-row card-link">
-        <div className="card" style={{backgroundColor: linkedCard.color}}>{linkedCard.text}</div>
+        <div
+          className="card"
+          style={{ backgroundColor: linkedCard.color, cursor: 'default' }}
+        >{linkedCard.text}</div>
         <button className="delete-button" onClick={() => this.deleteLink(link)}>
           <i className="fa fa-trash" />
         </button>
@@ -184,11 +212,7 @@ export default class EditCardModal extends React.Component {
                 </button>
               </div>
             </div>
-            <h5>Linked {TITLES[linkKey]}</h5>
-            <div className="modal-row">
-              <button onClick={this.showLinkCardModal}><i className="fa fa-link" /> Link {SINGULAR[linkKey]}</button>
-            </div>
-            {this.state.links.map(this.renderLink)}
+            {this.renderLinksSection()}
           </div>
           <div className="modal-buttons">
             <button onClick={this.cancel} className="cancel-button">Cancel</button>
@@ -211,7 +235,7 @@ export default class EditCardModal extends React.Component {
           ref={this.setLinkCardModal}
           linkType={SINGULAR[linkKey]}
           onLinkCard={this.linkCard}
-          cards={this.props.cards[this.props.linkKey].filter(card => this.state.links.indexOf(card.id) === -1)}
+          cards={this.getLinkCards()}
         />
       </div>
     );

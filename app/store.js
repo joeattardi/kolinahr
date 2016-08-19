@@ -1,13 +1,14 @@
 import { createStore, combineReducers, compose } from 'redux';
 
-import { cardsReducer, titleReducer, titleModeReducer, cardOffsetsReducer } from './reducers';
+import * as reducers from './reducers';
 
 export default function configureStore() {
   const reducer = combineReducers({
-    cards: cardsReducer,
-    titleMode: titleModeReducer,
-    title: titleReducer,
-    cardOffsets: cardOffsetsReducer
+    cards: reducers.cardsReducer,
+    titleMode: reducers.titleModeReducer,
+    title: reducers.titleReducer,
+    cardOffsets: reducers.cardOffsetsReducer,
+    columnOffsets: reducers.columnOffsetsReducer
   });
 
   const state = {
