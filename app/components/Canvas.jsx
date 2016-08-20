@@ -69,21 +69,23 @@ class Canvas extends React.Component {
     cards[left].forEach(card => {
       if (card.links) {
         card.links.forEach(link => {
-          const srcOffset = cardOffsets[card.id];
-          const destOffset = cardOffsets[link];
+          if (this.props.dragging !== card.id && this.props.dragging !== link) {
+            const srcOffset = cardOffsets[card.id];
+            const destOffset = cardOffsets[link];
 
-          ctx.beginPath();
+            ctx.beginPath();
 
-          const srcX = 0;
-          const srcY = this.getYCoordinate(srcOffset);
-          ctx.moveTo(srcX, srcY);
+            const srcX = 0;
+            const srcY = this.getYCoordinate(srcOffset);
+            ctx.moveTo(srcX, srcY);
 
-          const destX = this.canvasElement.offsetWidth - 1;
-          const destY = this.getYCoordinate(destOffset);
-          ctx.lineTo(destX, destY);
-          ctx.stroke();
+            const destX = this.canvasElement.offsetWidth - 1;
+            const destY = this.getYCoordinate(destOffset);
+            ctx.lineTo(destX, destY);
+            ctx.stroke();
 
-          ctx.closePath();
+            ctx.closePath();
+          }
         });
       }
     });
@@ -110,7 +112,8 @@ function mapStateToProps(state) {
   return {
     cards: state.cards,
     cardOffsets: state.cardOffsets,
-    columnOffsets: state.columnOffsets
+    columnOffsets: state.columnOffsets,
+    dragging: state.dragging
   };
 }
 

@@ -7,3 +7,5 @@ export const DELETE_CARD = 'DELETE_CARD';
 export const MOVE_CARD = 'MOVE_CARD';
 export const REGISTER_OFFSET = 'REGISTER_OFFSET';
 export const REGISTER_COLUMN_OFFSET = 'REGISTER_COLUMN_OFFSET';
+export const START_DRAG = 'START_DRAG';
+export const END_DRAG = 'END_DRAG';

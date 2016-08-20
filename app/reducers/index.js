@@ -129,3 +129,15 @@ export function titleModeReducer(state = VIEW_MODE, action) {
       return state;
   }
 }
+
+export function dragReducer(state = null, action) {
+  switch (action.type) {
+    case types.START_DRAG:
+      console.log(action);
+      return action.payload;
+    case types.END_DRAG:
+      return null;
+    default:
+      return state;
+  }
+}

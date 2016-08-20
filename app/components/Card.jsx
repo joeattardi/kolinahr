@@ -96,11 +96,17 @@ Card.propTypes = {
 const cardSource = {
   beginDrag(props) {
     const { card } = props;
+    props.startDrag(card.id);
     return {
       id: card.id,
       column: card.column,
-      text: card.text
+      text: card.text,
+      endDrag: props.endDrag
     };
+  },
+
+  endDrag(props) {
+    props.endDrag();
   },
 
   isDragging(props, monitor) {
@@ -117,7 +123,7 @@ const cardTarget = {
       targetProps.moveCard(source.column, source.id, card.column, card.id);
       source.column = card.column;
     }
-  },
+  }
 };
 
 function dragCollect(connect, monitor) {

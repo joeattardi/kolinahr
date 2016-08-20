@@ -8,7 +8,8 @@ export default function configureStore() {
     titleMode: reducers.titleModeReducer,
     title: reducers.titleReducer,
     cardOffsets: reducers.cardOffsetsReducer,
-    columnOffsets: reducers.columnOffsetsReducer
+    columnOffsets: reducers.columnOffsetsReducer,
+    dragging: reducers.dragReducer
   });
 
   const state = {

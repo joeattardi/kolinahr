@@ -3,6 +3,19 @@ import uuid from 'uuid';
 import { DEFAULT_COLOR, DEFAULT_TEXT } from '../constants';
 import * as types from './types';
 
+export function startDrag(cardId) {
+  return {
+    type: types.START_DRAG,
+    payload: cardId
+  };
+}
+
+export function endDrag() {
+  return {
+    type: types.END_DRAG
+  };
+}
+
 export function addCard(column) {
   return {
     type: types.ADD_CARD,
