@@ -28,16 +28,17 @@ describe('Reducers', () => {
 
     it('deletes a card', () => {
       const startState = {
-        inputs: [{ id: 'abc', text: 'Delete Me', column: 'inputs', color: 'red' },
-                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'blue' }],
-        activities: [],
+        inputs: [{ id: 'abc', text: 'Some Card', column: 'inputs', color: 'red', links: ['ghi'] },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'blue', links: [] }],
+        activities: [{ id: 'ghi', text: 'Delete Me', column: 'activities', color: 'green', links: [] }],
         outputs: [],
         outcomes: [],
         impact: []
       };
 
       const expectedState = {
-        inputs: [{ id: 'def', text: 'Other Card', column: 'inputs', color: 'blue' }],
+        inputs: [{ id: 'abc', text: 'Some Card', column: 'inputs', color: 'red', links: [] },
+                 { id: 'def', text: 'Other Card', column: 'inputs', color: 'blue', links: [] }],
         activities: [],
         outputs: [],
         outcomes: [],
@@ -47,8 +48,8 @@ describe('Reducers', () => {
       const action = {
         type: actionTypes.DELETE_CARD,
         payload: {
-          id: 'abc',
-          column: 'inputs',
+          id: 'ghi',
+          column: 'activities',
         }
       };
 

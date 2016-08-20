@@ -56,6 +56,14 @@ export default class EditCardModal extends React.Component {
     this.setColorPickerModal = this.setColorPickerModal.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      text: nextProps.card.text,
+      color: nextProps.card.color,
+      links: nextProps.card.links
+    });
+  }
+
   onTextChange(event) {
     this.setState({
       text: event.target.value
@@ -147,6 +155,7 @@ export default class EditCardModal extends React.Component {
       links: this.state.links.filter(linkId => linkId !== link)
     });
   }
+
 
   renderLinksSection() {
     if (this.props.linkKey) {

@@ -35,6 +35,24 @@ function moveCard(state, sourceColumnId, sourceId, targetColumnId, targetId) {
   };
 }
 
+function deleteCard(state, column, cardId) {
+  const nextState = {
+    ...state,
+    ...{ [column]: state[column].filter(card =>
+      card.id !== cardId
+    ) }
+  };
+
+  return _.mapValues(nextState, cards => {
+    return cards.map(card => {
+      return {
+        ...card,
+        links: card.links.filter(link => link !== cardId)
+      };
+    });
+  });
+}
+
 export function cardsReducer(state = defaultCardsState, action) {
   switch (action.type) {
     case types.ADD_CARD:
@@ -43,12 +61,7 @@ export function cardsReducer(state = defaultCardsState, action) {
         ...{ [action.payload.column]: [...state[action.payload.column], action.payload] }
       };
     case types.DELETE_CARD:
-      return {
-        ...state,
-        ...{ [action.payload.column]: state[action.payload.column].filter(card =>
-          card.id !== action.payload.id
-        ) }
-      };
+      return deleteCard(state, action.payload.column, action.payload.id);
     case types.UPDATE_CARD:
       return {
         ...state,
