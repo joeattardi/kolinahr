@@ -23,7 +23,7 @@ export class Card extends React.Component {
   }
 
   componentDidUpdate() {
-    this.registerOffset();
+    _.defer(this.registerOffset);
   }
 
   setCardElement(element) {
@@ -100,13 +100,13 @@ const cardSource = {
     return {
       id: card.id,
       column: card.column,
-      text: card.text,
-      endDrag: props.endDrag
+      text: card.text
     };
   },
 
-  endDrag(props) {
-    props.endDrag();
+  endDrag(props, monitor, card) {
+    card.props.endDrag();
+    card.registerOffset();
   },
 
   isDragging(props, monitor) {
