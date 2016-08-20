@@ -31,3 +31,31 @@ $fade-duration: 0.5s;
 .yellow-fade {
   animation: yellow-fade 1s;
 }
+
+@keyframes scale-out {
+  from {
+    transform: scale3d(1.0, 1.0, 1.0);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale3d(0.6, 0.6, 1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale3d(0.6, 0.6, 1.0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale3d(1.0, 1.0, 1.0);
+    opacity: 1;
+  }
+}
+
+.modal-container {
+  animation: scale-in ease-in .25s;
+}

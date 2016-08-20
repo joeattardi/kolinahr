@@ -83,10 +83,15 @@ button {
   padding: 5px;
   margin: 5px auto;
   cursor: pointer;
+  transition: all 0.05s;
 
   &.card-dragging {
     opacity: 0.25;
     border-style: dashed;
+  }
+
+  &:hover {
+    transform: scale(1.025);
   }
 }
 
@@ -214,10 +219,6 @@ button {
   .card-list {
     height: 12em;
     overflow: scroll;
-
-    .card:hover {
-      transform: scale(1.05);
-    }
   }
 }
 
