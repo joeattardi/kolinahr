@@ -95,6 +95,8 @@ export function columnOffsetsReducer(state = {}, action) {
 
 export function cardOffsetsReducer(state = {}, action) {
   switch (action.type) {
+    case types.DELETE_CARD:
+      return _.pickBy(state, (value, key) => key !== action.payload.id);
     case types.REGISTER_OFFSET:
       return {
         ...state,
