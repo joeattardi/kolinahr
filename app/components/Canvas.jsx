@@ -105,7 +105,8 @@ Canvas.propTypes = {
   right: React.PropTypes.string.isRequired,
   cardOffsets: React.PropTypes.object.isRequired,
   columnOffsets: React.PropTypes.object.isRequired,
-  cards: React.PropTypes.object.isRequired
+  cards: React.PropTypes.object.isRequired,
+  dragging: React.PropTypes.string
 };
 
 function mapStateToProps(state) {

@@ -1,14 +1,16 @@
 import { createStore, combineReducers, compose } from 'redux';
 
+import cardsReducer from './reducers/cardsReducer';
+import { columnOffsetsReducer, cardOffsetsReducer } from './reducers/offsetReducers';
 import * as reducers from './reducers';
 
 export default function configureStore() {
   const reducer = combineReducers({
-    cards: reducers.cardsReducer,
+    cards: cardsReducer,
     titleMode: reducers.titleModeReducer,
     title: reducers.titleReducer,
-    cardOffsets: reducers.cardOffsetsReducer,
-    columnOffsets: reducers.columnOffsetsReducer,
+    cardOffsets: cardOffsetsReducer,
+    columnOffsets: columnOffsetsReducer,
     dragging: reducers.dragReducer
   });
 
