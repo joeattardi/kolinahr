@@ -113,7 +113,7 @@ const cardTarget = {
     const source = monitor.getItem();
     const { card } = targetProps;
 
-    if (source.id !== card.id) {
+    if (source.id !== card.id && source.column === card.column) {
       targetProps.moveCard(source.column, source.id, card.column, card.id);
       source.column = card.column;
     }
