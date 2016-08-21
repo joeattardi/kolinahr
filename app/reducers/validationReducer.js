@@ -1,18 +1,5 @@
 import { VALIDATE_MODEL } from '../actions/types';
-
-const INCOMING_LINK_NAMES = {
-  activities: 'Input',
-  outputs: 'Activity',
-  outcomes: 'Output',
-  impact: 'Outcome'
-};
-
-const OUTGOING_LINK_NAMES = {
-  inputs: 'Activity',
-  activities: 'Output',
-  outputs: 'Outcome',
-  outcomes: 'Impact'
-};
+import { SINGULAR, INCOMING_LINK_NAMES, OUTGOING_LINK_NAMES } from '../constants';
 
 function findLinksToCard(cardId, allCards) {
   const links = [];
@@ -34,11 +21,14 @@ function validate(allCards) {
   Object.keys(allCards).forEach(columnId => {
     allCards[columnId].forEach(card => {
       if (columnId !== 'impact' && card.links.length === 0) {
-        validationErrors[card.id] = `This must link to at least one ${OUTGOING_LINK_NAMES[columnId]}.`; 
+        validationErrors[card.id] =
+          `This ${SINGULAR[columnId]} must link to at least one ${OUTGOING_LINK_NAMES[columnId]}.`;
       }
 
       if (columnId !== 'inputs' && findLinksToCard(card.id, allCards).length === 0) {
-        validationErrors[card.id] = `This must be linked to by at least one ${INCOMING_LINK_NAMES[columnId]}.`;
+        /* eslint-disable max-len */
+        validationErrors[card.id] =
+          `This ${SINGULAR[columnId]} must be linked to by at least one ${INCOMING_LINK_NAMES[columnId]}.`;
       }
     });
   });

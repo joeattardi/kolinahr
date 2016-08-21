@@ -9,3 +9,33 @@ export const COLOR_CHOICES = [
 export const DEFAULT_COLOR = '#FFFFFF';
 
 export const DEFAULT_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+export const INCOMING_LINK_NAMES = {
+  activities: 'Input',
+  outputs: 'Activity',
+  outcomes: 'Output',
+  impact: 'Outcome'
+};
+
+export const OUTGOING_LINK_NAMES = {
+  inputs: 'Activity',
+  activities: 'Output',
+  outputs: 'Outcome',
+  outcomes: 'Impact'
+};
+
+export const TITLES = {
+  inputs: 'Inputs',
+  activities: 'Activities',
+  outputs: 'Outputs',
+  outcomes: 'Outcomes',
+  impact: 'Impact'
+};
+
+export const SINGULAR = {
+  inputs: 'Input',
+  activities: 'Activity',
+  outputs: 'Output',
+  outcomes: 'Outcome',
+  impact: 'Impact'
+};

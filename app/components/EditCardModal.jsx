@@ -5,22 +5,7 @@ import _ from 'lodash';
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LinkCardModal from './LinkCardModal';
-
-const TITLES = {
-  inputs: 'Inputs',
-  activities: 'Activities',
-  outputs: 'Outputs',
-  outcomes: 'Outcomes',
-  impact: 'Impact'
-};
-
-const SINGULAR = {
-  inputs: 'Input',
-  activities: 'Activity',
-  outputs: 'Output',
-  outcomes: 'Outcome',
-  impact: 'Impact'
-};
+import { TITLES, SINGULAR } from '../constants';
 
 export default class EditCardModal extends React.Component {
   constructor(props) {
