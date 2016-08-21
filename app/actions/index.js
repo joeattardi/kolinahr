@@ -17,32 +17,53 @@ export function endDrag() {
 }
 
 export function addCard(column) {
-  return {
-    type: types.ADD_CARD,
-    payload: {
-      column,
-      id: uuid.v4(),
-      color: DEFAULT_COLOR,
-      text: DEFAULT_TEXT,
-      links: []
-    }
+  return function (dispatch, getState) {
+    dispatch({
+      type: types.ADD_CARD,
+      payload: {
+        column,
+        id: uuid.v4(),
+        color: DEFAULT_COLOR,
+        text: DEFAULT_TEXT,
+        links: []
+      }
+    });
+
+    dispatch({
+      type: types.VALIDATE_MODEL,
+      payload: getState().cards
+    });
   };
 }
 
 export function updateCard(card) {
-  return {
-    type: types.UPDATE_CARD,
-    payload: card
+  return function (dispatch, getState) {
+    dispatch({
+      type: types.UPDATE_CARD,
+      payload: card
+    });
+
+    dispatch({
+      type: types.VALIDATE_MODEL,
+      payload: getState().cards
+    });
   };
 }
 
 export function deleteCard(id, column) {
-  return {
-    type: types.DELETE_CARD,
-    payload: {
-      id,
-      column
-    }
+  return function (dispatch, getState) {
+    dispatch({
+      type: types.DELETE_CARD,
+      payload: {
+        id,
+        column
+      }
+    });
+
+    dispatch({
+      type: types.VALIDATE_MODEL,
+      payload: getState().cards
+    });
   };
 }
 

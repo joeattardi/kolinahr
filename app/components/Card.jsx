@@ -48,13 +48,18 @@ export class Card extends React.Component {
   }
 
   renderCard() {
-    const className = this.props.isDragging ? 'card card-dragging' : 'card';
+    let className = this.props.isDragging ? 'card card-dragging' : 'card';
+
+    if (this.props.validationErrors[this.props.card.id]) {
+      className += ' error';
+    }
 
     return this.props.connectDragSource(
       <div
         ref={this.setCardElement}
         onClick={this.showModal}
         className={className}
+        title={this.props.validationErrors[this.props.card.id]}
         style={{
           backgroundColor: this.props.card.color }}
       >
@@ -141,7 +146,8 @@ function dropCollect(connect) {
 
 function mapStateToProps(state) {
   return {
-    cards: state.cards
+    cards: state.cards,
+    validationErrors: state.validationErrors
   };
 }
 

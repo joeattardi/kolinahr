@@ -1,7 +1,10 @@
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
+import { VALIDATE_MODEL } from './actions/types';
 import cardsReducer from './reducers/cardsReducer';
 import { columnOffsetsReducer, cardOffsetsReducer } from './reducers/offsetReducers';
+import validationReducer from './reducers/validationReducer';
 import * as reducers from './reducers';
 
 export default function configureStore() {
@@ -11,7 +14,8 @@ export default function configureStore() {
     title: reducers.titleReducer,
     cardOffsets: cardOffsetsReducer,
     columnOffsets: columnOffsetsReducer,
-    dragging: reducers.dragReducer
+    dragging: reducers.dragReducer,
+    validationErrors: validationReducer
   });
 
   const state = {
@@ -54,7 +58,7 @@ export default function configureStore() {
           text: 'Derp Derp',
           color: '#FFFFFF',
           column: 'activities',
-          links: []
+          links: [],
         }
       ],
       outputs: [],
@@ -63,7 +67,12 @@ export default function configureStore() {
     }
   };
 
-  return createStore(reducer, state, compose(
+  const store = createStore(reducer, state, compose(
+    applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   ));
+
+  store.dispatch({ type: VALIDATE_MODEL, payload: state.cards });
+
+  return store;
 }

@@ -85,6 +85,10 @@ button {
   cursor: pointer;
   transition: all 0.05s;
 
+  &.error {
+    border: 2px solid red;
+  }
+
   &.card-dragging {
     opacity: 0.25;
     border-style: dashed;
