@@ -1,5 +1,19 @@
 import { VALIDATE_MODEL } from '../actions/types';
 
+const INCOMING_LINK_NAMES = {
+  activities: 'Input',
+  outputs: 'Activity',
+  outcomes: 'Output',
+  impact: 'Outcome'
+};
+
+const OUTGOING_LINK_NAMES = {
+  inputs: 'Activity',
+  activities: 'Output',
+  outputs: 'Outcome',
+  outcomes: 'Impact'
+};
+
 function findLinksToCard(cardId, allCards) {
   const links = [];
 
@@ -17,15 +31,14 @@ function findLinksToCard(cardId, allCards) {
 function validate(allCards) {
   const validationErrors = {};
 
-  // Find cards with no outgoing links
   Object.keys(allCards).forEach(columnId => {
     allCards[columnId].forEach(card => {
       if (columnId !== 'impact' && card.links.length === 0) {
-        validationErrors[card.id] = 'NO_OUTGOING_LINKS';
+        validationErrors[card.id] = `This must link to at least one ${OUTGOING_LINK_NAMES[columnId]}.`; 
       }
 
       if (columnId !== 'inputs' && findLinksToCard(card.id, allCards).length === 0) {
-        validationErrors[card.id] = 'NO_INCOMING_LINKS';
+        validationErrors[card.id] = `This must be linked to by at least one ${INCOMING_LINK_NAMES[columnId]}.`;
       }
     });
   });
