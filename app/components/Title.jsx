@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { EDIT_MODE, VIEW_MODE } from '../constants';
 import * as actions from '../actions';
 
+import Tooltip from './Tooltip';
+
 class Title extends React.Component {
   constructor(props) {
     super(props);
@@ -62,12 +64,14 @@ class Title extends React.Component {
   renderStaticTitle() {
     const cls = this.state.updated ? 'yellow-fade' : '';
     return (
-      <div className={cls} onClick={this.editTitle} id="model-title" title="Click to edit title">
-        <h2>{this.props.title}</h2>
-        <span className="edit-hint">
-          <i className="fa fa-pencil-square-o" />
-        </span>
-      </div>
+      <Tooltip text="Click to edit title">
+        <div className={cls} onClick={this.editTitle} id="model-title">
+          <h2>{this.props.title}</h2>
+          <span className="edit-hint">
+            <i className="fa fa-pencil-square-o" />
+          </span>
+        </div>
+      </Tooltip>
     );
   }
 

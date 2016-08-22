@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import * as actions from '../actions';
 import EditCardModal from './EditCardModal';
+import Tooltip from './Tooltip';
 
 export class Card extends React.Component {
   constructor(props) {
@@ -59,7 +60,6 @@ export class Card extends React.Component {
         ref={this.setCardElement}
         onClick={this.showModal}
         className={className}
-        title={this.props.validationErrors[this.props.card.id]}
         style={{
           backgroundColor: this.props.card.color }}
       >
@@ -69,10 +69,19 @@ export class Card extends React.Component {
     );
   }
 
+  renderCardWithTooltip(validationError) {
+    return (
+      <Tooltip text={validationError} className="error">
+        {this.renderCard()}
+      </Tooltip>
+    );
+  }
+
   render() {
+    const validationError = this.props.validationErrors[this.props.card.id];
     return this.props.connectDropTarget(
       <div className="card-wrapper">
-        {this.renderCard()}
+        {validationError ? this.renderCardWithTooltip(validationError) : this.renderCard()}
         <EditCardModal
           linkKey={this.props.linkKey}
           cards={this.props.cards}
@@ -95,7 +104,8 @@ Card.propTypes = {
   connectDropTarget: React.PropTypes.func.isRequired,
   registerOffset: React.PropTypes.func.isRequired,
   isDragging: React.PropTypes.bool.isRequired,
-  linkKey: React.PropTypes.string
+  linkKey: React.PropTypes.string,
+  validationErrors: React.PropTypes.object.isRequired
 };
 
 const cardSource = {

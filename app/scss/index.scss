@@ -8,6 +8,7 @@ $delete-button-color: #C9302C;
 $add-button-color: #FFFFFF;
 $button-color: #CED4E0;
 $button-transition-duration: 0.25s;
+$error-color: #C9302C;
 
 body {
   font-family: Roboto, sans-serif;
@@ -51,25 +52,30 @@ button {
     border-bottom: 4px solid #02BEC7;
   }
 
-  .add-button {
-    background-color: $add-button-color; 
-    border: 2px solid darken($add-button-color, 10%);
-    border-radius: 50%;
-    color: darken($add-button-color, 10%);
-    width: 2rem;
-    height: 2rem;
-    margin: 1rem;
-    font-size: 1rem;
-    transition: background-color $button-transition-duration;
-    box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
-    padding: 0.25em;
+  .add-button-container {
 
-    &:hover {
-      color: #000000;
-      transition: color $button-transition-duration;
+    .tooltip-container {
+      display: inline-block;
+    }
+
+    .add-button {
+      background-color: $add-button-color; 
+      border: 2px solid darken($add-button-color, 10%);
+      border-radius: 50%;
+      color: darken($add-button-color, 10%);
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+      transition: background-color $button-transition-duration;
+      box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
+      padding: 0.25em;
+
+      &:hover {
+        color: #000000;
+        transition: color $button-transition-duration;
+      }
     }
   }
-
 }
 
 .card {
@@ -86,7 +92,7 @@ button {
   transition: all 0.05s;
 
   &.error {
-    border: 2px solid red;
+    border: 2px solid $error-color;
   }
 
   &.card-dragging {
@@ -345,3 +351,33 @@ footer {
   }
 }
 
+.tooltip {
+  position: absolute;
+  font-size: 0.8em;
+
+  &.error {
+    .tooltip-body {
+      background: $error-color;
+    }
+
+    .arrow {
+      border-bottom-color: $error-color;
+    }
+  }
+
+  .tooltip-body {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 5px;
+  }
+
+  .arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #000000;
+    width: 0;
+    height: 0;
+    margin: auto;
+  }
+
+}

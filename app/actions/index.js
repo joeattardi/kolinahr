@@ -17,7 +17,7 @@ export function endDrag() {
 }
 
 export function addCard(column) {
-  return function (dispatch, getState) {
+  return (dispatch, getState) => {
     dispatch({
       type: types.ADD_CARD,
       payload: {
@@ -37,7 +37,7 @@ export function addCard(column) {
 }
 
 export function updateCard(card) {
-  return function (dispatch, getState) {
+  return (dispatch, getState) => {
     dispatch({
       type: types.UPDATE_CARD,
       payload: card
@@ -51,7 +51,7 @@ export function updateCard(card) {
 }
 
 export function deleteCard(id, column) {
-  return function (dispatch, getState) {
+  return (dispatch, getState) => {
     dispatch({
       type: types.DELETE_CARD,
       payload: {

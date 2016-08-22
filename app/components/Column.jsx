@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 import Card from './Card';
+import Tooltip from './Tooltip';
 
 export class Column extends React.Component {
   constructor(props) {
@@ -61,13 +62,16 @@ export class Column extends React.Component {
       <div ref={this.setColumnElement} className="column">
         <h3>{this.props.name}</h3>
         {this.props.cards.map(this.renderCard)}
-        <button
-          title="Add a new card"
-          onClick={this.onClickAdd}
-          className="add-button"
-        >
-          <i className="fa fa-plus" />
-        </button>
+        <div className="add-button-container">
+          <Tooltip text="Add a new card">
+            <button
+              onClick={this.onClickAdd}
+              className="add-button"
+            >
+              <i className="fa fa-plus" />
+            </button>
+          </Tooltip>
+        </div>
       </div>
     );
   }
