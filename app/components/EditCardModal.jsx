@@ -277,7 +277,7 @@ export default class EditCardModal extends React.Component {
               <div className="modal-column edit-column">
                 <textarea
                   ref={this.setTextArea}
-                  rows="4"
+                  rows="10"
                   cols="35"
                   value={this.state.text}
                   onChange={this.onTextChange}
