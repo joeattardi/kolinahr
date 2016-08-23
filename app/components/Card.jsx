@@ -13,6 +13,7 @@ export class Card extends React.Component {
     super(props);
 
     this.registerOffset = this.registerOffset.bind(this);
+    this.setTooltip = this.setTooltip.bind(this);
     this.setModal = this.setModal.bind(this);
     this.setCardElement = this.setCardElement.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -34,6 +35,10 @@ export class Card extends React.Component {
 
   setModal(modal) {
     this.modal = modal;
+  }
+
+  setTooltip(tooltip) {
+    this.tooltip = tooltip;
   }
 
   registerOffset() {
@@ -75,7 +80,7 @@ export class Card extends React.Component {
 
   renderCardWithTooltip(validationError) {
     return (
-      <Tooltip text={validationError} className="error">
+      <Tooltip ref={this.setTooltip} text={validationError} className="error">
         {this.renderCard()}
       </Tooltip>
     );
@@ -116,8 +121,9 @@ Card.propTypes = {
 };
 
 const cardSource = {
-  beginDrag(props) {
+  beginDrag(props, monitor, cardComponent) {
     const { card } = props;
+    cardComponent.tooltip.setState({ show: false });
     props.startDrag(card.id);
     return {
       id: card.id,
