@@ -1,16 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { ADD_MODE } from '../constants';
 import * as actions from '../actions';
 import Card from './Card';
 import Tooltip from './Tooltip';
+import EditCardModal from './EditCardModal';
 
 export class Column extends React.Component {
   constructor(props) {
     super(props);
+
     this.onClickAdd = this.onClickAdd.bind(this);
     this.renderCard = this.renderCard.bind(this);
 
+    this.setModal = this.setModal.bind(this);
     this.setColumnElement = this.setColumnElement.bind(this);
     this.registerOffset = this.registerOffset.bind(this);
   }
@@ -25,11 +29,15 @@ export class Column extends React.Component {
   }
 
   onClickAdd() {
-    this.props.addCard(this.props.stateKey);
+    this.modal.showModal();
   }
 
   setColumnElement(element) {
     this.columnElement = element;
+  }
+
+  setModal(element) {
+    this.modal = element;
   }
 
   registerOffset() {
@@ -61,7 +69,7 @@ export class Column extends React.Component {
     return (
       <div ref={this.setColumnElement} className="column">
         <h3>{this.props.name}</h3>
-        {this.props.cards.map(this.renderCard)}
+        {this.props.cards[this.props.stateKey].map(this.renderCard)}
         <div className="add-button-container">
           <Tooltip text="Add a new card">
             <button
@@ -72,6 +80,14 @@ export class Column extends React.Component {
             </button>
           </Tooltip>
         </div>
+        <EditCardModal
+          mode={ADD_MODE}
+          linkKey={this.props.linkKey}
+          stateKey={this.props.stateKey}
+          cards={this.props.cards}
+          addCard={this.props.addCard}
+          ref={this.setModal}
+        />
       </div>
     );
   }
@@ -81,16 +97,16 @@ Column.propTypes = {
   name: React.PropTypes.string.isRequired,
   stateKey: React.PropTypes.string.isRequired,
   addCard: React.PropTypes.func.isRequired,
-  cards: React.PropTypes.array.isRequired,
+  cards: React.PropTypes.object.isRequired,
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   registerColumnOffset: React.PropTypes.func.isRequired,
   linkKey: React.PropTypes.string
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    cards: state.cards[ownProps.stateKey]
+    cards: state.cards
   };
 }
 

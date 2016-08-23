@@ -1,6 +1,5 @@
 import uuid from 'uuid';
 
-import { DEFAULT_COLOR, DEFAULT_TEXT } from '../constants';
 import * as types from './types';
 
 export function startDrag(cardId) {
@@ -16,16 +15,16 @@ export function endDrag() {
   };
 }
 
-export function addCard(column) {
+export function addCard(column, card) {
   return (dispatch, getState) => {
     dispatch({
       type: types.ADD_CARD,
       payload: {
         column,
         id: uuid.v4(),
-        color: DEFAULT_COLOR,
-        text: DEFAULT_TEXT,
-        links: []
+        color: card.color,
+        text: card.text,
+        links: card.links
       }
     });
 

@@ -5,20 +5,31 @@ import _ from 'lodash';
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LinkCardModal from './LinkCardModal';
-import { TITLES, SINGULAR } from '../constants';
+import { ADD_MODE, EDIT_MODE, DEFAULT_COLOR, TITLES, SINGULAR } from '../constants';
 
 export default class EditCardModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      text: props.card.text,
-      color: props.card.color,
-      links: props.card.links,
-      show: false,
-      showConfirm: false,
-      showColorPicker: false
-    };
+    if (props.mode === EDIT_MODE) {
+      this.state = {
+        text: props.card.text,
+        color: props.card.color,
+        links: props.card.links,
+        show: false,
+        showConfirm: false,
+        showColorPicker: false
+      };
+    } else {
+      this.state = {
+        text: '',
+        color: DEFAULT_COLOR,
+        links: [],
+        show: false,
+        showConfirm: false,
+        showColorPicker: false
+      };
+    }
 
     this.renderLink = this.renderLink.bind(this);
 
@@ -42,11 +53,19 @@ export default class EditCardModal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      text: nextProps.card.text,
-      color: nextProps.card.color,
-      links: nextProps.card.links
-    });
+    if (nextProps.card) {
+      this.setState({
+        text: nextProps.card.text,
+        color: nextProps.card.color,
+        links: nextProps.card.links
+      });
+    } else {
+      this.setState({
+        text: '',
+        color: DEFAULT_COLOR,
+        links: []
+      });
+    }
   }
 
   onTextChange(event) {
@@ -106,24 +125,40 @@ export default class EditCardModal extends React.Component {
     this.setState({ show: false });
   }
 
-
   cancel() {
     this.hideModal();
-    this.setState({
-      text: this.props.card.text,
-      color: this.props.card.color,
-      links: this.props.card.links
-    });
+
+    if (this.props.mode === EDIT_MODE) {
+      this.setState({
+        text: this.props.card.text,
+        color: this.props.card.color,
+        links: this.props.card.links
+      });
+    } else {
+      this.setState({
+        text: '',
+        color: DEFAULT_COLOR,
+        links: []
+      });
+    }
   }
 
   saveChanges() {
     this.hideModal();
-    this.props.updateCard({
-      ...this.props.card,
-      text: this.state.text,
-      color: this.state.color,
-      links: this.state.links
-    });
+    if (this.props.mode === EDIT_MODE) {
+      this.props.updateCard({
+        ...this.props.card,
+        text: this.state.text,
+        color: this.state.color,
+        links: this.state.links
+      });
+    } else {
+      this.props.addCard(this.props.stateKey, {
+        text: this.state.text,
+        color: this.state.color,
+        links: this.state.links
+      });
+    }
   }
 
   linkCard(cardId) {
@@ -175,6 +210,20 @@ export default class EditCardModal extends React.Component {
     );
   }
 
+  renderDelete() {
+    if (this.props.mode === EDIT_MODE) {
+      return (
+        <button
+          onClick={this.showConfirmDeleteModal}
+          className="delete-button"
+        ><i className="fa fa-trash-o" /> Delete
+        </button>
+      );
+    }
+
+    return <div />;
+  }
+
   render() {
     const { linkKey } = this.props;
     return (
@@ -186,7 +235,7 @@ export default class EditCardModal extends React.Component {
           ref={this.setModal}
         >
           <div className="modal-header">
-            <h4>Edit Card</h4>
+            <h4>{this.props.mode === ADD_MODE ? 'Add Card' : 'Edit Card'}</h4>
           </div>
           <div className="modal-body">
             <h5>Card Details</h5>
@@ -195,11 +244,7 @@ export default class EditCardModal extends React.Component {
                 <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
               </div>
               <div className="modal-column">
-                <button
-                  onClick={this.showConfirmDeleteModal}
-                  className="delete-button"
-                ><i className="fa fa-trash-o" /> Delete
-                </button>
+                {this.renderDelete()}
                 <button
                   onClick={this.showColorPicker}
                   style={{ backgroundColor: this.state.color }}
@@ -239,9 +284,12 @@ export default class EditCardModal extends React.Component {
 }
 
 EditCardModal.propTypes = {
-  card: React.PropTypes.object.isRequired,
-  updateCard: React.PropTypes.func.isRequired,
-  deleteCard: React.PropTypes.func.isRequired,
+  mode: React.PropTypes.string.isRequired,
+  card: React.PropTypes.object,
+  addCard: React.PropTypes.func,
+  updateCard: React.PropTypes.func,
+  deleteCard: React.PropTypes.func,
+  stateKey: React.PropTypes.string,
   linkKey: React.PropTypes.string,
   cards: React.PropTypes.object.isRequired
 };

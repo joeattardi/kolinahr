@@ -81,16 +81,18 @@ class Canvas extends React.Component {
             const srcOffset = cardOffsets[card.id];
             const destOffset = cardOffsets[link];
 
-            const srcX = 0;
-            const srcY = this.getYCoordinate(srcOffset);
-            ctx.moveTo(srcX, srcY);
+            if (srcOffset && destOffset) {
+              const srcX = 0;
+              const srcY = this.getYCoordinate(srcOffset);
+              ctx.moveTo(srcX, srcY);
 
-            const destX = this.canvasElement.offsetWidth - 1;
-            const destY = this.getYCoordinate(destOffset);
+              const destX = this.canvasElement.offsetWidth - 1;
+              const destY = this.getYCoordinate(destOffset);
 
-            this.drawArrow(ctx, srcX, srcY, destX, destY);
+              this.drawArrow(ctx, srcX, srcY, destX, destY);
 
-            ctx.closePath();
+              ctx.closePath();
+            }
           }
         });
       }

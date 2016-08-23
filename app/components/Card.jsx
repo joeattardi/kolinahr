@@ -3,6 +3,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { connect as reduxConnect } from 'react-redux';
 import _ from 'lodash';
 
+import { EDIT_MODE } from '../constants';
 import * as actions from '../actions';
 import EditCardModal from './EditCardModal';
 import Tooltip from './Tooltip';
@@ -84,6 +85,7 @@ export class Card extends React.Component {
       <div className="card-wrapper">
         {validationError ? this.renderCardWithTooltip(validationError) : this.renderCard()}
         <EditCardModal
+          mode={EDIT_MODE}
           linkKey={this.props.linkKey}
           cards={this.props.cards}
           updateCard={this.props.updateCard}
