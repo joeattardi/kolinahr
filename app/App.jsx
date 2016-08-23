@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Column from './components/Column';
 import Title from './components/Title';
 import Canvas from './components/Canvas';
+import ErrorNotification from './components/ErrorNotification';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends React.Component {
@@ -16,6 +17,7 @@ class App extends React.Component {
         <Header />
         <div className="main-content">
           <Title />
+          <ErrorNotification />
           <div id="column-container">
             <Column stateKey="inputs" name="Inputs" linkKey="activities" />
             <Canvas left="inputs" right="activities" />

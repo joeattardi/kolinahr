@@ -65,7 +65,8 @@ export class Card extends React.Component {
         style={{
           backgroundColor: this.props.card.color }}
       >
-        {this.props.validationErrors[this.props.card.id] ? <i className="fa fa-exclamation-triangle error" /> : ''}
+        {this.props.validationErrors[this.props.card.id] ?
+          <i className="fa fa-exclamation-triangle error" /> : ''}
         {this.props.card.text}
         {this.props.isDragging}
       </div>
