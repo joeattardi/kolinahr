@@ -39,6 +39,11 @@ export default class Tooltip extends React.Component {
 
 
   render() {
+    let className = 'tooltip';
+    if (this.props.className) {
+      className += ` ${this.props.className}`;
+    }
+
     return (
       <div className="tooltip-container">
         <div
@@ -54,7 +59,7 @@ export default class Tooltip extends React.Component {
             top: this.state.top,
             left: this.state.left
           }}
-          className={`tooltip ${this.props.className}`}
+          className={className}
         >
           <div className="arrow" />
           <div ref={this.setTooltipBody} className="tooltip-body">{this.props.text}</div>
@@ -66,5 +71,6 @@ export default class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
   text: React.PropTypes.string.isRequired,
+  className: React.PropTypes.string,
   children: React.PropTypes.object.isRequired
 };

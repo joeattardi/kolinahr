@@ -90,6 +90,8 @@ button {
   margin: 5px auto;
   cursor: pointer;
   transition: all 0.05s;
+  position: relative;
+  z-index: 100;
 
   &.error {
     border: 2px solid $error-color;
@@ -116,6 +118,7 @@ button {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
 }
 
 
@@ -354,6 +357,7 @@ footer {
 .tooltip {
   position: absolute;
   font-size: 0.8em;
+  z-index: 200;
 
   &.error {
     .tooltip-body {

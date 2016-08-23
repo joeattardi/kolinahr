@@ -88,14 +88,12 @@ class Title extends React.Component {
         />
         <button
           id="edit-title-save"
-          title="Save new title"
           onClick={this.saveTitle}
         >
           <i className="fa fa-2x fa-check" />
         </button>
         <button
           id="edit-title-cancel"
-          title="Cancel changes"
           onClick={this.props.editTitleCancel}
         >
           <i className="fa fa-2x fa-times" />
