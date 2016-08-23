@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 function ErrorNotification(props) {
   if (Object.keys(props.validationErrors).length > 0) {
     return (
-      <div className="notification-error">
+      <div className="notification notification-error">
         <i className="fa fa-exclamation-triangle" />
         <strong>The logic model is not complete.</strong> One or more cards are missing links.
       </div>

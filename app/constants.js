@@ -40,3 +40,7 @@ export const SINGULAR = {
   outcomes: 'Outcome',
   impact: 'Impact'
 };
+
+export const KEY_ENTER = 13;
+
+export const MAX_ROWS = 12;

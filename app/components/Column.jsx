@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ADD_MODE } from '../constants';
+import { ADD_MODE, SINGULAR } from '../constants';
 import * as actions from '../actions';
 import Card from './Card';
 import Tooltip from './Tooltip';
@@ -72,7 +72,7 @@ export class Column extends React.Component {
         <h3>{this.props.name}</h3>
         {this.props.cards[this.props.stateKey].map(this.renderCard)}
         <div className="add-button-container">
-          <Tooltip text="Add a new card">
+          <Tooltip text={`Add a new ${SINGULAR[this.props.stateKey]}`}>
             <button
               onClick={this.onClickAdd}
               className="add-button"

@@ -9,6 +9,7 @@ $add-button-color: #FFFFFF;
 $button-color: #CED4E0;
 $button-transition-duration: 0.25s;
 $error-color: #C9302C;
+$info-color: #31B0D5;
 
 body {
   font-family: Roboto, sans-serif;
@@ -403,8 +404,7 @@ footer {
 
 }
 
-.notification-error {
-  background-color: $error-color;
+.notification {
   color: #FFFFFF;
   padding: 5px;
   border-radius: 5px;
@@ -412,5 +412,13 @@ footer {
 
   i {
     margin-right: 0.5em;
+  }
+
+  &.notification-error {
+    background-color: $error-color;
+  }
+
+  &.notification-info {
+    background-color: $info-color;
   }
 }

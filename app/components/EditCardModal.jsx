@@ -5,7 +5,10 @@ import _ from 'lodash';
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LinkCardModal from './LinkCardModal';
-import { ADD_MODE, EDIT_MODE, DEFAULT_COLOR, TITLES, SINGULAR } from '../constants';
+import {
+  ADD_MODE, EDIT_MODE, DEFAULT_COLOR, TITLES, SINGULAR,
+  KEY_ENTER, MAX_ROWS
+} from '../constants';
 
 export default class EditCardModal extends React.Component {
   constructor(props) {
@@ -52,6 +55,8 @@ export default class EditCardModal extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.setColorPickerModal = this.setColorPickerModal.bind(this);
+
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -130,6 +135,13 @@ export default class EditCardModal extends React.Component {
 
   hideModal() {
     this.setState({ show: false });
+  }
+
+  handleKeyUp(event) {
+    const rows = event.target.value.split('\n').length;
+    if (event.keyCode === KEY_ENTER && rows === this.textArea.rows && rows <= MAX_ROWS) {
+      this.textArea.rows++;
+    }
   }
 
   cancel() {
@@ -238,7 +250,7 @@ export default class EditCardModal extends React.Component {
   renderError() {
     if (this.isLinkError()) {
       return (
-        <div className="notification-error">
+        <div className="notification notification-error">
           <i className="fa fa-exclamation-triangle" />
           This {SINGULAR[this.props.stateKey]} must be linked to
           at least one {SINGULAR[this.props.linkKey]}.
@@ -246,6 +258,22 @@ export default class EditCardModal extends React.Component {
       );
     }
 
+    return <div />;
+  }
+
+  renderLongMessage() {
+    if (this.textArea) {
+      const rows = this.textArea.value.split('\n').length;
+      if (rows > MAX_ROWS) {
+        return (
+          <div className="notification notification-info">
+            <i className="fa fa-info-circle" />
+            This {SINGULAR[this.props.stateKey]} is a little long.
+            You might want to split it up into smaller ones.
+          </div>
+        );
+      }
+    }
     return <div />;
   }
 
@@ -272,12 +300,14 @@ export default class EditCardModal extends React.Component {
           </div>
           <div className="modal-body">
             {this.renderError()}
+            {this.renderLongMessage()}
             <h5>Card Details</h5>
             <div className="modal-row">
               <div className="modal-column edit-column">
                 <textarea
                   ref={this.setTextArea}
-                  rows="10"
+                  onKeyUp={this.handleKeyUp}
+                  rows="5"
                   cols="35"
                   value={this.state.text}
                   onChange={this.onTextChange}
