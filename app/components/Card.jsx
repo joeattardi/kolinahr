@@ -55,6 +55,14 @@ export class Card extends React.Component {
     this.modal.showModal();
   }
 
+  renderText(text) {
+    const lines = text.split('\n');
+    let key = 0;
+    return (
+      lines.map(line => <span key={++key}>{line}<br /></span>)
+    );
+  }
+
   renderCard() {
     let className = this.props.isDragging ? 'card card-dragging' : 'card';
 
@@ -72,7 +80,7 @@ export class Card extends React.Component {
       >
         {this.props.validationErrors[this.props.card.id] ?
           <i className="fa fa-exclamation-triangle error" /> : ''}
-        {this.props.card.text}
+        {this.renderText(this.props.card.text)}
         {this.props.isDragging}
       </div>
     );
