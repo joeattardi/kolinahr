@@ -3,7 +3,7 @@
 $header-background-color: #1F65AA;
 $footer-background-color: #333333;
 $column-background-color: #EFEFEF;
-$modal-button-color: #02BEC7;
+$primary-button-color: #64A3E3;
 $delete-button-color: #C9302C;
 $add-button-color: #FFFFFF;
 $button-color: #CED4E0;
@@ -35,6 +35,17 @@ button {
   padding: 0.25em 2em;
   font-size: 0.8em;
   margin: 0.5em;
+
+  &.button-primary {
+    background-color: $primary-button-color;
+    border-color: darken($primary-button-color, 5%);
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: lighten($primary-button-color, 5%);
+      border-color: $primary-button-color;
+    }
+  }
 }
 
 .column {
@@ -188,21 +199,12 @@ button {
     text-align: center;
 
     button {
-      background-color: $modal-button-color;
-      border: 1px solid darken($modal-button-color, 5%);
       border-radius: 3px;
-      color: #FFFFFF;
       font-size: 1.1em;
       margin: 1em;
       padding: 0.25em 2em;
       cursor: pointer;
       transition: all $button-transition-duration;
-
-      &:hover {
-        background-color: lighten($modal-button-color, 5%);
-        border-color: $modal-button-color;
-        transition: all $button-transition-duration;
-      }
 
       &.delete-button {
         background-color: $delete-button-color;
@@ -238,6 +240,10 @@ button {
 .edit-card-modal {
   width: 500px;
   margin: 10% auto;
+
+  .edit-column {
+    flex-grow: 1;
+  }
 
   .card-link {
     display: flex;
@@ -358,7 +364,7 @@ footer {
 .tooltip {
   position: absolute;
   font-size: 0.8em;
-  z-index: 200;
+  z-index: 800;
 
   &.error {
     .tooltip-body {

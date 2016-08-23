@@ -191,7 +191,9 @@ export default class EditCardModal extends React.Component {
           <div className="modal-body">
             <h5>Card Details</h5>
             <div className="modal-row">
-              <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
+              <div className="modal-column edit-column">
+                <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
+              </div>
               <div className="modal-column">
                 <button
                   onClick={this.showConfirmDeleteModal}
@@ -210,7 +212,7 @@ export default class EditCardModal extends React.Component {
           </div>
           <div className="modal-buttons">
             <button onClick={this.cancel} className="cancel-button">Cancel</button>
-            <button onClick={this.saveChanges}>Save</button>
+            <button className="button-primary" onClick={this.saveChanges}>Save</button>
           </div>
         </Modal>
 
