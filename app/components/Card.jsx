@@ -123,7 +123,9 @@ Card.propTypes = {
 const cardSource = {
   beginDrag(props, monitor, cardComponent) {
     const { card } = props;
-    cardComponent.tooltip.setState({ show: false });
+    if (cardComponent.tooltip) {
+      cardComponent.tooltip.setState({ show: false });
+    }
     props.startDrag(card.id);
     return {
       id: card.id,
