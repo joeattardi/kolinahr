@@ -36,13 +36,15 @@ class Canvas extends React.Component {
   }
 
   calcWidth() {
-    const { columnOffsets, left, right } = this.props;
+    const { columnOffsets, cardOffsets, left, right } = this.props;
 
     if (columnOffsets[left] && columnOffsets[right]) {
-      const leftOffset = columnOffsets[left];
-      const rightOffset = columnOffsets[right];
+      const cardOffset = cardOffsets[Object.keys(cardOffsets)[0]];
 
-      const width = rightOffset.left - (leftOffset.left + leftOffset.width) + 25;
+      const leftVal = 5 + cardOffset.left - columnOffsets[cardOffset.column].left;
+      this.canvasElement.style.left = `${-1 * leftVal}px`;
+
+      const width = (leftVal * 2);
       return width;
     }
 
@@ -64,7 +66,13 @@ class Canvas extends React.Component {
     ctx.lineWidth = 3;
     ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
-    const { left, cards, cardOffsets } = this.props;
+    const { left, cards, cardOffsets, columnOffsets } = this.props;
+
+    const leftOffset = columnOffsets[left];
+    if (cardOffsets[left]) {
+      const leftCardOffset = cardOffsets[left][0];
+      this.canvasElement.style.left = -1 * (leftOffset.left - leftCardOffset.width);
+    }
 
     cards[left].forEach(card => {
       if (card.links) {

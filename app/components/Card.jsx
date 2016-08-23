@@ -40,7 +40,8 @@ export class Card extends React.Component {
       top: this.cardElement.offsetTop,
       left: this.cardElement.offsetLeft,
       width: this.cardElement.offsetWidth,
-      height: this.cardElement.offsetHeight
+      height: this.cardElement.offsetHeight,
+      column: this.props.card.column
     });
   }
 
