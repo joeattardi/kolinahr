@@ -58,6 +58,7 @@ export class Column extends React.Component {
       <Card
         updateCard={this.props.updateCard}
         deleteCard={this.props.deleteCard}
+        stateKey={this.props.stateKey}
         linkKey={this.props.linkKey}
         key={card.id}
         card={card}

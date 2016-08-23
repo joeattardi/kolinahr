@@ -176,6 +176,9 @@ export default class EditCardModal extends React.Component {
     });
   }
 
+  isLinkError() {
+    return this.props.stateKey !== 'impact' && this.state.links.length === 0;
+  }
 
   renderLinksSection() {
     if (this.props.linkKey) {
@@ -224,6 +227,29 @@ export default class EditCardModal extends React.Component {
     return <div />;
   }
 
+
+  renderError() {
+    if (this.isLinkError()) {
+      return (
+        <div className="notification-error">
+          <i className="fa fa-exclamation-triangle" />&nbsp;
+          This {SINGULAR[this.props.stateKey]} must be linked to
+          at least one {SINGULAR[this.props.linkKey]}.
+        </div>
+      );
+    }
+
+    return <div />;
+  }
+
+  renderSaveButton() {
+    if (this.isLinkError()) {
+      return <button disabled className="button-primary-disabled">Save</button>;
+    }
+
+    return <button className="button-primary" onClick={this.saveChanges}>Save</button>;
+  }
+
   render() {
     const { linkKey } = this.props;
     return (
@@ -238,6 +264,7 @@ export default class EditCardModal extends React.Component {
             <h4>{this.props.mode === ADD_MODE ? 'Add Card' : 'Edit Card'}</h4>
           </div>
           <div className="modal-body">
+            {this.renderError()}
             <h5>Card Details</h5>
             <div className="modal-row">
               <div className="modal-column edit-column">
@@ -257,7 +284,7 @@ export default class EditCardModal extends React.Component {
           </div>
           <div className="modal-buttons">
             <button onClick={this.cancel} className="cancel-button">Cancel</button>
-            <button className="button-primary" onClick={this.saveChanges}>Save</button>
+            {this.renderSaveButton()}
           </div>
         </Modal>
 

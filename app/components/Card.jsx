@@ -87,6 +87,7 @@ export class Card extends React.Component {
         <EditCardModal
           mode={EDIT_MODE}
           linkKey={this.props.linkKey}
+          stateKey={this.props.stateKey}
           cards={this.props.cards}
           updateCard={this.props.updateCard}
           deleteCard={this.props.deleteCard}
@@ -107,6 +108,7 @@ Card.propTypes = {
   connectDropTarget: React.PropTypes.func.isRequired,
   registerOffset: React.PropTypes.func.isRequired,
   isDragging: React.PropTypes.bool.isRequired,
+  stateKey: React.PropTypes.string.isRequired,
   linkKey: React.PropTypes.string,
   validationErrors: React.PropTypes.object.isRequired
 };

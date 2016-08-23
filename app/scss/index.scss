@@ -46,6 +46,12 @@ button {
       border-color: $primary-button-color;
     }
   }
+
+  &.button-primary-disabled {
+    background-color: mix($primary-button-color, gray); 
+    color: gray;
+    cursor: default !important;
+  }
 }
 
 .column {
@@ -390,4 +396,12 @@ footer {
     margin: auto;
   }
 
+}
+
+.notification-error {
+  background-color: $error-color;
+  color: #FFFFFF;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.9em;
 }
