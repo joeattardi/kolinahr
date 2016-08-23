@@ -24,46 +24,70 @@ export default function configureStore() {
     cards: {
       inputs: [
         {
-          id: '1',
-          text: 'Hello World',
+          id: '8',
+          text: 'It all begins here!',
           color: '#FFFFFF',
           column: 'inputs',
-          links: ['3']
-        },
-        {
-          id: '2',
-          text: 'Another Card',
-          color: '#B3ECFF',
-          column: 'inputs',
-          links: ['4']
+          links: ['7']
         }
       ],
       activities: [
         {
-          id: '3',
+          id: '5',
           text: 'Blah Blah',
           color: '#FFB3EC',
           column: 'activities',
           links: []
         },
         {
-          id: '4',
+          id: '6',
           text: 'Yet Another Card!',
           color: '#75FF98',
           column: 'activities',
           links: []
         },
         {
-          id: '5',
+          id: '7',
           text: 'Derp Derp',
           color: '#FFFFFF',
           column: 'activities',
-          links: [],
+          links: ['3'],
         }
       ],
-      outputs: [],
-      outcomes: [],
-      impact: []
+      outputs: [
+        {
+          id: '3',
+          text: 'A Linked Output',
+          color: '#FFB3EC',
+          column: 'outputs',
+          links: ['2']
+        },
+        {
+          id: '4',
+          text: 'A Non-Linked Output',
+          color: '#FFFFFF',
+          column: 'outputs',
+          links: []
+        }
+      ],
+      outcomes: [
+        {
+          id: '2',
+          text: 'A Linked Outcome',
+          color: '#75FF98',
+          column: 'outcomes',
+          links: ['1']
+        }
+      ],
+      impact: [
+        {
+          id: '1',
+          text: 'Some Impact',
+          color: '#FFFFFF',
+          column: 'impact',
+          links: []
+        }
+      ]
     }
   };
 
