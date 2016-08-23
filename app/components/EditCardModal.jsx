@@ -262,18 +262,17 @@ export default class EditCardModal extends React.Component {
   }
 
   renderLongMessage() {
-    if (this.textArea) {
-      const rows = this.textArea.value.split('\n').length;
-      if (rows > MAX_ROWS) {
-        return (
-          <div className="notification notification-info">
-            <i className="fa fa-info-circle" />
-            This {SINGULAR[this.props.stateKey]} is a little long.
-            You might want to split it up into smaller ones.
-          </div>
-        );
-      }
+    const rows = this.state.text.split('\n').length;
+    if (rows > MAX_ROWS) {
+      return (
+        <div className="notification notification-info">
+          <i className="fa fa-info-circle" />
+          This {SINGULAR[this.props.stateKey]} is a little long.
+          You might want to split it up into smaller ones.
+        </div>
+      );
     }
+
     return <div />;
   }
 
