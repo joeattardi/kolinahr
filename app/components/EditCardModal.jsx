@@ -43,6 +43,8 @@ export default class EditCardModal extends React.Component {
     this.showLinkCardModal = this.showLinkCardModal.bind(this);
     this.linkCard = this.linkCard.bind(this);
 
+    this.setTextArea = this.setTextArea.bind(this);
+
     this.hideModal = this.hideModal.bind(this);
     this.setModal = this.setModal.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -72,6 +74,10 @@ export default class EditCardModal extends React.Component {
     this.setState({
       text: event.target.value
     });
+  }
+
+  setTextArea(textArea) {
+    this.textArea = textArea;
   }
 
   setModal(modal) {
@@ -119,6 +125,7 @@ export default class EditCardModal extends React.Component {
 
   showModal() {
     this.setState({ show: true });
+    _.defer(() => this.textArea.focus());
   }
 
   hideModal() {
@@ -232,7 +239,7 @@ export default class EditCardModal extends React.Component {
     if (this.isLinkError()) {
       return (
         <div className="notification-error">
-          <i className="fa fa-exclamation-triangle" />&nbsp;
+          <i className="fa fa-exclamation-triangle" />
           This {SINGULAR[this.props.stateKey]} must be linked to
           at least one {SINGULAR[this.props.linkKey]}.
         </div>
@@ -243,7 +250,7 @@ export default class EditCardModal extends React.Component {
   }
 
   renderSaveButton() {
-    if (this.isLinkError()) {
+    if (this.isLinkError() || this.state.text === '') {
       return <button disabled className="button-primary-disabled">Save</button>;
     }
 
@@ -268,7 +275,7 @@ export default class EditCardModal extends React.Component {
             <h5>Card Details</h5>
             <div className="modal-row">
               <div className="modal-column edit-column">
-                <textarea rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
+                <textarea ref={this.setTextArea} rows="4" cols="35" value={this.state.text} onChange={this.onTextChange} />
               </div>
               <div className="modal-column">
                 {this.renderDelete()}
