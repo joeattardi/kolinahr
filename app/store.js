@@ -37,14 +37,14 @@ export default function configureStore() {
           text: 'Blah Blah',
           color: '#FFB3EC',
           column: 'activities',
-          links: []
+          links: ['3']
         },
         {
           id: '6',
           text: 'Yet Another Card!',
           color: '#75FF98',
           column: 'activities',
-          links: []
+          links: ['3']
         },
         {
           id: '7',
@@ -67,7 +67,7 @@ export default function configureStore() {
           text: 'A Non-Linked Output',
           color: '#FFFFFF',
           column: 'outputs',
-          links: []
+          links: ['2']
         }
       ],
       outcomes: [
