@@ -122,6 +122,11 @@ button {
   &:hover {
     transform: scale(1.025);
   }
+
+  i.error {
+    color: $error-color;
+    margin-right: 0.5em;
+  }
 }
 
 .ReactModal__Content {
