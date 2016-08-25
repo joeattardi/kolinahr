@@ -1,14 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
-mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI, error => {
-  if (error) {
-    console.error(`Failed to connect to MongoDB: ${error}`);
+MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
+  if (err) {
+    console.error(`Error connecting to MongoDB: ${err}`);
     process.exit(1);
   }
 
