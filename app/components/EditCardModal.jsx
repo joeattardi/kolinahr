@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import _ from 'lodash';
+import Color from 'color';
 
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -224,7 +225,11 @@ export default class EditCardModal extends React.Component {
       <div key={link} className="modal-row card-link">
         <div
           className="card"
-          style={{ backgroundColor: linkedCard.color, cursor: 'default' }}
+          style={{
+            backgroundColor: linkedCard.color,
+            borderColor: Color(linkedCard.color).darken(0.25).hslString(),
+            cursor: 'default'
+          }}
         >{linkedCard.text}</div>
         <Tooltip text="Unlink">
           <button onClick={() => this.deleteLink(link)}>
@@ -292,6 +297,7 @@ export default class EditCardModal extends React.Component {
     return (
       <div>
         <Modal
+          onRequestClose={this.hideModal}
           isOpen={this.state.show}
           className="edit-card-modal modal-container"
           overlayClassName="modal-overlay"
@@ -321,7 +327,10 @@ export default class EditCardModal extends React.Component {
                 {this.renderDelete()}
                 <button
                   onClick={this.showColorPicker}
-                  style={{ background: this.state.color }}
+                  style={{
+                    background: this.state.color,
+                    borderColor: Color(this.state.color).darken(0.25).hslString()
+                  }}
                 >
                   <i className="fa fa-paint-brush" /> Color
                 </button>
