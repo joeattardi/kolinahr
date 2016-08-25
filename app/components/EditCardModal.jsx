@@ -298,7 +298,9 @@ export default class EditCardModal extends React.Component {
           ref={this.setModal}
         >
           <div className="modal-header">
-            <h4>{this.props.mode === ADD_MODE ? 'Add Card' : 'Edit Card'}</h4>
+            <h4>
+              {this.props.mode === ADD_MODE ? 'Add' : 'Edit'} {SINGULAR[this.props.stateKey]}
+            </h4>
           </div>
           <div className="modal-body">
             {this.renderError()}
@@ -336,6 +338,7 @@ export default class EditCardModal extends React.Component {
         <ConfirmDeleteModal
           ref={this.setConfirmDeleteModal}
           onConfirmDelete={this.confirmDelete}
+          type={SINGULAR[this.props.stateKey]}
         />
 
         <ColorPickerModal

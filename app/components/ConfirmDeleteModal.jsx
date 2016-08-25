@@ -28,10 +28,10 @@ export default class ConfirmDeleteModal extends React.Component {
         isOpen={this.state.show}
       >
         <div className="modal-header">
-          <h4>Delete Card</h4>
+          <h4>Delete {this.props.type}</h4>
         </div>
         <div className="modal-body">
-          Are you sure you want to delete this card?
+          <p>Are you sure you want to delete this {this.props.type}?</p>
         </div>
         <div className="modal-buttons">
           <button onClick={this.hide}>Cancel</button>
@@ -43,5 +43,6 @@ export default class ConfirmDeleteModal extends React.Component {
 }
 
 ConfirmDeleteModal.propTypes = {
-  onConfirmDelete: React.PropTypes.func.isRequired
+  onConfirmDelete: React.PropTypes.func.isRequired,
+  type: React.PropTypes.string.isRequired
 };
