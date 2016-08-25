@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "test": "karma start",
-    "start": "npm run build && node server/index.js",
+    "start": "npm run build && nodemon server/index.js",
     "lint": "eslint test/**/*.jsx test/**/*.js app/**/*.jsx app/**/*.js server/",
     "heroku-postbuild": "node_modules/.bin/webpack"
   },
