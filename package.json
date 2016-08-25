@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A visual logic model builder",
   "main": "index.js",
+  "engines": {
+    "node": "6.2.2"
+  },
   "scripts": {
     "build": "webpack",
     "test": "karma start",
