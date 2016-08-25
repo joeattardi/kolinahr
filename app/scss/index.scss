@@ -64,6 +64,11 @@ button {
     opacity: 0.4;
     color: gray;
     cursor: not-allowed !important;
+
+    &:hover {
+      background: $button-color;
+      background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
+    }
   }
 }
 
