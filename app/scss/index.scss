@@ -12,7 +12,7 @@ $error-color: #C9302C;
 $info-color: #31B0D5;
 
 body {
-  font-family: Roboto, sans-serif;
+  font-family: Open Sans, sans-serif;
   margin: 0;
 }
 
@@ -391,6 +391,7 @@ footer {
     background: #000000;
     color: #FFFFFF;
     padding: 5px;
+    border-radius: 5px;
   }
 
   .arrow {
