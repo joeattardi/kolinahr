@@ -2,6 +2,7 @@ import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { connect as reduxConnect } from 'react-redux';
 import _ from 'lodash';
+import Color from 'color';
 
 import { EDIT_MODE } from '../constants';
 import * as actions from '../actions';
@@ -66,7 +67,9 @@ export class Card extends React.Component {
   renderCard() {
     let className = this.props.isDragging ? 'card card-dragging' : 'card';
 
-    if (this.props.validationErrors[this.props.card.id]) {
+    const validationErrors = this.props.validationErrors[this.props.card.id];
+
+    if (validationErrors) {
       className += ' error';
     }
 
@@ -76,9 +79,12 @@ export class Card extends React.Component {
         onClick={this.showModal}
         className={className}
         style={{
-          backgroundColor: this.props.card.color }}
+          backgroundColor: this.props.card.color,
+          borderColor: validationErrors ? 'red' :
+            Color(this.props.card.color).darken(0.25).hslString()
+        }}
       >
-        {this.props.validationErrors[this.props.card.id] ?
+        {validationErrors ?
           <i className="fa fa-exclamation-triangle error" /> : ''}
         {this.renderText(this.props.card.text)}
         {this.props.isDragging}
