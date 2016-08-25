@@ -1,6 +1,8 @@
 import { VIEW_MODE, EDIT_MODE, DEFAULT_COLOR } from '../../app/constants';
 import * as actionTypes from '../../app/actions/types';
-import { cardsReducer, titleReducer, titleModeReducer } from '../../app/reducers';
+import cardsReducer from '../../app/reducers/cardsReducer';
+
+import { titleReducer, titleModeReducer } from '../../app/reducers';
 
 describe('Reducers', () => {
   describe('Card Reducer', () => {
@@ -30,7 +32,9 @@ describe('Reducers', () => {
       const startState = {
         inputs: [{ id: 'abc', text: 'Some Card', column: 'inputs', color: 'red', links: ['ghi'] },
                  { id: 'def', text: 'Other Card', column: 'inputs', color: 'blue', links: [] }],
-        activities: [{ id: 'ghi', text: 'Delete Me', column: 'activities', color: 'green', links: [] }],
+        activities: [
+          { id: 'ghi', text: 'Delete Me', column: 'activities', color: 'green', links: [] }
+        ],
         outputs: [],
         outcomes: [],
         impact: []
