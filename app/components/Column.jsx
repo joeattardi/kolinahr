@@ -68,27 +68,29 @@ export class Column extends React.Component {
 
   render() {
     return (
-      <div ref={this.setColumnElement} className="column">
+      <div className="column">
         <h3>{this.props.name}</h3>
-        {this.props.cards[this.props.stateKey].map(this.renderCard)}
-        <div className="add-button-container">
-          <Tooltip text={`Add a new ${SINGULAR[this.props.stateKey]}`}>
-            <button
-              onClick={this.onClickAdd}
-              className="add-button"
-            >
-              <i className="fa fa-plus" />
-            </button>
-          </Tooltip>
+        <div ref={this.setColumnElement} className="column-body">
+          {this.props.cards[this.props.stateKey].map(this.renderCard)}
+          <div className="add-button-container">
+            <Tooltip text={`Add a new ${SINGULAR[this.props.stateKey]}`}>
+              <button
+                onClick={this.onClickAdd}
+                className="add-button"
+              >
+                <i className="fa fa-plus" />
+              </button>
+            </Tooltip>
+          </div>
+          <EditCardModal
+            mode={ADD_MODE}
+            linkKey={this.props.linkKey}
+            stateKey={this.props.stateKey}
+            cards={this.props.cards}
+            addCard={this.props.addCard}
+            ref={this.setModal}
+          />
         </div>
-        <EditCardModal
-          mode={ADD_MODE}
-          linkKey={this.props.linkKey}
-          stateKey={this.props.stateKey}
-          cards={this.props.cards}
-          addCard={this.props.addCard}
-          ref={this.setModal}
-        />
       </div>
     );
   }

@@ -48,7 +48,7 @@ export default class ColorPickerModal extends React.Component {
         </div>
         <div className="modal-body">
           {COLOR_CHOICES.map(color =>
-            <button key={color} onClick={this.setNewColor} style={{ backgroundColor: color }} />)}
+            <button key={color} onClick={this.setNewColor} style={{ background: color }} />)}
         </div>
         <div className="modal-buttons">
           <button onClick={this.onCancelClick} className="cancel-button">Cancel</button>

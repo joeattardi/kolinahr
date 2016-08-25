@@ -3,10 +3,14 @@
 $header-background-color: #1F65AA;
 $footer-background-color: #333333;
 $column-background-color: #EFEFEF;
-$primary-button-color: #64A3E3;
+$column-header-background-color: #02BEC7;
+$primary-button-color: #448AD1;
+$primary-button-hover-color: lighten($primary-button-color, 5%);
 $delete-button-color: #C9302C;
+$delete-button-hover-color: lighten($delete-button-color, 5%);
 $add-button-color: #FFFFFF;
-$button-color: #CED4E0;
+$button-color: #E0E0E0;
+$button-hover-color: lighten($button-color, 5%);
 $button-transition-duration: 0.25s;
 $error-color: #C9302C;
 $info-color: #31B0D5;
@@ -29,45 +33,62 @@ body {
 button {
   outline: none;
   cursor: pointer;
-  background-color: $button-color;
+  background: $button-color;
+  background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
   border: 1px solid darken($button-color, 5%);
   color: darken($button-color, 50%);
-  border-radius: 3px;
-  padding: 0.25em 2em;
+  border-radius: 5px;
+  padding: 0.5em 2em;
   font-size: 0.8em;
   margin: 0.5em;
 
+  &:hover {
+    background: $button-hover-color;
+    background: linear-gradient(to bottom, $button-hover-color, $button-color);
+  }
+
   &.button-primary {
-    background-color: $primary-button-color;
+    background: $primary-button-color;
+    background: linear-gradient(to bottom, $primary-button-color, darken($primary-button-color, 5%));
     border-color: darken($primary-button-color, 5%);
     color: #FFFFFF;
 
     &:hover {
-      background-color: lighten($primary-button-color, 5%);
+      background: $primary-button-hover-color;
+      background: linear-gradient(to bottom, lighten($primary-button-hover-color, 5%), $primary-button-color);
       border-color: $primary-button-color;
     }
   }
 
   &.button-primary-disabled {
-    background-color: mix($primary-button-color, gray); 
+    opacity: 0.4;
     color: gray;
-    cursor: default !important;
+    cursor: not-allowed !important;
   }
 }
 
 .column {
-  flex-grow: 1;
-  margin: 5px;
-  background-color: $column-background-color;
-  border: 1px solid darken($column-background-color, 5%);
-  text-align: center;
   width: 20%;
+  margin: 5px;
+
+  .column-body {
+    border: 1px solid darken($column-background-color, 5%);
+    border-top: none;
+    background-color: $column-background-color;
+    border-radius: 0 0 5px 5px;
+    padding: 5px;
+    text-align: center;
+  }
 
   h3 {
     text-align: center;
     margin: 0;
     padding: 0.5em;
-    border-bottom: 4px solid #02BEC7;
+    background: $column-header-background-color;
+    border: 1px solid darken($column-header-background-color, 5%);
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    color: #FFFFFF;
   }
 
   .add-button-container {
@@ -77,15 +98,14 @@ button {
     }
 
     .add-button {
-      background-color: $add-button-color; 
-      border: 2px solid darken($add-button-color, 10%);
+      background: $add-button-color; 
+      border: 2px solid darken($add-button-color, 20%);
       border-radius: 50%;
-      color: darken($add-button-color, 10%);
       width: 2rem;
       height: 2rem;
       font-size: 1rem;
       transition: background-color $button-transition-duration;
-      box-shadow: 0px 2px 13px -6px rgba(0,0,0,0.75);
+      box-shadow: 0px 2px 13px -9px rgba(0,0,0,0.75);
       padding: 0.25em;
 
       &:hover {
@@ -101,7 +121,7 @@ button {
   background-color: #FFFFFF;
   border: 1px solid #AAAAAA;
   border-radius: 2px;
-  box-shadow: 0px 4px 13px -6px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 13px -9px rgba(0,0,0,0.75);
   width: 90%;
   text-align: left;
   padding: 5px;
@@ -140,7 +160,7 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.85);
   z-index: 1000;
 }
 
@@ -153,6 +173,7 @@ button {
 
     padding: 0.5em;
     background-color: $header-background-color;
+    border-radius: 5px 5px 0 0;
     color: #FFFFFF;
 
     h4 {
@@ -172,13 +193,18 @@ button {
     flex-direction: column;
     background: $column-background-color;
     padding: 1em;
+    padding-bottom: 0;
 
     h5 {
       margin: 0.5em;
     }
 
     textarea {
-      font-size: 1em;
+      font-size: 0.8em;
+      outline: none;
+      border: 1px solid #666666;
+      border-radius: 3px;
+      font-family: Open Sans, sans-serif;
     }
 
     .modal-row {
@@ -193,13 +219,15 @@ button {
     }
 
     .delete-button {
-      background-color: $delete-button-color;
+      background: $delete-button-color;
+      background: linear-gradient(to bottom, $delete-button-color, darken($delete-button-color, 5%));
       border: 1px solid darken($delete-button-color, 5%);
       color: #FFFFFF; 
       transition: all $button-transition-duration;
 
       &:hover {
-        background-color: lighten($delete-button-color, 5%);
+        background: $delete-button-hover-color;
+        background: linear-gradient(to bottom, $delete-button-hover-color, $delete-button-color);
         border-color: $delete-button-color;
         transition: all $button-transition-duration;
       }
@@ -209,25 +237,27 @@ button {
   .modal-buttons {
     background: $column-background-color;
     text-align: center;
+    margin-top: 0;
+    border-radius: 0 0 5px 5px;
 
     button {
       border-radius: 3px;
-      font-size: 1.1em;
+      font-size: 0.9em;
       margin: 1em;
-      padding: 0.25em 2em;
+      padding: 0.5em 2em;
       cursor: pointer;
       transition: all $button-transition-duration;
 
       &.delete-button {
-        background-color: $delete-button-color;
+        background: $delete-button-color;
+        background: linear-gradient(to bottom, $delete-button-color, darken($delete-button-color, 5%));
         border-color: darken($delete-button-color, 5%);
-        transition: all $button-transition-duration;
         color: #FFFFFF;
 
         &:hover {
-          background-color: lighten($delete-button-color, 5%);
+          background: $delete-button-hover-color;
+          background: linear-gradient(to bottom, $delete-button-hover-color, $delete-button-color);
           border-color: $delete-button-color;
-          transition: all $button-transition-duration;
         }
       }
     }
@@ -416,7 +446,8 @@ footer {
   }
 
   &.notification-error {
-    background-color: $error-color;
+    background: $error-color;
+    background: linear-gradient(to bottom, $error-color, darken($error-color, 10%));
   }
 
   &.notification-info {

@@ -5,6 +5,7 @@ import _ from 'lodash';
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LinkCardModal from './LinkCardModal';
+import Tooltip from './Tooltip';
 import {
   ADD_MODE, EDIT_MODE, DEFAULT_COLOR, TITLES, SINGULAR,
   KEY_ENTER, MAX_ROWS
@@ -225,9 +226,11 @@ export default class EditCardModal extends React.Component {
           className="card"
           style={{ backgroundColor: linkedCard.color, cursor: 'default' }}
         >{linkedCard.text}</div>
-        <button className="delete-button" onClick={() => this.deleteLink(link)}>
-          <i className="fa fa-trash" />
-        </button>
+        <Tooltip text="Unlink">
+          <button onClick={() => this.deleteLink(link)}>
+            <i className="fa fa-chain-broken" />
+          </button>
+        </Tooltip>
       </div>
     );
   }
@@ -316,7 +319,7 @@ export default class EditCardModal extends React.Component {
                 {this.renderDelete()}
                 <button
                   onClick={this.showColorPicker}
-                  style={{ backgroundColor: this.state.color }}
+                  style={{ background: this.state.color }}
                 >
                   <i className="fa fa-paint-brush" /> Color
                 </button>
