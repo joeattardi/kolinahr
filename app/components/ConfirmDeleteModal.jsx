@@ -1,14 +1,12 @@
 import React from 'react';
 import Modal from 'react-modal';
+import autoBind from 'auto-bind';
 
 export default class ConfirmDeleteModal extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { show: false };
-
-    this.confirmDelete = this.confirmDelete.bind(this);
-    this.hide = this.hide.bind(this);
+    autoBind(this);
   }
 
   hide() {

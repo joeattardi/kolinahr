@@ -1,15 +1,13 @@
 import React from 'react';
 import Modal from 'react-modal';
 import Color from 'color';
+import autoBind from 'auto-bind';
 
 export default class LinkCardModal extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { show: false };
-
-    this.renderCard = this.renderCard.bind(this);
-    this.hide = this.hide.bind(this);
+    autoBind(this);
   }
 
   hide() {

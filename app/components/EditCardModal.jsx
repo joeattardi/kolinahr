@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import _ from 'lodash';
 import Color from 'color';
+import autoBind from 'auto-bind';
 
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -36,29 +37,7 @@ export default class EditCardModal extends React.Component {
       };
     }
 
-    this.renderLink = this.renderLink.bind(this);
-
-    this.setNewColor = this.setNewColor.bind(this);
-    this.showColorPicker = this.showColorPicker.bind(this);
-
-    this.setConfirmDeleteModal = this.setConfirmDeleteModal.bind(this);
-    this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this);
-
-    this.setLinkCardModal = this.setLinkCardModal.bind(this);
-    this.showLinkCardModal = this.showLinkCardModal.bind(this);
-    this.linkCard = this.linkCard.bind(this);
-
-    this.setTextArea = this.setTextArea.bind(this);
-
-    this.hideModal = this.hideModal.bind(this);
-    this.setModal = this.setModal.bind(this);
-    this.cancel = this.cancel.bind(this);
-    this.confirmDelete = this.confirmDelete.bind(this);
-    this.onTextChange = this.onTextChange.bind(this);
-    this.saveChanges = this.saveChanges.bind(this);
-    this.setColorPickerModal = this.setColorPickerModal.bind(this);
-
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+    autoBind(this);
   }
 
   componentWillReceiveProps(nextProps) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import autoBind from 'auto-bind';
 
 export default class Tooltip extends React.Component {
   constructor(props) {
@@ -8,10 +9,7 @@ export default class Tooltip extends React.Component {
       show: false
     };
 
-    this.handleMouseOver = this.handleMouseOver.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
-    this.setTooltipContainer = this.setTooltipContainer.bind(this);
-    this.setTooltipBody = this.setTooltipBody.bind(this);
+    autoBind(this);
   }
 
   setTooltipContainer(element) {

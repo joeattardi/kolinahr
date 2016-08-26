@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import autoBind from 'auto-bind';
 
 class Canvas extends React.Component {
   constructor(props) {
     super(props);
-
-    this.drawLines = this.drawLines.bind(this);
-    this.setCanvasElement = this.setCanvasElement.bind(this);
-    this.setCanvasContainer = this.setCanvasContainer.bind(this);
-
-    this.calcWidth = this.calcWidth.bind(this);
-    this.calcHeight = this.calcHeight.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

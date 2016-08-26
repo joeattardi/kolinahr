@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import autoBind from 'auto-bind';
 
 import { COLOR_CHOICES } from '../constants';
 
@@ -7,12 +8,11 @@ export default class ColorPickerModal extends React.Component {
   constructor(props) {
     super(props);
 
+    autoBind(this);
+
     this.state = {
       show: false,
     };
-
-    this.setNewColor = this.setNewColor.bind(this);
-    this.onCancelClick = this.onCancelClick.bind(this);
   }
 
   onCancelClick() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import autoBind from 'auto-bind';
 
 import { ADD_MODE, SINGULAR } from '../constants';
 import * as actions from '../actions';
@@ -10,13 +11,7 @@ import EditCardModal from './EditCardModal';
 export class Column extends React.Component {
   constructor(props) {
     super(props);
-
-    this.onClickAdd = this.onClickAdd.bind(this);
-    this.renderCard = this.renderCard.bind(this);
-
-    this.setModal = this.setModal.bind(this);
-    this.setColumnElement = this.setColumnElement.bind(this);
-    this.registerOffset = this.registerOffset.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

@@ -3,6 +3,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { connect as reduxConnect } from 'react-redux';
 import _ from 'lodash';
 import Color from 'color';
+import autoBind from 'auto-bind';
 
 import { EDIT_MODE } from '../constants';
 import * as actions from '../actions';
@@ -12,12 +13,7 @@ import Tooltip from './Tooltip';
 export class Card extends React.Component {
   constructor(props) {
     super(props);
-
-    this.registerOffset = this.registerOffset.bind(this);
-    this.setTooltip = this.setTooltip.bind(this);
-    this.setModal = this.setModal.bind(this);
-    this.setCardElement = this.setCardElement.bind(this);
-    this.showModal = this.showModal.bind(this);
+    autoBind(this);
   }
 
   componentDidMount() {

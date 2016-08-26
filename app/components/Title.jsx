@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import autoBind from 'auto-bind';
+
 import { EDIT_MODE, VIEW_MODE } from '../constants';
 import * as actions from '../actions';
-
 import Tooltip from './Tooltip';
 
 class Title extends React.Component {
@@ -13,10 +14,7 @@ class Title extends React.Component {
       title: props.title
     };
 
-    this.editTitle = this.editTitle.bind(this);
-    this.onKeyUp = this.onKeyUp.bind(this);
-    this.changeTitle = this.changeTitle.bind(this);
-    this.saveTitle = this.saveTitle.bind(this);
+    autoBind(this);
   }
 
   componentDidUpdate() {
