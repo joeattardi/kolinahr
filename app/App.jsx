@@ -8,6 +8,7 @@ import Column from './components/Column';
 import Title from './components/Title';
 import Canvas from './components/Canvas';
 import ErrorNotification from './components/ErrorNotification';
+import EmptyNotification from './components/EmptyNotification';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
         <div className="main-content">
           <Title />
           <ErrorNotification />
+          <EmptyNotification />
           <div id="column-container">
             <Column stateKey="inputs" name="Inputs" linkKey="activities" />
             <Canvas left="inputs" right="activities" />
@@ -36,5 +38,4 @@ class App extends React.Component {
   }
 }
 
-/* eslint-disable new-cap */
 export default DragDropContext(HTML5Backend)(App);
