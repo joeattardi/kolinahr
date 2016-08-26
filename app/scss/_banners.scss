@@ -1,4 +1,4 @@
-.notification {
+.banner {
   color: #FFFFFF;
   padding: 5px;
   border-radius: 5px;
@@ -8,12 +8,12 @@
     margin-right: 0.5em;
   }
 
-  &.notification-error {
+  &.banner-error {
     background: $error-color;
     background: linear-gradient(to bottom, $error-color, darken($error-color, 10%));
   }
 
-  &.notification-info {
+  &.banner-info {
     background-color: $info-color;
   }
 }

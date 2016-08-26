@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-function ErrorNotification(props) {
+function ErrorBanner(props) {
   if (Object.keys(props.validationErrors).length > 0) {
     return (
-      <div className="notification notification-error">
+      <div className="banner banner-error">
         <i className="fa fa-exclamation-triangle" />
         <strong>The logic model is not complete.</strong> One or more cards are missing links.
       </div>
@@ -14,7 +14,7 @@ function ErrorNotification(props) {
   return <div />;
 }
 
-ErrorNotification.propTypes = {
+ErrorBanner.propTypes = {
   validationErrors: React.PropTypes.object.isRequired
 };
 
@@ -24,4 +24,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ErrorNotification);
+export default connect(mapStateToProps)(ErrorBanner);

@@ -8,8 +8,8 @@ import Footer from './components/Footer';
 import Column from './components/Column';
 import Title from './components/Title';
 import Canvas from './components/Canvas';
-import ErrorNotification from './components/ErrorNotification';
-import EmptyNotification from './components/EmptyNotification';
+import ErrorBanner from './components/ErrorBanner';
+import EmptyBanner from './components/EmptyBanner';
 
 class App extends React.Component {
   render() {
@@ -21,8 +21,8 @@ class App extends React.Component {
             <Title />
             <SaveButton />
           </div>
-          <ErrorNotification />
-          <EmptyNotification />
+          <ErrorBanner />
+          <EmptyBanner />
           <div id="column-container">
             <Column stateKey="inputs" name="Inputs" linkKey="activities" />
             <Canvas left="inputs" right="activities" />

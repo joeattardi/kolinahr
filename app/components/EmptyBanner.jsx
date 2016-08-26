@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-function EmptyNotification(props) {
+function EmptyBanner(props) {
   if (props.cards.impact.length === 0) {
     return (
-      <div className="notification notification-info">
+      <div className="banner banner-info">
         <i className="fa fa-info-circle" />
         <strong>The logic model is empty.</strong> Add an Impact to get started.
       </div>
@@ -14,7 +14,7 @@ function EmptyNotification(props) {
   return <div />;
 }
 
-EmptyNotification.propTypes = {
+EmptyBanner.propTypes = {
   cards: React.PropTypes.object.isRequired
 };
 
@@ -24,4 +24,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(EmptyNotification);
+export default connect(mapStateToProps)(EmptyBanner);
