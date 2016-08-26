@@ -4,6 +4,8 @@ import * as types from '../actions/types';
 
 export function columnOffsetsReducer(state = {}, action) {
   switch (action.type) {
+    case types.LOAD_DATA:
+      return {};
     case types.REGISTER_COLUMN_OFFSET:
       return {
         ...state,
@@ -16,6 +18,8 @@ export function columnOffsetsReducer(state = {}, action) {
 
 export function cardOffsetsReducer(state = {}, action) {
   switch (action.type) {
+    case types.LOAD_DATA:
+      return {};
     case types.DELETE_CARD:
       return _.pickBy(state, (value, key) => key !== action.payload.id);
     case types.REGISTER_OFFSET:

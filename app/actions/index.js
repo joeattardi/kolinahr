@@ -2,6 +2,13 @@ import uuid from 'uuid';
 
 import * as types from './types';
 
+export function loadData(model) {
+  return {
+    type: types.LOAD_DATA,
+    payload: model
+  };
+}
+
 export function startDrag(cardId) {
   return {
     type: types.START_DRAG,

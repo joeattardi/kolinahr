@@ -41,11 +41,13 @@ class Canvas extends React.Component {
     if (columnOffsets[left] && columnOffsets[right]) {
       const cardOffset = cardOffsets[Object.keys(cardOffsets)[0]];
 
-      const leftVal = 5 + cardOffset.left - columnOffsets[cardOffset.column].left;
-      this.canvasElement.style.left = `${-1 * leftVal}px`;
+      if (cardOffset) {
+        const leftVal = 5 + cardOffset.left - columnOffsets[cardOffset.column].left;
+        this.canvasElement.style.left = `${-1 * leftVal}px`;
 
-      const width = (leftVal * 2);
-      return width;
+        const width = (leftVal * 2);
+        return width;
+      }
     }
 
     return 30;

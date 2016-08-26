@@ -1,4 +1,4 @@
-import { VALIDATE_MODEL } from '../actions/types';
+import { LOAD_DATA, VALIDATE_MODEL } from '../actions/types';
 import { SINGULAR, INCOMING_LINK_NAMES, OUTGOING_LINK_NAMES } from '../constants';
 
 function findLinksToCard(cardId, allCards) {
@@ -38,6 +38,8 @@ function validate(allCards) {
 
 export default function validationReducer(state = {}, action) {
   switch (action.type) {
+    case LOAD_DATA:
+      return validate(action.payload.cards);
     case VALIDATE_MODEL:
       return validate(action.payload);
     default:

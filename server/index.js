@@ -12,11 +12,20 @@ MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
   }
 
   console.log('Connected to MongoDB');
-});
 
-app.use(express.static('dist/public'));
+  const collection = db.collection('logicmodels');
+  collection.find({}).toArray((findErr, docs) => {
+    const model = docs[0];
 
-app.listen(port, () => {
-  console.log(`Kolinahr listening on port ${port}`);
+    app.use(express.static('dist/public'));
+
+    app.get('/model', (req, res) => {
+      res.json(model);
+    });
+
+    app.listen(port, () => {
+      console.log(`Kolinahr listening on port ${port}`);
+    });
+  });
 });
 

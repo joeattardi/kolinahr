@@ -3,6 +3,8 @@ import * as types from '../actions/types';
 
 export function titleReducer(state = 'New Logic Model', action) {
   switch (action.type) {
+    case types.LOAD_DATA:
+      return action.payload.title;
     case types.EDIT_TITLE_SAVE:
       return action.payload;
     case types.EDIT_TITLE_CANCEL:

@@ -54,6 +54,8 @@ function deleteCard(state, column, cardId) {
 
 export default function cardsReducer(state = defaultCardsState, action) {
   switch (action.type) {
+    case types.LOAD_DATA:
+      return action.payload.cards;
     case types.ADD_CARD:
       return {
         ...state,
