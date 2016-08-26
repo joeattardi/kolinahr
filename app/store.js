@@ -15,7 +15,8 @@ export default function configureStore() {
     columnOffsets: columnOffsetsReducer,
     dragging: reducers.dragReducer,
     validationErrors: validationReducer,
-    saving: reducers.savingReducer
+    saving: reducers.savingReducer,
+    notification: reducers.notificationReducer
   });
 
   const store = createStore(reducer, {}, compose(

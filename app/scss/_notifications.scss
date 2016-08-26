@@ -1,0 +1,11 @@
+.notification {
+  background: $success-color;
+  background: linear-gradient(to bottom, $success-color, darken($success-color, 10%));
+  color: white;
+  padding: 5px;
+  border-radius: 0 0 5px 5px;
+  font-size: 0.8em;
+
+  position: absolute;
+  top: -0px;
+}

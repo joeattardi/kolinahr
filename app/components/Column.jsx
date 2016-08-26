@@ -63,7 +63,7 @@ export class Column extends React.Component {
 
   render() {
     return (
-      <div className="column">
+      <div className={this.props.className}>
         <h3>{this.props.name}</h3>
         <div ref={this.setColumnElement} className="column-body">
           {this.props.cards[this.props.stateKey].map(this.renderCard)}
@@ -99,7 +99,8 @@ Column.propTypes = {
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   registerColumnOffset: React.PropTypes.func.isRequired,
-  linkKey: React.PropTypes.string
+  linkKey: React.PropTypes.string,
+  className: React.PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {

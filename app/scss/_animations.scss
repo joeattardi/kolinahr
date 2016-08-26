@@ -59,3 +59,36 @@ $fade-duration: 0.5s;
 .modal-container {
   animation: scale-in ease-in .25s;
 }
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    top: -50px;
+  }
+
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 1;
+    top: 0;
+  }
+
+  to {
+    opacity: 0;
+    top: -50px;
+  }
+}
+
+.notification {
+  animation: slide-down 0.5s;
+}
+
+.notification.notification-exit {
+  animation: slide-up 0.5s;
+}
+

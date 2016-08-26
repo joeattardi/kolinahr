@@ -3,6 +3,19 @@ import axios from 'axios';
 
 import * as types from './types';
 
+export function showNotification(notification) {
+  return {
+    type: types.SHOW_NOTIFICATION,
+    payload: notification
+  };
+}
+
+export function hideNotification() {
+  return {
+    type: types.HIDE_NOTIFICATION
+  };
+}
+
 export function loadData(model) {
   return {
     type: types.LOAD_DATA,
@@ -22,6 +35,7 @@ export function saveData() {
     axios.post('/model', payload)
       .then(() => {
         dispatch({ type: types.SAVE_COMPLETE });
+        dispatch(showNotification('Save completed'));
       });
   };
 }

@@ -10,6 +10,7 @@ import Title from './components/Title';
 import Canvas from './components/Canvas';
 import ErrorBanner from './components/ErrorBanner';
 import EmptyBanner from './components/EmptyBanner';
+import Notification from './components/Notification';
 
 class App extends React.Component {
   render() {
@@ -21,18 +22,19 @@ class App extends React.Component {
             <Title />
             <SaveButton />
           </div>
+          <Notification />
           <ErrorBanner />
           <EmptyBanner />
           <div id="column-container">
-            <Column stateKey="inputs" name="Inputs" linkKey="activities" />
+            <Column stateKey="inputs" name="Inputs" linkKey="activities" className="column" />
             <Canvas left="inputs" right="activities" />
-            <Column stateKey="activities" name="Activities" linkKey="outputs" />
+            <Column stateKey="activities" name="Activities" linkKey="outputs" className="column" />
             <Canvas left="activities" right="outputs" />
-            <Column stateKey="outputs" name="Outputs" linkKey="outcomes" />
+            <Column stateKey="outputs" name="Outputs" linkKey="outcomes" className="column" />
             <Canvas left="outputs" right="outcomes" />
-            <Column stateKey="outcomes" name="Outcomes" linkKey="impact" />
+            <Column stateKey="outcomes" name="Outcomes" linkKey="impact" className="column column-dark" />
             <Canvas left="outcomes" right="impact" />
-            <Column stateKey="impact" name="Impact" />
+            <Column stateKey="impact" name="Impact" className="column column-dark" />
           </div>
         </div>
         <Footer />

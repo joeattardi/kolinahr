@@ -1,6 +1,17 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function notificationReducer(state = null, action) {
+  switch (action.type) {
+    case types.SHOW_NOTIFICATION:
+      return action.payload;
+    case types.HIDE_NOTIFICATION:
+      return null;
+    default:
+      return state;
+  }
+}
+
 export function savingReducer(state = false, action) {
   switch (action.type) {
     case types.SAVE_BEGIN:
