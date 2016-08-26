@@ -44,3 +44,6 @@ export const SINGULAR = {
 export const KEY_ENTER = 13;
 
 export const MAX_ROWS = 12;
+
+export const NOTIFICATION_SUCCESS = 'notification-success';
+export const NOTIFICATION_ERROR = 'notification-error';

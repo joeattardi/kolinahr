@@ -1,6 +1,4 @@
 .notification {
-  background: $success-color;
-  background: linear-gradient(to bottom, $success-color, darken($success-color, 10%));
   color: white;
   padding: 5px;
   border-radius: 0 0 5px 5px;
@@ -8,4 +6,14 @@
 
   position: absolute;
   top: -0px;
+
+  &.notification-success {
+    background: $success-color;
+    background: linear-gradient(to bottom, $success-color, darken($success-color, 10%));
+  }
+
+  &.notification-error {
+    background: $error-color;
+    background: linear-gradient(to bottom, $error-color, darken($error-color, 10%));
+  }
 }

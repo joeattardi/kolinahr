@@ -3,6 +3,14 @@ import { connect } from 'react-redux';
 import autoBind from 'auto-bind';
 
 import { hideNotification } from '../actions';
+import { NOTIFICATION_SUCCESS } from '../constants';
+
+const NOTIFICATION_DURATION = 5000;
+const NOTIFICATION_ANIMATION_DURATION = 500;
+
+const icons = {
+  [NOTIFICATION_SUCCESS]: 'fa-check-circle-o'
+};
 
 class Notification extends React.Component {
   constructor(props) {
@@ -14,8 +22,8 @@ class Notification extends React.Component {
     if (this.element && this.props.notification) {
       const leftPosition = (window.innerWidth / 2) - (this.element.offsetWidth / 2);
       this.element.style.left = `${leftPosition}px`;
-      this.element.className = 'notification';
-      setTimeout(this.hideNotification, 5000);
+      this.element.className = `notification ${this.props.notification.type}`;
+      setTimeout(this.hideNotification, NOTIFICATION_DURATION);
     }
   }
 
@@ -23,9 +31,13 @@ class Notification extends React.Component {
     this.element = element;
   }
 
+  getIcon() {
+    return icons[this.props.notification.type] || 'fa-info-circle';
+  }
+
   hideNotification() {
-    this.element.className = 'notification notification-exit';
-    setTimeout(this.props.hideNotification, 500);
+    this.element.className = `notification notification-exit ${this.props.notification.type}`;
+    setTimeout(this.props.hideNotification, NOTIFICATION_ANIMATION_DURATION);
   }
 
   render() {
@@ -33,9 +45,9 @@ class Notification extends React.Component {
       return (
         <div
           ref={this.setElement}
-          className="notification"
+          className={`notification ${this.props.notification.type}`}
         >
-          <i className="fa fa-check-circle-o" /> {this.props.notification}
+          <i className={`fa ${this.getIcon()}`} /> {this.props.notification.message}
         </div>
       );
     }
@@ -45,7 +57,7 @@ class Notification extends React.Component {
 }
 
 Notification.propTypes = {
-  notification: React.PropTypes.string,
+  notification: React.PropTypes.object,
   hideNotification: React.PropTypes.func.isRequired
 };
 

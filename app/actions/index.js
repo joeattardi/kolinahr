@@ -2,11 +2,15 @@ import uuid from 'uuid';
 import axios from 'axios';
 
 import * as types from './types';
+import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
-export function showNotification(notification) {
+export function showNotification(type, message) {
   return {
     type: types.SHOW_NOTIFICATION,
-    payload: notification
+    payload: {
+      type,
+      message
+    }
   };
 }
 
@@ -35,7 +39,15 @@ export function saveData() {
     axios.post('/model', payload)
       .then(() => {
         dispatch({ type: types.SAVE_COMPLETE });
-        dispatch(showNotification('Save completed'));
+        dispatch(showNotification(NOTIFICATION_SUCCESS,
+          'Successfully saved the logic model.'
+        ));
+      })
+      .catch(err => {
+        dispatch({ type: types.SAVE_COMPLETE });
+        dispatch(showNotification(NOTIFICATION_ERROR,
+          `Failed to save the logic model: ${err.message}`
+        ));
       });
   };
 }
