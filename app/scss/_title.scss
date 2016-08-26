@@ -1,3 +1,11 @@
+#title-area {
+  display: flex;
+
+  #title-container {
+    flex-grow: 1;
+  }
+}
+
 .editable-title {
   button {
     width: 3em;
@@ -16,7 +24,7 @@
 
   .title-edit {
     font-size: 1.2em;
-    width: 50em;
+    width: 30em;
   }
 }
 
@@ -24,6 +32,7 @@
   border: 1px dashed transparent;
   cursor: text;
   padding: 5px;
+  margin: 5px;
   transition: border-color 0.25s;
 
   &:hover {
@@ -38,6 +47,7 @@
 
   h2 {
     display: inline;
+    flex-grow: 1;
   }
   .edit-hint {
     display: none;

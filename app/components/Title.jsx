@@ -62,14 +62,16 @@ class Title extends React.Component {
   renderStaticTitle() {
     const cls = this.state.updated ? 'yellow-fade' : '';
     return (
-      <Tooltip text="Click to edit title">
-        <div className={cls} onClick={this.editTitle} id="model-title">
-          <h2>{this.props.title}</h2>
-          <span className="edit-hint">
-            <i className="fa fa-pencil-square-o" />
-          </span>
-        </div>
-      </Tooltip>
+      <div id="title-container">
+        <Tooltip text="Click to edit title">
+          <div className={cls} onClick={this.editTitle} id="model-title">
+            <h2>{this.props.title}</h2>
+            <span className="edit-hint">
+              <i className="fa fa-pencil-square-o" />
+            </span>
+          </div>
+        </Tooltip>
+      </div>
     );
   }
 

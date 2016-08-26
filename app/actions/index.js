@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import axios from 'axios';
 
 import * as types from './types';
 
@@ -6,6 +7,18 @@ export function loadData(model) {
   return {
     type: types.LOAD_DATA,
     payload: model
+  };
+}
+
+export function saveData() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const payload = {
+      title: state.title,
+      cards: state.cards
+    };
+
+    axios.post('/model', payload);
   };
 }
 

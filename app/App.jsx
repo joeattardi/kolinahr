@@ -1,7 +1,10 @@
+import _ from 'lodash';
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { connect } from 'react-redux';
 
+import * as actions from './actions';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Column from './components/Column';
@@ -17,7 +20,14 @@ class App extends React.Component {
       <div id="container">
         <Header />
         <div className="main-content">
-          <Title />
+          <div id="title-area">
+            <Title />
+            <button
+              id="save-button"
+              className="button-primary"
+              onClick={this.props.saveData}
+            >Save</button>
+          </div>
           <ErrorNotification />
           <EmptyNotification />
           <div id="column-container">
@@ -38,4 +48,11 @@ class App extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(App);
+App.propTypes = {
+  saveData: React.PropTypes.func.isRequired
+};
+
+export default _.flow(
+  DragDropContext(HTML5Backend),
+  connect(null, actions)
+)(App);
