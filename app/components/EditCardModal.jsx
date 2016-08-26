@@ -237,7 +237,7 @@ export default class EditCardModal extends React.Component {
   renderError() {
     if (this.isLinkError()) {
       return (
-        <div className="notification notification-error">
+        <div className="banner banner-error">
           <i className="fa fa-exclamation-triangle" />
           This {SINGULAR[this.props.stateKey]} must be linked to
           at least one {SINGULAR[this.props.linkKey]}.
@@ -252,7 +252,7 @@ export default class EditCardModal extends React.Component {
     const rows = this.state.text.split('\n').length;
     if (rows > MAX_ROWS) {
       return (
-        <div className="notification notification-info">
+        <div className="banner banner-info">
           <i className="fa fa-info-circle" />
           This {SINGULAR[this.props.stateKey]} is a little long.
           You might want to split it up into smaller ones.
