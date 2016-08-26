@@ -3,6 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
+const production = process.env.NODE_ENV === 'production';
+
 module.exports = {
   entry: [
     path.resolve(__dirname, 'app', 'index.jsx')
@@ -17,6 +19,8 @@ module.exports = {
     root: __dirname,
     extensions: ['.js', '.jsx', '']
   },
+
+  devtool: production ? 'source-map' : 'eval-source-map',
 
   module: {
     preLoaders: [

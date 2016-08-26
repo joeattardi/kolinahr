@@ -24,6 +24,7 @@ MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
     if (process.env.NODE_ENV === 'production') {
       app.use(express.static('dist/public'));
     } else {
+      console.log('Running in development mode');
       const compiler = webpack(webpackConfig);
       app.use(webpackDevMiddleware(compiler));
     }
