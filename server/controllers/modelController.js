@@ -1,9 +1,10 @@
+const winston = require('winston');
 const LogicModel = require('../models/LogicModel');
 
 function getModel(req, res) {
   LogicModel.findOne({}, (err, model) => {
     if (err) {
-      console.error(`Failed to load logic model: ${err.message}`);
+      winston.error(`Failed to load logic model: ${err.message}`);
       res.status(500).json({
         result: 'error',
         message: err.message
