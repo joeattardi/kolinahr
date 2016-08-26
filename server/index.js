@@ -1,5 +1,9 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+const webpackDevMiddleware = require('webpack-dev-middleware');
+
+const webpack = require('webpack');
+const webpackConfig = require('../webpack.config');
 
 const port = process.env.PORT || 3000;
 
@@ -17,7 +21,12 @@ MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
   collection.find({}).toArray((findErr, docs) => {
     const model = docs[0];
 
-    app.use(express.static('dist/public'));
+    if (process.env.NODE_ENV === 'production') {
+      app.use(express.static('dist/public'));
+    } else {
+      const compiler = webpack(webpackConfig);
+      app.use(webpackDevMiddleware(compiler));
+    }
 
     app.get('/model', (req, res) => {
       res.json(model);
