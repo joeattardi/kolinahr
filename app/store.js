@@ -14,7 +14,8 @@ export default function configureStore() {
     cardOffsets: cardOffsetsReducer,
     columnOffsets: columnOffsetsReducer,
     dragging: reducers.dragReducer,
-    validationErrors: validationReducer
+    validationErrors: validationReducer,
+    saving: reducers.savingReducer
   });
 
   const store = createStore(reducer, {}, compose(

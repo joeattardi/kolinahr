@@ -18,7 +18,11 @@ export function saveData() {
       cards: state.cards
     };
 
-    axios.post('/model', payload);
+    dispatch({ type: types.SAVE_BEGIN });
+    axios.post('/model', payload)
+      .then(() => {
+        dispatch({ type: types.SAVE_COMPLETE });
+      });
   };
 }
 

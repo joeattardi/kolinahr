@@ -11,3 +11,5 @@ export const START_DRAG = 'START_DRAG';
 export const END_DRAG = 'END_DRAG';
 export const VALIDATE_MODEL = 'VALIDATE_MODEL';
 export const LOAD_DATA = 'LOAD_DATA';
+export const SAVE_BEGIN = 'SAVE_BEGIN';
+export const SAVE_COMPLETE = 'SAVE_COMPLETE';

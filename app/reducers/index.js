@@ -1,6 +1,17 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function savingReducer(state = false, action) {
+  switch (action.type) {
+    case types.SAVE_BEGIN:
+      return true;
+    case types.SAVE_COMPLETE:
+      return false;
+    default:
+      return state;
+  }
+}
+
 export function titleReducer(state = 'New Logic Model', action) {
   switch (action.type) {
     case types.LOAD_DATA:

@@ -1,10 +1,8 @@
-import _ from 'lodash';
 import React from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { connect } from 'react-redux';
 
-import * as actions from './actions';
+import SaveButton from './components/SaveButton';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Column from './components/Column';
@@ -13,7 +11,6 @@ import Canvas from './components/Canvas';
 import ErrorNotification from './components/ErrorNotification';
 import EmptyNotification from './components/EmptyNotification';
 
-/* eslint-disable react/prefer-stateless-function */
 class App extends React.Component {
   render() {
     return (
@@ -22,11 +19,7 @@ class App extends React.Component {
         <div className="main-content">
           <div id="title-area">
             <Title />
-            <button
-              id="save-button"
-              className="button-primary"
-              onClick={this.props.saveData}
-            >Save</button>
+            <SaveButton />
           </div>
           <ErrorNotification />
           <EmptyNotification />
@@ -48,11 +41,4 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  saveData: React.PropTypes.func.isRequired
-};
-
-export default _.flow(
-  DragDropContext(HTML5Backend),
-  connect(null, actions)
-)(App);
+export default DragDropContext(HTML5Backend)(App);
