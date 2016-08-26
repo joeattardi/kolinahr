@@ -11,7 +11,7 @@
     "test": "karma start",
     "start": "npm run build && nodemon server/index.js",
     "lint": "eslint test/**/*.jsx test/**/*.js app/**/*.jsx app/**/*.js server/",
-    "heroku-postbuild": "node_modules/.bin/webpack"
+    "heroku-postbuild": "node_modules/.bin/webpack -p"
   },
   "repository": {
     "type": "git",
@@ -56,7 +56,7 @@
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
     "lodash": "^4.15.0",
-    "mongodb": "^2.2.8",
+    "mongoose": "^4.5.10",
     "node-sass": "^3.8.0",
     "nodemon": "^1.10.2",
     "postcss-loader": "^0.9.1",
