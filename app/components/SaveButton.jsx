@@ -14,7 +14,7 @@ function SaveButton(props) {
       id="save-button"
       className="button-primary"
     >
-      Save
+      <i className="fa fa-floppy-o" /> Save
     </button>
   );
 }
