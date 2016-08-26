@@ -1,0 +1,30 @@
+#column-container {
+  display: flex;
+}
+
+.column {
+  width: 20%;
+  margin: 5px;
+
+  .column-body {
+    border: 1px solid darken($column-background-color, 5%);
+    border-top: none;
+    background-color: $column-background-color;
+    border-radius: 0 0 5px 5px;
+    padding: 5px;
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+    margin: 0;
+    padding: 0.5em;
+    background: $column-header-background-color;
+    border: 1px solid darken($column-header-background-color, 5%);
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    color: #FFFFFF;
+  }
+
+}
+

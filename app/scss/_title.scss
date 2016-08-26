@@ -1,0 +1,47 @@
+.editable-title {
+  button {
+    width: 3em;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    text-align: center;
+    padding: 0.5em 0.5em;
+    margin: 0 0.5em;
+
+    &:hover {
+      border: 1px solid #999999;
+      border-radius: 3px;
+    }
+  }
+
+  .title-edit {
+    font-size: 1.2em;
+    width: 50em;
+  }
+}
+
+#model-title {
+  border: 1px dashed transparent;
+  cursor: text;
+  padding: 5px;
+  transition: border-color 0.25s;
+
+  &:hover {
+    border: 1px dashed #999999;
+    transition: border-color 0.25s;
+
+    .edit-hint {
+      display: inline-block;
+      margin-left: 0.5em;
+    }
+  }
+
+  h2 {
+    display: inline;
+  }
+  .edit-hint {
+    display: none;
+    color: #999999;
+  }
+}
+

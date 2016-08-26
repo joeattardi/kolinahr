@@ -1,0 +1,65 @@
+button {
+  outline: none;
+  cursor: pointer;
+  background: $button-color;
+  background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
+  border: 1px solid darken($button-color, 5%);
+  color: darken($button-color, 50%);
+  border-radius: 5px;
+  padding: 0.5em 2em;
+  font-size: 0.8em;
+  margin: 0.5em;
+
+  &:hover {
+    background: $button-hover-color;
+    background: linear-gradient(to bottom, $button-hover-color, $button-color);
+  }
+
+  &.button-primary {
+    background: $primary-button-color;
+    background: linear-gradient(to bottom, $primary-button-color, darken($primary-button-color, 5%));
+    border-color: darken($primary-button-color, 5%);
+    color: #FFFFFF;
+
+    &:hover {
+      background: $primary-button-hover-color;
+      background: linear-gradient(to bottom, lighten($primary-button-hover-color, 5%), $primary-button-color);
+      border-color: $primary-button-color;
+    }
+  }
+
+  &.button-primary-disabled {
+    opacity: 0.4;
+    color: gray;
+    cursor: not-allowed !important;
+
+    &:hover {
+      background: $button-color;
+      background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
+    }
+  }
+}
+
+.add-button-container {
+
+  .tooltip-container {
+    display: inline-block;
+  }
+
+  .add-button {
+    background: $add-button-color; 
+    border: 2px solid darken($add-button-color, 20%);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    transition: background-color $button-transition-duration;
+    box-shadow: 0px 2px 13px -9px rgba(0,0,0,0.75);
+    padding: 0.25em;
+
+    &:hover {
+      color: #000000;
+      transition: color $button-transition-duration;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.tooltip {
+  position: absolute;
+  font-size: 0.8em;
+  z-index: 800;
+
+  &.error {
+    .tooltip-body {
+      background: $error-color;
+    }
+
+    .arrow {
+      border-bottom-color: $error-color;
+    }
+  }
+
+  .tooltip-body {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #000000;
+    width: 0;
+    height: 0;
+    margin: auto;
+  }
+
+}
+
