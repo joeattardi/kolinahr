@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import Color from 'color';
 
 export default class LinkCardModal extends React.Component {
   constructor(props) {
@@ -27,7 +28,8 @@ export default class LinkCardModal extends React.Component {
         key={card.id}
         className="card"
         style={{
-          backgroundColor: card.color
+          backgroundColor: card.color,
+          borderColor: Color(card.color).darken(0.25).hslString()
         }}
       >
         {card.text}
