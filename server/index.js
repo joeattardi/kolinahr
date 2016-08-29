@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
@@ -27,8 +28,13 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(bodyParser.json());
 
-app.get('/model', modelController.getModel);
-app.post('/model', modelController.updateModel);
+app.get('/api/models', modelController.getModels);
+app.get('/api/models/:modelId', modelController.getModel);
+app.put('/api/models', modelController.updateModel);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('dist/public', 'index.html'));
+});
 
 app.listen(port, () => {
   winston.info(`Kolinahr listening on port ${port}`);

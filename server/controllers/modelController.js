@@ -1,16 +1,37 @@
 const winston = require('winston');
 const LogicModel = require('../models/LogicModel');
 
-function getModel(req, res) {
-  LogicModel.findOne({}, (err, model) => {
+function handleError(res, err) {
+  res.status(500).json({
+    result: 'error',
+    message: err.message
+  });
+}
+
+function getModels(req, res) {
+  LogicModel.find({}, 'title', (err, result) => {
     if (err) {
-      winston.error(`Failed to load logic model: ${err.message}`);
-      res.status(500).json({
-        result: 'error',
-        message: err.message
-      });
+      handleError(res, err);
+    } else {
+      res.json(result);
     }
-    res.json(model);
+  });
+}
+
+function getModel(req, res) {
+  LogicModel.findById(req.params.modelId, (err, model) => {
+    if (err) {
+      handleError(res, err);
+    } else {
+      if (model) {
+        res.json(model);
+      } else {
+        res.status(404).json({
+          result: 'error',
+          message: `Model not found with ID ${req.params.modelId}.`
+        });
+      }
+    }
   });
 }
 
@@ -18,10 +39,7 @@ function updateModel(req, res) {
   const model = req.body;
   LogicModel.update({}, model, {}, err => {
     if (err) {
-      res.status(500).json({
-        result: 'error',
-        message: err.message
-      });
+      handleError(res, err);
     }
   });
   res.json({
@@ -29,4 +47,4 @@ function updateModel(req, res) {
   });
 }
 
-module.exports = { getModel, updateModel };
+module.exports = { getModels, getModel, updateModel };

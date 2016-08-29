@@ -4,6 +4,15 @@ import axios from 'axios';
 import * as types from './types';
 import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
+export function loadModels() {
+  return (dispatch) => {
+    axios.get('/api/models')
+      .then(result => {
+        dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
+      });
+  };
+}
+
 export function showNotification(type, message) {
   return {
     type: types.SHOW_NOTIFICATION,

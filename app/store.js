@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import cardsReducer from './reducers/cardsReducer';
 import { columnOffsetsReducer, cardOffsetsReducer } from './reducers/offsetReducers';
 import validationReducer from './reducers/validationReducer';
+import modelsReducer from './reducers/modelsReducer';
 import * as reducers from './reducers';
 
 export default function configureStore() {
@@ -16,7 +17,8 @@ export default function configureStore() {
     dragging: reducers.dragReducer,
     validationErrors: validationReducer,
     saving: reducers.savingReducer,
-    notification: reducers.notificationReducer
+    notification: reducers.notificationReducer,
+    allModels: modelsReducer
   });
 
   const store = createStore(reducer, {}, compose(

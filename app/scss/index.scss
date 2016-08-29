@@ -27,10 +27,13 @@ header {
   
   background-color: $header-background-color;
 
-  h1 {
-    font-size: 1.2em;
-    margin: 0;
-    color: #FFFFFF;
+  a {
+    display: flex;
+    h1 {
+      font-size: 1.2em;
+      margin: 0;
+      color: #FFFFFF;
+    }
   }
 }
 
