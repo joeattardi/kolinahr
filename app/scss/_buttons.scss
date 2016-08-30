@@ -15,6 +15,21 @@ button {
     background: linear-gradient(to bottom, $button-hover-color, $button-color);
   }
 
+  &.button-delete {
+    background: $delete-button-color;
+    background: linear-gradient(to bottom, $delete-button-color, darken($delete-button-color, 5%));
+    border: 1px solid darken($delete-button-color, 5%);
+    color: #FFFFFF; 
+    transition: all $button-transition-duration;
+
+    &:hover {
+      background: $delete-button-hover-color;
+      background: linear-gradient(to bottom, $delete-button-hover-color, $delete-button-color);
+      border-color: $delete-button-color;
+      transition: all $button-transition-duration;
+    }
+  }
+
   &.button-primary {
     background: $primary-button-color;
     background: linear-gradient(to bottom, $primary-button-color, darken($primary-button-color, 5%));

@@ -18,7 +18,8 @@ export default function configureStore() {
     validationErrors: validationReducer,
     saving: reducers.savingReducer,
     notification: reducers.notificationReducer,
-    allModels: modelsReducer
+    allModels: modelsReducer,
+    currentModel: reducers.currentModelReducer
   });
 
   const store = createStore(reducer, {}, compose(

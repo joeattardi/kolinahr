@@ -1,6 +1,15 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function currentModelReducer(state = null, action) {
+  switch (action.type) {
+    case types.LOAD_DATA:
+      return action.payload._id;
+    default:
+      return state;
+  }
+}
+
 export function notificationReducer(state = null, action) {
   switch (action.type) {
     case types.SHOW_NOTIFICATION:

@@ -33,7 +33,7 @@ export default class ConfirmDeleteModal extends React.Component {
         </div>
         <div className="modal-buttons">
           <button onClick={this.hide}>Cancel</button>
-          <button className="delete-button" onClick={this.confirmDelete}>Delete</button>
+          <button className="button-delete" onClick={this.confirmDelete}>Delete</button>
         </div>
       </Modal>
     );

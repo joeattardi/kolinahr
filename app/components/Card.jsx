@@ -39,13 +39,15 @@ export class Card extends React.Component {
   }
 
   registerOffset() {
-    this.props.registerOffset(this.props.card.id, {
-      top: this.cardElement.offsetTop,
-      left: this.cardElement.offsetLeft,
-      width: this.cardElement.offsetWidth,
-      height: this.cardElement.offsetHeight,
-      column: this.props.card.column
-    });
+    if (this.cardElement) {
+      this.props.registerOffset(this.props.card.id, {
+        top: this.cardElement.offsetTop,
+        left: this.cardElement.offsetLeft,
+        width: this.cardElement.offsetWidth,
+        height: this.cardElement.offsetHeight,
+        column: this.props.card.column
+      });
+    }
   }
 
   showModal() {

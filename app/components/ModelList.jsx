@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import autoBind from 'auto-bind';
 
-import { loadModels } from '../actions';
+import { deleteModel, createModel, loadModels } from '../actions';
+import NewModelModal from './NewModelModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 class ModelList extends React.Component {
   constructor(props) {
@@ -14,22 +17,51 @@ class ModelList extends React.Component {
     this.props.loadModels();
   }
 
+  setNewModelModal(modal) {
+    this.newModelModal = modal;
+  }
+
+  setConfirmDeleteModal(modal) {
+    this.confirmDeleteModal = modal;
+  }
+
+  showNewModelModal() {
+    this.newModelModal.showModal();
+  }
+
+  deleteModel(id) {
+    this.setState({ deleteId: id });
+    this.confirmDeleteModal.setState({ show: true });
+  }
+
+  confirmDeleteModel() {
+    this.props.deleteModel(this.state.deleteId);
+  }
+
   renderModel(model) {
     /* eslint-disable no-underscore-dangle */
-    return <li key={model._id}>{model.title}</li>;
+    return (
+      <li key={model._id}>
+        <Link to={`/edit/${model._id}`}>{model.title}</Link>
+        <button className="button-delete" onClick={() => this.deleteModel(model._id)}>
+          <i className="fa fa-trash-o" />
+        </button>
+      </li>
+    );
   }
 
   render() {
     return (
       <div>
-        <h2>Logic Models</h2>
-        <button className="button-primary"><i className="fa fa-plus" /> New</button>
+        <button className="button-primary" onClick={this.showNewModelModal}><i className="fa fa-plus" /> New</button>
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
         <div id="model-list">
           <ul>
             {this.props.models.map(this.renderModel)}
           </ul>
         </div>
+        <NewModelModal ref={this.setNewModelModal} createModel={this.props.createModel} />
+        <ConfirmDeleteModal ref={this.setConfirmDeleteModal} type="Logic Model" onConfirmDelete={this.confirmDeleteModel} />
       </div>
     );
   }
@@ -46,4 +78,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { loadModels })(ModelList);
+export default connect(mapStateToProps, { deleteModel, createModel, loadModels })(ModelList);

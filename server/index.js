@@ -29,8 +29,10 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.json());
 
 app.get('/api/models', modelController.getModels);
+app.post('/api/models', modelController.createModel);
 app.get('/api/models/:modelId', modelController.getModel);
-app.put('/api/models', modelController.updateModel);
+app.delete('/api/models/:modelId', modelController.deleteModel);
+app.put('/api/models/:modelId', modelController.updateModel);
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist/public', 'index.html'));

@@ -200,23 +200,27 @@ export default class EditCardModal extends React.Component {
 
   renderLink(link) {
     const linkedCard = _.find(this.props.cards[this.props.linkKey], card => card.id === link);
-    return (
-      <div key={link} className="modal-row card-link">
-        <div
-          className="card"
-          style={{
-            backgroundColor: linkedCard.color,
-            borderColor: Color(linkedCard.color).darken(0.25).hslString(),
-            cursor: 'default'
-          }}
-        >{linkedCard.text}</div>
-        <Tooltip text="Unlink">
-          <button onClick={() => this.deleteLink(link)}>
-            <i className="fa fa-chain-broken" />
-          </button>
-        </Tooltip>
-      </div>
-    );
+    if (linkedCard) {
+      return (
+        <div key={link} className="modal-row card-link">
+          <div
+            className="card"
+            style={{
+              backgroundColor: linkedCard.color,
+              borderColor: Color(linkedCard.color).darken(0.25).hslString(),
+              cursor: 'default'
+            }}
+          >{linkedCard.text}</div>
+          <Tooltip text="Unlink">
+            <button onClick={() => this.deleteLink(link)}>
+              <i className="fa fa-chain-broken" />
+            </button>
+          </Tooltip>
+        </div>
+      );
+    }
+
+    return <div key={link} />;
   }
 
   renderDelete() {
@@ -224,7 +228,7 @@ export default class EditCardModal extends React.Component {
       return (
         <button
           onClick={this.showConfirmDeleteModal}
-          className="delete-button"
+          className="button-delete"
         ><i className="fa fa-trash-o" /> Delete
         </button>
       );

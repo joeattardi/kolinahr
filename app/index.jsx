@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import configureStore from './store';
 import App from './App';
@@ -14,10 +14,10 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={ModelList} />
-        <Route path="edit" component={ModelDetail} />
+        <Route path="edit/:modelId" component={ModelDetail} />
       </Route>
     </Router>
   </Provider>,

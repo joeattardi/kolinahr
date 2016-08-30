@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import axios from 'axios';
+import { hashHistory } from 'react-router';
 
 import * as types from './types';
 import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
@@ -9,6 +10,25 @@ export function loadModels() {
     axios.get('/api/models')
       .then(result => {
         dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
+      });
+  };
+}
+
+export function deleteModel(modelId) {
+  return dispatch => {
+    axios.delete(`/api/models/${modelId}`)
+      .then(() => {
+        dispatch({ type: types.DELETE_MODEL, payload: modelId });
+      });
+  };
+}
+
+/* eslint-disable no-underscore-dangle */
+export function createModel(title) {
+  return () => {
+    axios.post('/api/models', { title })
+      .then(result => {
+        hashHistory.push(`/edit/${result.data._id}`);
       });
   };
 }
@@ -36,16 +56,29 @@ export function loadData(model) {
   };
 }
 
+export function loadModel(modelId) {
+  return dispatch => {
+    axios.get(`/api/models/${modelId}`)
+      .then(result => {
+        dispatch(loadData(result.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+}
+
 export function saveData() {
   return (dispatch, getState) => {
     const state = getState();
     const payload = {
+      _id: state.currentModel,
       title: state.title,
       cards: state.cards
     };
 
     dispatch({ type: types.SAVE_BEGIN });
-    axios.post('/model', payload)
+    axios.put(`/api/models/${state.currentModel}`, payload)
       .then(() => {
         dispatch({ type: types.SAVE_COMPLETE });
         dispatch(showNotification(NOTIFICATION_SUCCESS,

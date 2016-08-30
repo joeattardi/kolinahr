@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -9,8 +11,13 @@ import Canvas from './Canvas';
 import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
 import Notification from './Notification';
+import { loadModel } from '../actions';
 
 class ModelDetail extends React.Component {
+  componentDidMount() {
+    this.props.loadModel(this.props.routeParams.modelId);
+  }
+
   render() {
     return (
       <div id="model-detail">
@@ -37,5 +44,8 @@ class ModelDetail extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(ModelDetail);
+export default compose(
+  DragDropContext(HTML5Backend),
+  connect(null, { loadModel })
+)(ModelDetail);
 
