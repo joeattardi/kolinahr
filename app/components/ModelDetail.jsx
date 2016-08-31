@@ -25,7 +25,6 @@ class ModelDetail extends React.Component {
           <Title />
           <SaveButton />
         </div>
-        <Notification />
         <ErrorBanner />
         <EmptyBanner />
         <div id="column-container">

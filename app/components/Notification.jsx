@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import autoBind from 'auto-bind';
 
 import { hideNotification } from '../actions';
-import { NOTIFICATION_SUCCESS } from '../constants';
+import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
 const NOTIFICATION_DURATION = 5000;
 const NOTIFICATION_ANIMATION_DURATION = 500;
 
 const icons = {
-  [NOTIFICATION_SUCCESS]: 'fa-check-circle-o'
+  [NOTIFICATION_SUCCESS]: 'fa-check-circle-o',
+  [NOTIFICATION_ERROR]: 'fa-exclamation-triangle'
 };
 
 class Notification extends React.Component {
@@ -36,8 +37,10 @@ class Notification extends React.Component {
   }
 
   hideNotification() {
-    this.element.className = `notification notification-exit ${this.props.notification.type}`;
-    setTimeout(this.props.hideNotification, NOTIFICATION_ANIMATION_DURATION);
+    if (this.props.notification) {
+      this.element.className = `notification notification-exit ${this.props.notification.type}`;
+      setTimeout(this.props.hideNotification, NOTIFICATION_ANIMATION_DURATION);
+    }
   }
 
   render() {

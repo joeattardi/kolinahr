@@ -5,34 +5,6 @@ import { hashHistory } from 'react-router';
 import * as types from './types';
 import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
-export function loadModels() {
-  return (dispatch) => {
-    axios.get('/api/models')
-      .then(result => {
-        dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
-      });
-  };
-}
-
-export function deleteModel(modelId) {
-  return dispatch => {
-    axios.delete(`/api/models/${modelId}`)
-      .then(() => {
-        dispatch({ type: types.DELETE_MODEL, payload: modelId });
-      });
-  };
-}
-
-/* eslint-disable no-underscore-dangle */
-export function createModel(title) {
-  return () => {
-    axios.post('/api/models', { title })
-      .then(result => {
-        hashHistory.push(`/edit/${result.data._id}`);
-      });
-  };
-}
-
 export function showNotification(type, message) {
   return {
     type: types.SHOW_NOTIFICATION,
@@ -49,6 +21,35 @@ export function hideNotification() {
   };
 }
 
+export function loadModels() {
+  return (dispatch) => {
+    axios.get('/api/models')
+      .then(result => {
+        dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
+      });
+  };
+}
+
+export function deleteModel(modelId) {
+  return dispatch => {
+    axios.delete(`/api/models/${modelId}`)
+      .then(() => {
+        dispatch({ type: types.DELETE_MODEL, payload: modelId });
+        dispatch(showNotification(NOTIFICATION_SUCCESS, 'The logic model was deleted.'));
+      });
+  };
+}
+
+/* eslint-disable no-underscore-dangle */
+export function createModel(title) {
+  return () => {
+    axios.post('/api/models', { title })
+      .then(result => {
+        hashHistory.push(`/edit/${result.data._id}`);
+      });
+  };
+}
+
 export function loadData(model) {
   return {
     type: types.LOAD_DATA,
@@ -62,8 +63,9 @@ export function loadModel(modelId) {
       .then(result => {
         dispatch(loadData(result.data));
       })
-      .catch(() => {
-        // TODO show notification
+      .catch(err => {
+        dispatch(showNotification(NOTIFICATION_ERROR,
+          `Failed to load logic model: ${err.message}`));
       });
   };
 }
