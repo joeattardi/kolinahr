@@ -28,6 +28,12 @@ class NewModelModal extends React.Component {
     });
   }
 
+  handleKeyUp(event) {
+    if (event.keyCode === 13) {
+      this.create();
+    }
+  }
+
   showModal() {
     this.setState({ show: true });
     _.defer(() => this.input.focus());
@@ -84,6 +90,7 @@ class NewModelModal extends React.Component {
           <h5>Model Name</h5>
           <input
             onChange={this.handleChangeTitle}
+            onKeyUp={this.handleKeyUp}
             ref={this.setInput}
             value={this.state.title}
             type="text"
