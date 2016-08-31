@@ -55,7 +55,7 @@ function deleteModel(req, res) {
 }
 
 function getModels(req, res) {
-  LogicModel.find({}, 'title', (err, result) => {
+  LogicModel.find({}, 'title created updated', (err, result) => {
     if (err) {
       handleError(res, err);
     } else {

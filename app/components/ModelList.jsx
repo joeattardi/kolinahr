@@ -6,6 +6,7 @@ import autoBind from 'auto-bind';
 import { deleteModel, createModel, loadModels } from '../actions';
 import NewModelModal from './NewModelModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import ModelListItem from './ModelListItem';
 
 class ModelList extends React.Component {
   constructor(props) {
@@ -39,15 +40,7 @@ class ModelList extends React.Component {
   }
 
   renderModel(model) {
-    /* eslint-disable no-underscore-dangle */
-    return (
-      <li className="model-list-item" key={model._id}>
-        <Link to={`/edit/${model._id}`}>
-          <i className="fa fa-file-text-o" /> {model.title}
-        </Link>
-        <i onClick={() => this.deleteModel(model._id)} className="fa fa-trash-o" />
-      </li>
-    );
+    return <ModelListItem key={model._id} model={model} deleteModel={this.deleteModel} />;
   }
 
   render() {
@@ -59,9 +52,7 @@ class ModelList extends React.Component {
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
         <div id="model-list">
           <h2>Logic Models</h2>
-          <ul>
-            {this.props.models.map(this.renderModel)}
-          </ul>
+          {this.props.models.map(this.renderModel)}
         </div>
         <NewModelModal ref={this.setNewModelModal} createModel={this.props.createModel} />
         <ConfirmDeleteModal
