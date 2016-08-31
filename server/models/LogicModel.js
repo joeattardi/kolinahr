@@ -11,6 +11,8 @@ const cardSchema = mongoose.Schema({
 
 const logicModelSchema = mongoose.Schema({
   title: String,
+  created: Date,
+  updated: Date,
   cards: {
     inputs: [cardSchema],
     activities: [cardSchema],

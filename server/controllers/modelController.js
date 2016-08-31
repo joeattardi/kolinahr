@@ -15,6 +15,9 @@ function createModel(req, res) {
     });
   } else {
     const model = new LogicModel(req.body);
+    const now = new Date();
+    model.created = now;
+    model.updated = now;
     model.save(err => {
       if (err) {
         handleError(res, err);
@@ -89,6 +92,7 @@ function updateModel(req, res) {
       if (model) {
         model.title = updatedModel.title;
         model.cards = updatedModel.cards;
+        model.updated = new Date();
         model.save(saveErr => {
           if (saveErr) {
             handleError(res, saveErr);
