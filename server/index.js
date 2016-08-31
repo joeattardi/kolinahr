@@ -16,7 +16,15 @@ const app = express();
 
 winston.level = config.logLevel;
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    winston.info('Connected to MongoDB');
+  })
+  .catch(err => {
+    winston.error(`Failed to connect to MongoDB: ${err.message}`);
+    process.exit(1);
+  });
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('dist/public'));

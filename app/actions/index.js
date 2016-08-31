@@ -62,8 +62,8 @@ export function loadModel(modelId) {
       .then(result => {
         dispatch(loadData(result.data));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        // TODO show notification
       });
   };
 }

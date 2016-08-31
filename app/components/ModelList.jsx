@@ -53,7 +53,9 @@ class ModelList extends React.Component {
   render() {
     return (
       <div>
-        <button className="button-primary" onClick={this.showNewModelModal}><i className="fa fa-plus" /> New</button>
+        <button className="button-primary" onClick={this.showNewModelModal}>
+          <i className="fa fa-plus" /> New
+        </button>
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
         <div id="model-list">
           <ul>
@@ -61,7 +63,11 @@ class ModelList extends React.Component {
           </ul>
         </div>
         <NewModelModal ref={this.setNewModelModal} createModel={this.props.createModel} />
-        <ConfirmDeleteModal ref={this.setConfirmDeleteModal} type="Logic Model" onConfirmDelete={this.confirmDeleteModel} />
+        <ConfirmDeleteModal
+          ref={this.setConfirmDeleteModal}
+          type="Logic Model"
+          onConfirmDelete={this.confirmDeleteModel}
+        />
       </div>
     );
   }
@@ -69,6 +75,8 @@ class ModelList extends React.Component {
 
 ModelList.propTypes = {
   loadModels: React.PropTypes.func.isRequired,
+  deleteModel: React.PropTypes.func.isRequired,
+  createModel: React.PropTypes.func.isRequired,
   models: React.PropTypes.array.isRequired
 };
 

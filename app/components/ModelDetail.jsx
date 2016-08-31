@@ -35,7 +35,9 @@ class ModelDetail extends React.Component {
           <Canvas left="activities" right="outputs" />
           <Column stateKey="outputs" name="Outputs" linkKey="outcomes" className="column" />
           <Canvas left="outputs" right="outcomes" />
-          <Column stateKey="outcomes" name="Outcomes" linkKey="impact" className="column column-dark" />
+          <Column
+            stateKey="outcomes" name="Outcomes" linkKey="impact" className="column column-dark"
+          />
           <Canvas left="outcomes" right="impact" />
           <Column stateKey="impact" name="Impact" className="column column-dark" />
         </div>
@@ -43,6 +45,11 @@ class ModelDetail extends React.Component {
     );
   }
 }
+
+ModelDetail.propTypes = {
+  loadModel: React.PropTypes.func.isRequired,
+  routeParams: React.PropTypes.object.isRequired
+};
 
 export default compose(
   DragDropContext(HTML5Backend),

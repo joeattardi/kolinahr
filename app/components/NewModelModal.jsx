@@ -1,10 +1,7 @@
 import _ from 'lodash';
-import { connect } from 'react-redux';
 import React from 'react';
 import Modal from 'react-modal';
 import autoBind from 'auto-bind';
-
-import { createModel } from '../actions';
 
 class NewModelModal extends React.Component {
   constructor(props) {
@@ -18,6 +15,10 @@ class NewModelModal extends React.Component {
     autoBind(this);
   }
 
+  setInput(input) {
+    this.input = input;
+  }
+
   handleChangeTitle(event) {
     const emptyTitle = event.target.value === '';
 
@@ -25,10 +26,6 @@ class NewModelModal extends React.Component {
       title: event.target.value,
       emptyTitle
     });
-  }
-
-  setInput(input) {
-    this.input = input;
   }
 
   showModal() {
@@ -62,7 +59,11 @@ class NewModelModal extends React.Component {
 
   renderValidationError() {
     if (this.state.emptyTitle) {
-      return <p className="error"><i className="fa fa-exclamation-triangle" /> Title is required.</p>;
+      return (
+        <p className="error">
+          <i className="fa fa-exclamation-triangle" /> Title is required.
+        </p>
+      );
     }
 
     return <div />;
@@ -98,5 +99,9 @@ class NewModelModal extends React.Component {
     );
   }
 }
+
+NewModelModal.propTypes = {
+  createModel: React.PropTypes.func.isRequired
+};
 
 export default NewModelModal;
