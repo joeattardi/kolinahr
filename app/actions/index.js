@@ -3,7 +3,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import * as types from './types';
-import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
+import { TITLE, NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
 export function showNotification(type, message) {
   return {
@@ -75,6 +75,7 @@ export function loadModel(modelId) {
       .then(result => {
         dispatch({ type: types.LOAD_COMPLETE });
         dispatch(loadData(result.data));
+        document.title = `${TITLE} - ${result.data.title}`;
       })
       .catch(err => {
         dispatch(showNotification(NOTIFICATION_ERROR,
@@ -212,6 +213,7 @@ export function editTitle() {
 }
 
 export function editTitleSave(newTitle) {
+  document.title = `${TITLE} - ${newTitle}`;
   return {
     type: types.EDIT_TITLE_SAVE,
     payload: newTitle

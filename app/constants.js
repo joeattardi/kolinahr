@@ -1,5 +1,7 @@
 export const VERSION = '1.0.0';
 
+export const TITLE = 'Kolinahr';
+
 export const COPY_MODE = 'COPY_MODE';
 export const ADD_MODE = 'ADD_MODE';
 export const EDIT_MODE = 'EDIT_MODE';

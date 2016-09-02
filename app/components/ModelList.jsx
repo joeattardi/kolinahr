@@ -6,7 +6,7 @@ import { deleteModel, createModel, copyModel, loadModels } from '../actions';
 import NewModelModal from './NewModelModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import ModelListItem from './ModelListItem';
-import { ADD_MODE, COPY_MODE } from '../constants';
+import { TITLE, ADD_MODE, COPY_MODE } from '../constants';
 
 class ModelList extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class ModelList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = TITLE;
     this.props.loadModels();
   }
 
