@@ -59,41 +59,43 @@ class Canvas extends React.Component {
   }
 
   drawLines() {
-    const ctx = this.canvasElement.getContext('2d');
-    ctx.lineWidth = 3;
-    ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+    if (this.canvasElement) {
+      const ctx = this.canvasElement.getContext('2d');
+      ctx.lineWidth = 3;
+      ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
-    const { left, cards, cardOffsets, columnOffsets } = this.props;
+      const { left, cards, cardOffsets, columnOffsets } = this.props;
 
-    const leftOffset = columnOffsets[left];
-    if (cardOffsets[left]) {
-      const leftCardOffset = cardOffsets[left][0];
-      this.canvasElement.style.left = -1 * (leftOffset.left - leftCardOffset.width);
-    }
-
-    cards[left].forEach(card => {
-      if (card.links) {
-        card.links.forEach(link => {
-          if (this.props.dragging !== card.id && this.props.dragging !== link) {
-            const srcOffset = cardOffsets[card.id];
-            const destOffset = cardOffsets[link];
-
-            if (srcOffset && destOffset) {
-              const srcX = 0;
-              const srcY = this.getYCoordinate(srcOffset);
-              ctx.moveTo(srcX, srcY);
-
-              const destX = this.canvasElement.offsetWidth - 1;
-              const destY = this.getYCoordinate(destOffset);
-
-              this.drawArrow(ctx, srcX, srcY, destX, destY);
-
-              ctx.closePath();
-            }
-          }
-        });
+      const leftOffset = columnOffsets[left];
+      if (cardOffsets[left]) {
+        const leftCardOffset = cardOffsets[left][0];
+        this.canvasElement.style.left = -1 * (leftOffset.left - leftCardOffset.width);
       }
-    });
+
+      cards[left].forEach(card => {
+        if (card.links) {
+          card.links.forEach(link => {
+            if (this.props.dragging !== card.id && this.props.dragging !== link) {
+              const srcOffset = cardOffsets[card.id];
+              const destOffset = cardOffsets[link];
+
+              if (srcOffset && destOffset) {
+                const srcX = 0;
+                const srcY = this.getYCoordinate(srcOffset);
+                ctx.moveTo(srcX, srcY);
+
+                const destX = this.canvasElement.offsetWidth - 1;
+                const destY = this.getYCoordinate(destOffset);
+
+                this.drawArrow(ctx, srcX, srcY, destX, destY);
+
+                ctx.closePath();
+              }
+            }
+          });
+        }
+      });
+    }
   }
 
   drawArrow(context, fromx, fromy, tox, toy) {

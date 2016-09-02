@@ -36,12 +36,14 @@ export class Column extends React.Component {
   }
 
   registerOffset() {
-    this.props.registerColumnOffset(this.props.stateKey, {
-      top: this.columnElement.offsetTop,
-      left: this.columnElement.offsetLeft,
-      width: this.columnElement.offsetWidth,
-      height: this.columnElement.offsetHeight
-    });
+    if (this.columnElement) {
+      this.props.registerColumnOffset(this.props.stateKey, {
+        top: this.columnElement.offsetTop,
+        left: this.columnElement.offsetLeft,
+        width: this.columnElement.offsetWidth,
+        height: this.columnElement.offsetHeight
+      });
+    }
   }
 
   updateCard(card) {
