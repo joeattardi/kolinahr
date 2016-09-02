@@ -15,6 +15,10 @@
 
   &.error {
     border: 2px solid $error-color;
+
+    div {
+      margin-left: 1.1em;
+    }
   }
 
   &.card-dragging {
@@ -29,6 +33,11 @@
   i.error {
     color: $error-color;
     margin-right: 0.5em;
+    position: absolute;
+  }
+
+  p, ul, ol, h1, h2, h3, h4, h5 {
+    margin: 0;
   }
 }
 

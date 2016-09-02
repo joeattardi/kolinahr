@@ -4,6 +4,7 @@ import { connect as reduxConnect } from 'react-redux';
 import _ from 'lodash';
 import Color from 'color';
 import autoBind from 'auto-bind';
+import Markdown from 'react-markdown';
 
 import { EDIT_MODE } from '../constants';
 import * as actions from '../actions';
@@ -84,7 +85,7 @@ export class Card extends React.Component {
       >
         {validationErrors ?
           <i className="fa fa-exclamation-triangle error" /> : ''}
-        {this.renderText(this.props.card.text)}
+        <Markdown source={this.props.card.text} />
         {this.props.isDragging}
       </div>
     );
