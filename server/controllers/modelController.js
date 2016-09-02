@@ -7,6 +7,42 @@ function handleError(res, err) {
   });
 }
 
+function copyModel(req, res) {
+  if (!req.body.title) {
+    res.status(400).json({
+      result: 'error',
+      message: 'title is required'
+    });
+  } else {
+    LogicModel.findById(req.params.modelId, (err, model) => {
+      if (err) {
+        handleError(res, err);
+      } else {
+        if (model) {
+          const copy = new LogicModel();
+          const now = new Date();
+          copy.created = now;
+          copy.updated = now;
+          copy.title = req.body.title;
+          copy.cards = model.cards;
+          copy.save(copyErr => {
+            if (copyErr) {
+              handleError(res, copyErr);
+            } else {
+              res.status(201).send(copy);
+            }
+          });
+        } else {
+          res.status(404).json({
+            result: 'error',
+            message: `Model not found with ID ${req.params.modelId}.`
+          });
+        }
+      }
+    });
+  }
+}
+
 function createModel(req, res) {
   if (!req.body.title) {
     res.status(400).json({
@@ -113,4 +149,11 @@ function updateModel(req, res) {
   });
 }
 
-module.exports = { deleteModel, createModel, getModels, getModel, updateModel };
+module.exports = {
+  deleteModel,
+  createModel,
+  copyModel,
+  getModels,
+  getModel,
+  updateModel
+};

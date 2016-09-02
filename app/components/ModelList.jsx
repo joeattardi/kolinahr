@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import autoBind from 'auto-bind';
 
-import { deleteModel, createModel, loadModels } from '../actions';
+import { deleteModel, createModel, copyModel, loadModels } from '../actions';
 import NewModelModal from './NewModelModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import ModelListItem from './ModelListItem';
+import { ADD_MODE, COPY_MODE } from '../constants';
 
 class ModelList extends React.Component {
   constructor(props) {
@@ -26,6 +26,14 @@ class ModelList extends React.Component {
     this.confirmDeleteModal = modal;
   }
 
+  createNewModel() {
+    this.newModelModal.showModal(ADD_MODE);
+  }
+
+  copyModel(modelId) {
+    this.newModelModal.showModal(COPY_MODE, modelId);
+  }
+
   showNewModelModal() {
     this.newModelModal.showModal();
   }
@@ -40,13 +48,19 @@ class ModelList extends React.Component {
   }
 
   renderModel(model) {
-    return <ModelListItem key={model._id} model={model} deleteModel={this.deleteModel} />;
+    return (
+      <ModelListItem
+        key={model._id}
+        model={model}
+        deleteModel={this.deleteModel} copyModel={this.copyModel}
+      />
+    );
   }
 
   render() {
     return (
       <div>
-        <button className="button-primary" onClick={this.showNewModelModal}>
+        <button className="button-primary" onClick={this.createNewModel}>
           <i className="fa fa-plus" /> New
         </button>
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
@@ -54,7 +68,11 @@ class ModelList extends React.Component {
           <h2>Logic Models</h2>
           {this.props.models.map(this.renderModel)}
         </div>
-        <NewModelModal ref={this.setNewModelModal} createModel={this.props.createModel} />
+        <NewModelModal
+          ref={this.setNewModelModal}
+          createModel={this.props.createModel}
+          copyModel={this.props.copyModel}
+        />
         <ConfirmDeleteModal
           ref={this.setConfirmDeleteModal}
           type="Logic Model"
@@ -69,6 +87,7 @@ ModelList.propTypes = {
   loadModels: React.PropTypes.func.isRequired,
   deleteModel: React.PropTypes.func.isRequired,
   createModel: React.PropTypes.func.isRequired,
+  copyModel: React.PropTypes.func.isRequired,
   models: React.PropTypes.array.isRequired
 };
 
@@ -78,4 +97,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { deleteModel, createModel, loadModels })(ModelList);
+export default connect(mapStateToProps, {
+  deleteModel, createModel, copyModel, loadModels })(ModelList);

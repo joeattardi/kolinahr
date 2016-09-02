@@ -10,7 +10,6 @@ import Title from './Title';
 import Canvas from './Canvas';
 import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
-import Notification from './Notification';
 import { loadModel } from '../actions';
 
 class ModelDetail extends React.Component {

@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import axios from 'axios';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import * as types from './types';
 import { NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
@@ -45,7 +45,16 @@ export function createModel(title) {
   return () => {
     axios.post('/api/models', { title })
       .then(result => {
-        hashHistory.push(`/edit/${result.data._id}`);
+        browserHistory.push(`/edit/${result.data._id}`);
+      });
+  };
+}
+
+export function copyModel(modelId, title) {
+  return () => {
+    axios.post(`/api/models/${modelId}`, { title })
+      .then(result => {
+        browserHistory.push(`/edit/${result.data._id}`);
       });
   };
 }

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Modal from 'react-modal';
 import autoBind from 'auto-bind';
+import { ADD_MODE } from '../constants';
 
 class NewModelModal extends React.Component {
   constructor(props) {
@@ -34,8 +35,13 @@ class NewModelModal extends React.Component {
     }
   }
 
-  showModal() {
-    this.setState({ show: true });
+  showModal(mode, id) {
+    this.setState({
+      show: true,
+      copyId: id,
+      mode
+    });
+
     _.defer(() => this.input.focus());
   }
 
@@ -59,7 +65,12 @@ class NewModelModal extends React.Component {
       _.defer(() => this.input.focus());
     } else {
       this.setState({ emptyTitle: false });
-      this.props.createModel(this.input.value);
+
+      if (this.state.mode === ADD_MODE) {
+        this.props.createModel(this.input.value);
+      } else {
+        this.props.copyModel(this.state.copyId, this.input.value);
+      }
     }
   }
 
@@ -84,7 +95,7 @@ class NewModelModal extends React.Component {
         isOpen={this.state.show}
       >
         <div className="modal-header">
-          <h4>New Logic Model</h4>
+          <h4>{this.state.mode === ADD_MODE ? 'New' : 'Copy'} Logic Model</h4>
         </div>
         <div className="modal-body">
           <h5>Model Name</h5>
@@ -100,7 +111,9 @@ class NewModelModal extends React.Component {
         </div>
         <div className="modal-buttons">
           <button onClick={this.cancel}>Cancel</button>
-          <button className="button-primary" onClick={this.create}>Create</button>
+          <button className="button-primary" onClick={this.create}>
+            {this.state.mode === ADD_MODE ? 'Create' : 'Create Copy'}
+          </button>
         </div>
       </Modal>
     );
@@ -108,7 +121,8 @@ class NewModelModal extends React.Component {
 }
 
 NewModelModal.propTypes = {
-  createModel: React.PropTypes.func.isRequired
+  createModel: React.PropTypes.func.isRequired,
+  copyModel: React.PropTypes.func.isRequired
 };
 
 export default NewModelModal;

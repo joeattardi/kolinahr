@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB_URI)
   });
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('dist/public'));
+  app.use(express.static(path.resolve('dist', 'public')));
 } else {
   winston.info('Running in development mode');
   const compiler = webpack(webpackConfig);
@@ -38,12 +38,13 @@ app.use(bodyParser.json());
 
 app.get('/api/models', modelController.getModels);
 app.post('/api/models', modelController.createModel);
+app.post('/api/models/:modelId', modelController.copyModel);
 app.get('/api/models/:modelId', modelController.getModel);
 app.delete('/api/models/:modelId', modelController.deleteModel);
 app.put('/api/models/:modelId', modelController.updateModel);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve('dist/public', 'index.html'));
+  res.sendFile(path.resolve('dist', 'public', 'index.html'));
 });
 
 app.listen(port, () => {
