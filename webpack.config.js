@@ -38,7 +38,7 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.png$/,
+        test: /\.png|.gif$/,
         exclude: /node_modules/,
         loader: 'file-loader?name=[name].[ext]'
       },

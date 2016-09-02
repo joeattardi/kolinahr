@@ -21,6 +21,17 @@ export function notificationReducer(state = null, action) {
   }
 }
 
+export function loadingReducer(state = false, action) {
+  switch (action.type) {
+    case types.LOAD_BEGIN:
+      return true;
+    case types.LOAD_COMPLETE:
+      return false;
+    default:
+      return state;
+  }
+}
+
 export function savingReducer(state = false, action) {
   switch (action.type) {
     case types.SAVE_BEGIN:

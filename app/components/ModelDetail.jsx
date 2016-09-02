@@ -12,12 +12,17 @@ import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
 import { loadModel } from '../actions';
 
+import loadingGif from '../images/loading.gif';
+
 class ModelDetail extends React.Component {
   componentDidMount() {
     this.props.loadModel(this.props.routeParams.modelId);
   }
 
   render() {
+    if (this.props.loading) {
+      return <img className="loadingIndicator" alt="Loading" src="/loading.gif" />;
+    }
     return (
       <div id="model-detail">
         <div className="title-area">
@@ -49,8 +54,14 @@ ModelDetail.propTypes = {
   routeParams: React.PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    loading: state.loading
+  };
+}
+
 export default compose(
   DragDropContext(HTML5Backend),
-  connect(null, { loadModel })
+  connect(mapStateToProps, { loadModel })
 )(ModelDetail);
 

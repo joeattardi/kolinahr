@@ -23,9 +23,11 @@ export function hideNotification() {
 
 export function loadModels() {
   return (dispatch) => {
+    dispatch({ type: types.LOAD_BEGIN });
     axios.get('/api/models')
       .then(result => {
         dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
+        dispatch({ type: types.LOAD_COMPLETE });
       });
   };
 }
@@ -68,8 +70,10 @@ export function loadData(model) {
 
 export function loadModel(modelId) {
   return dispatch => {
+    dispatch({ type: types.LOAD_BEGIN });
     axios.get(`/api/models/${modelId}`)
       .then(result => {
+        dispatch({ type: types.LOAD_COMPLETE });
         dispatch(loadData(result.data));
       })
       .catch(err => {

@@ -58,6 +58,10 @@ class ModelList extends React.Component {
   }
 
   render() {
+    if (this.props.loading) {
+      return <img className="loadingIndicator" alt="Loading" src="/loading.gif" />;
+    }
+
     return (
       <div>
         <button className="button-primary" onClick={this.createNewModel}>
@@ -93,7 +97,8 @@ ModelList.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    models: state.allModels
+    models: state.allModels,
+    loading: state.loading
   };
 }
 

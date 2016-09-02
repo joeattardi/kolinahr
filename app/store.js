@@ -17,6 +17,7 @@ export default function configureStore() {
     dragging: reducers.dragReducer,
     validationErrors: validationReducer,
     saving: reducers.savingReducer,
+    loading: reducers.loadingReducer,
     notification: reducers.notificationReducer,
     allModels: modelsReducer,
     currentModel: reducers.currentModelReducer
