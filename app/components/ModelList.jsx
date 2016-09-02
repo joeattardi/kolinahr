@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import autoBind from 'auto-bind';
 
-import { deleteModel, createModel, copyModel, loadModels } from '../actions';
+import { deleteModel, createModel, copyModel, loadModels, setDirty } from '../actions';
 import NewModelModal from './NewModelModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import ModelListItem from './ModelListItem';
@@ -16,6 +16,7 @@ class ModelList extends React.Component {
 
   componentDidMount() {
     document.title = TITLE;
+    this.props.setDirty(false);
     this.props.loadModels();
   }
 
@@ -93,6 +94,7 @@ ModelList.propTypes = {
   deleteModel: React.PropTypes.func.isRequired,
   createModel: React.PropTypes.func.isRequired,
   copyModel: React.PropTypes.func.isRequired,
+  setDirty: React.PropTypes.func.isRequired,
   models: React.PropTypes.array.isRequired,
   loading: React.PropTypes.bool.isRequired
 };
@@ -105,4 +107,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  deleteModel, createModel, copyModel, loadModels })(ModelList);
+  deleteModel, createModel, copyModel, loadModels, setDirty })(ModelList);

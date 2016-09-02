@@ -12,6 +12,23 @@ import './images/logo.png';
 
 const store = configureStore();
 
+window.onbeforeunload = () => {
+  if (store.getState().dirty) {
+    return 'You have unsaved changes. Are you sure you want to leave?';
+  }
+
+  return undefined;
+};
+
+store.subscribe(() => {
+  const dirty = store.getState().dirty;
+  if (dirty && document.title.indexOf('*') !== 0) {
+    document.title = `* ${document.title}`;
+  } else if (!dirty && document.title.indexOf('*') === 0) {
+    document.title = document.title.substring(2);
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>

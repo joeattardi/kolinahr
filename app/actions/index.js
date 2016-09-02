@@ -225,3 +225,10 @@ export function editTitleCancel() {
     type: types.EDIT_TITLE_CANCEL
   };
 }
+
+export function setDirty(dirty) {
+  return {
+    type: types.SET_DIRTY,
+    payload: dirty
+  };
+}

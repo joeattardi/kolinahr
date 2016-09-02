@@ -20,7 +20,8 @@ export default function configureStore() {
     loading: reducers.loadingReducer,
     notification: reducers.notificationReducer,
     allModels: modelsReducer,
-    currentModel: reducers.currentModelReducer
+    currentModel: reducers.currentModelReducer,
+    dirty: reducers.dirtyReducer
   });
 
   const store = createStore(reducer, {}, compose(

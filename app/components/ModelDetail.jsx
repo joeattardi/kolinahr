@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { withRouter } from 'react-router';
+import autoBind from 'auto-bind';
 
 import SaveButton from './SaveButton';
 import Column from './Column';
@@ -15,8 +17,22 @@ import { loadModel } from '../actions';
 import '../images/loading.gif';
 
 class ModelDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
+  }
+
   componentDidMount() {
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
     this.props.loadModel(this.props.routeParams.modelId);
+  }
+
+  routerWillLeave() {
+    if (this.props.dirty) {
+      return 'You have unsaved changes. Are you sure you want to leave?';
+    }
+
+    return true;
   }
 
   render() {
@@ -52,17 +68,21 @@ class ModelDetail extends React.Component {
 ModelDetail.propTypes = {
   loadModel: React.PropTypes.func.isRequired,
   routeParams: React.PropTypes.object.isRequired,
-  loading: React.PropTypes.bool.isRequired
+  loading: React.PropTypes.bool.isRequired,
+  router: React.PropTypes.object.isRequired,
+  route: React.PropTypes.object.isRequired,
+  dirty: React.PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    loading: state.loading
+    loading: state.loading,
+    dirty: state.dirty
   };
 }
 
 export default compose(
   DragDropContext(HTML5Backend),
   connect(mapStateToProps, { loadModel })
-)(ModelDetail);
+)(withRouter(ModelDetail));
 

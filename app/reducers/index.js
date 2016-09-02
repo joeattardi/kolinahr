@@ -21,6 +21,23 @@ export function notificationReducer(state = null, action) {
   }
 }
 
+export function dirtyReducer(state = false, action) {
+  switch (action.type) {
+    case types.MOVE_CARD:
+    case types.ADD_CARD:
+    case types.EDIT_TITLE:
+    case types.UPDATE_CARD:
+    case types.DELETE_CARD:
+      return true;
+    case types.SAVE_COMPLETE:
+      return false;
+    case types.SET_DIRTY:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export function loadingReducer(state = false, action) {
   switch (action.type) {
     case types.LOAD_BEGIN:
