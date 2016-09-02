@@ -8,7 +8,7 @@ const winston = require('winston');
 
 const config = require('./config');
 const webpackConfig = require('../webpack.config');
-const modelController = require('./controllers/modelController');
+const apiRouter = require('./routers/apiRouter');
 
 const port = process.env.PORT || 3000;
 
@@ -36,12 +36,8 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(bodyParser.json());
 
-app.get('/api/models', modelController.getModels);
-app.post('/api/models', modelController.createModel);
-app.post('/api/models/:modelId', modelController.copyModel);
-app.get('/api/models/:modelId', modelController.getModel);
-app.delete('/api/models/:modelId', modelController.deleteModel);
-app.put('/api/models/:modelId', modelController.updateModel);
+app.use('/api', apiRouter);
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'public', 'index.html'));
