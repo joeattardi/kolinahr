@@ -92,7 +92,8 @@ ModelList.propTypes = {
   deleteModel: React.PropTypes.func.isRequired,
   createModel: React.PropTypes.func.isRequired,
   copyModel: React.PropTypes.func.isRequired,
-  models: React.PropTypes.array.isRequired
+  models: React.PropTypes.array.isRequired,
+  loading: React.PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {

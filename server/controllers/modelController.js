@@ -17,27 +17,25 @@ function copyModel(req, res) {
     LogicModel.findById(req.params.modelId, (err, model) => {
       if (err) {
         handleError(res, err);
+      } else if (model) {
+        const copy = new LogicModel();
+        const now = new Date();
+        copy.created = now;
+        copy.updated = now;
+        copy.title = req.body.title;
+        copy.cards = model.cards;
+        copy.save(copyErr => {
+          if (copyErr) {
+            handleError(res, copyErr);
+          } else {
+            res.status(201).send(copy);
+          }
+        });
       } else {
-        if (model) {
-          const copy = new LogicModel();
-          const now = new Date();
-          copy.created = now;
-          copy.updated = now;
-          copy.title = req.body.title;
-          copy.cards = model.cards;
-          copy.save(copyErr => {
-            if (copyErr) {
-              handleError(res, copyErr);
-            } else {
-              res.status(201).send(copy);
-            }
-          });
-        } else {
-          res.status(404).json({
-            result: 'error',
-            message: `Model not found with ID ${req.params.modelId}.`
-          });
-        }
+        res.status(404).json({
+          result: 'error',
+          message: `Model not found with ID ${req.params.modelId}.`
+        });
       }
     });
   }
@@ -68,24 +66,22 @@ function deleteModel(req, res) {
   LogicModel.findById(req.params.modelId, (err, model) => {
     if (err) {
       handleError(res, err);
+    } else if (model) {
+      model.remove(removeErr => {
+        if (err) {
+          handleError(res, removeErr);
+        } else {
+          res.status(200).json({
+            result: 'success',
+            message: 'Model deleted'
+          });
+        }
+      });
     } else {
-      if (model) {
-        model.remove(removeErr => {
-          if (err) {
-            handleError(res, removeErr);
-          } else {
-            res.status(200).json({
-              result: 'success',
-              message: 'Model deleted'
-            });
-          }
-        });
-      } else {
-        res.status(404).json({
-          result: 'error',
-          message: `Model not found with ID ${req.params.modelId}.`
-        });
-      }
+      res.status(404).json({
+        result: 'error',
+        message: `Model not found with ID ${req.params.modelId}.`
+      });
     }
   });
 }
@@ -104,15 +100,13 @@ function getModel(req, res) {
   LogicModel.findById(req.params.modelId, (err, model) => {
     if (err) {
       handleError(res, err);
+    } else if (model) {
+      res.json(model);
     } else {
-      if (model) {
-        res.json(model);
-      } else {
-        res.status(404).json({
-          result: 'error',
-          message: `Model not found with ID ${req.params.modelId}.`
-        });
-      }
+      res.status(404).json({
+        result: 'error',
+        message: `Model not found with ID ${req.params.modelId}.`
+      });
     }
   });
 }
@@ -124,27 +118,25 @@ function updateModel(req, res) {
   LogicModel.findById(id, (err, model) => {
     if (err) {
       handleError(res, err);
+    } else if (model) {
+      model.title = updatedModel.title;
+      model.cards = updatedModel.cards;
+      model.updated = new Date();
+      model.save(saveErr => {
+        if (saveErr) {
+          handleError(res, saveErr);
+        } else {
+          res.status(200).json({
+            result: 'success',
+            message: 'Model updated.'
+          });
+        }
+      });
     } else {
-      if (model) {
-        model.title = updatedModel.title;
-        model.cards = updatedModel.cards;
-        model.updated = new Date();
-        model.save(saveErr => {
-          if (saveErr) {
-            handleError(res, saveErr);
-          } else {
-            res.status(200).json({
-              result: 'success',
-              message: 'Model updated.'
-            });
-          }
-        });
-      } else {
-        res.status(404).json({
-          result: 'error',
-          message: `Model not found with ID ${id}.`
-        });
-      }
+      res.status(404).json({
+        result: 'error',
+        message: `Model not found with ID ${id}.`
+      });
     }
   });
 }

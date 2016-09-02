@@ -12,7 +12,7 @@ import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
 import { loadModel } from '../actions';
 
-import loadingGif from '../images/loading.gif';
+import '../images/loading.gif';
 
 class ModelDetail extends React.Component {
   componentDidMount() {
@@ -51,7 +51,8 @@ class ModelDetail extends React.Component {
 
 ModelDetail.propTypes = {
   loadModel: React.PropTypes.func.isRequired,
-  routeParams: React.PropTypes.object.isRequired
+  routeParams: React.PropTypes.object.isRequired,
+  loading: React.PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
