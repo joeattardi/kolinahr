@@ -3,13 +3,12 @@ const GitHubStrategy = require('passport-github2');
 const jwt = require('passport-jwt');
 const JwtStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
-const config = require('./config');
 const User = require('./models/User');
 
 passport.use('github', new GitHubStrategy({
-  clientID: config.clientID,
-  clientSecret: config.clientSecret,
-  callbackURL: 'http://localhost:3000/auth/github/callback'
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL
 },
 
 (accessToken, refreshToken, profile, done) => {
@@ -24,7 +23,6 @@ passport.use('github', new GitHubStrategy({
         name: profile.displayName,
         avatarUrl: profile._json.avatar_url
       });
-      console.dir(newUser);
       newUser.save(saveErr => {
         if (saveErr) {
           done(saveErr, false);
@@ -38,7 +36,7 @@ passport.use('github', new GitHubStrategy({
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.jwtSecret
+  secretOrKey: process.env.JWT_SECRET
 };
 
 passport.use('jwt', new JwtStrategy(jwtOptions, (payload, done) => {

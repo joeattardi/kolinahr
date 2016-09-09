@@ -45,7 +45,7 @@ app.use('/api', apiRouter);
 app.get('/auth/github', passport.authenticate('github', { scope: 'openid email' }));
 app.get('/auth/github/callback', passport.authenticate('github', {
   session: false, failureRedirect: '/login' }), (req, res) => {
-    const token = jwt.encode({ iat: Date.now(), sub: req.user.githubId }, config.jwtSecret);
+    const token = jwt.encode({ iat: Date.now(), sub: req.user.githubId }, process.env.JWT_SECRET);
     res.redirect(`/?token=${token}`);
   });
 
