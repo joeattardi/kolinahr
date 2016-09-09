@@ -21,7 +21,9 @@ export default function configureStore() {
     notification: reducers.notificationReducer,
     allModels: modelsReducer,
     currentModel: reducers.currentModelReducer,
-    dirty: reducers.dirtyReducer
+    dirty: reducers.dirtyReducer,
+    auth: reducers.authReducer,
+    user: reducers.userReducer
   });
 
   const store = createStore(reducer, {}, compose(

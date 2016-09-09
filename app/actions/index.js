@@ -24,40 +24,52 @@ export function hideNotification() {
 export function loadModels() {
   return (dispatch) => {
     dispatch({ type: types.LOAD_BEGIN });
-    axios.get('/api/models')
-      .then(result => {
-        dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
-        dispatch({ type: types.LOAD_COMPLETE });
-      });
+    axios.get('/api/models', {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(result => {
+      dispatch({ type: types.LOAD_MODEL_LIST, payload: result.data });
+      dispatch({ type: types.LOAD_COMPLETE });
+    }).catch(err => {
+      dispatch(showNotification(NOTIFICATION_ERROR,
+        `Failed to load logic models: ${err.message}`));
+      dispatch({ type: types.LOAD_COMPLETE });
+    });
   };
 }
 
 export function deleteModel(modelId) {
   return dispatch => {
-    axios.delete(`/api/models/${modelId}`)
-      .then(() => {
-        dispatch({ type: types.DELETE_MODEL, payload: modelId });
-        dispatch(showNotification(NOTIFICATION_SUCCESS, 'The logic model was deleted.'));
-      });
+    axios.delete(`/api/models/${modelId}`, {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(() => {
+      dispatch({ type: types.DELETE_MODEL, payload: modelId });
+      dispatch(showNotification(NOTIFICATION_SUCCESS, 'The logic model was deleted.'));
+    }).catch(err => {
+      dispatch(showNotification(NOTIFICATION_ERROR,
+        `Failed to delete logic model: ${err.message}`));
+      dispatch({ type: types.LOAD_COMPLETE });
+    });
   };
 }
 
 /* eslint-disable no-underscore-dangle */
 export function createModel(title) {
   return () => {
-    axios.post('/api/models', { title })
-      .then(result => {
-        browserHistory.push(`/edit/${result.data._id}`);
-      });
+    axios.post('/api/models', { title }, {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(result => {
+      browserHistory.push(`/edit/${result.data._id}`);
+    });
   };
 }
 
 export function copyModel(modelId, title) {
   return () => {
-    axios.post(`/api/models/${modelId}`, { title })
-      .then(result => {
-        browserHistory.push(`/edit/${result.data._id}`);
-      });
+    axios.post(`/api/models/${modelId}`, { title }, {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(result => {
+      browserHistory.push(`/edit/${result.data._id}`);
+    });
   };
 }
 
@@ -71,16 +83,17 @@ export function loadData(model) {
 export function loadModel(modelId) {
   return dispatch => {
     dispatch({ type: types.LOAD_BEGIN });
-    axios.get(`/api/models/${modelId}`)
-      .then(result => {
-        dispatch({ type: types.LOAD_COMPLETE });
-        dispatch(loadData(result.data));
-        document.title = `${TITLE} - ${result.data.title}`;
-      })
-      .catch(err => {
-        dispatch(showNotification(NOTIFICATION_ERROR,
-          `Failed to load logic model: ${err.message}`));
-      });
+    axios.get(`/api/models/${modelId}`, {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(result => {
+      dispatch({ type: types.LOAD_COMPLETE });
+      dispatch(loadData(result.data));
+      document.title = `${TITLE} - ${result.data.title}`;
+    })
+    .catch(err => {
+      dispatch(showNotification(NOTIFICATION_ERROR,
+        `Failed to load logic model: ${err.message}`));
+    });
   };
 }
 
@@ -94,19 +107,20 @@ export function saveData() {
     };
 
     dispatch({ type: types.SAVE_BEGIN });
-    axios.put(`/api/models/${state.currentModel}`, payload)
-      .then(() => {
-        dispatch({ type: types.SAVE_COMPLETE });
-        dispatch(showNotification(NOTIFICATION_SUCCESS,
-          'Successfully saved the logic model.'
-        ));
-      })
-      .catch(err => {
-        dispatch({ type: types.SAVE_COMPLETE });
-        dispatch(showNotification(NOTIFICATION_ERROR,
-          `Failed to save the logic model: ${err.message}`
-        ));
-      });
+    axios.put(`/api/models/${state.currentModel}`, payload, {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(() => {
+      dispatch({ type: types.SAVE_COMPLETE });
+      dispatch(showNotification(NOTIFICATION_SUCCESS,
+        'Successfully saved the logic model.'
+      ));
+    })
+    .catch(err => {
+      dispatch({ type: types.SAVE_COMPLETE });
+      dispatch(showNotification(NOTIFICATION_ERROR,
+        `Failed to save the logic model: ${err.message}`
+      ));
+    });
   };
 }
 
@@ -230,5 +244,18 @@ export function setDirty(dirty) {
   return {
     type: types.SET_DIRTY,
     payload: dirty
+  };
+}
+
+export function getUser() {
+  return dispatch => {
+    axios.get('/api/user', {
+      headers: { authorization: localStorage.getItem('token') }
+    }).then(response => {
+      dispatch({
+        type: types.SET_USER,
+        payload: response.data
+      });
+    });
   };
 }

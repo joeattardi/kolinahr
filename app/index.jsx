@@ -7,6 +7,8 @@ import configureStore from './store';
 import App from './App';
 import ModelDetail from './components/ModelDetail';
 import ModelList from './components/ModelList';
+import Login from './components/Login';
+import Logout from './components/Logout';
 import './scss/index.scss';
 import './images/logo.png';
 
@@ -32,6 +34,8 @@ store.subscribe(() => {
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
+      <Route path="/login" component={Login} />
+      <Route path="/logout" component={Logout} />
       <Route path="/" component={App}>
         <IndexRoute component={ModelList} />
         <Route path="edit/:modelId" component={ModelDetail} />

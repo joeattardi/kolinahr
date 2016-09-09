@@ -5,10 +5,14 @@ const webpack = require('webpack');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const winston = require('winston');
+const passport = require('passport');
+const jwt = require('jwt-simple');
 
 const config = require('./config');
 const webpackConfig = require('../webpack.config');
 const apiRouter = require('./routers/apiRouter');
+require('./auth');
+
 
 const port = process.env.PORT || 3000;
 
@@ -35,8 +39,15 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(bodyParser.json());
-
+app.use(passport.initialize());
 app.use('/api', apiRouter);
+
+app.get('/auth/github', passport.authenticate('github', { scope: 'openid email' }));
+app.get('/auth/github/callback', passport.authenticate('github', {
+  session: false, failureRedirect: '/login' }), (req, res) => {
+    const token = jwt.encode({ iat: Date.now(), sub: req.user.githubId }, config.jwtSecret);
+    res.redirect(`/?token=${token}`);
+  });
 
 
 app.get('*', (req, res) => {

@@ -20,4 +20,6 @@ export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
 export const LOAD_MODEL_LIST = 'LOAD_MODEL_LIST';
 export const DELETE_MODEL = 'DELETE_MODEL';
 export const SET_DIRTY = 'SET_DIRTY';
-
+export const AUTH_USER = 'AUTH_USER';
+export const DEAUTH_USER = 'DEAUTH_USER';
+export const SET_USER = 'SET_USER';

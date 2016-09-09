@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import autoBind from 'auto-bind';
 
 import { deleteModel, createModel, copyModel, loadModels, setDirty } from '../actions';
@@ -14,10 +15,21 @@ class ModelList extends React.Component {
     autoBind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     document.title = TITLE;
     this.props.setDirty(false);
-    this.props.loadModels();
+
+    if (this.props.location.query.token) {
+      localStorage.setItem('token', this.props.location.query.token);
+      browserHistory.push('/');
+    }
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.props.loadModels();
+    } else {
+      browserHistory.push('/login');
+    }
   }
 
   setNewModelModal(modal) {
@@ -96,7 +108,8 @@ ModelList.propTypes = {
   copyModel: React.PropTypes.func.isRequired,
   setDirty: React.PropTypes.func.isRequired,
   models: React.PropTypes.array.isRequired,
-  loading: React.PropTypes.bool.isRequired
+  loading: React.PropTypes.bool.isRequired,
+  location: React.PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

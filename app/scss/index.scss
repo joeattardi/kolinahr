@@ -25,16 +25,32 @@ header {
   align-items: center;
   display: flex;
   padding: 5px;
+  color: #FFFFFF;
   
   background-color: $header-background-color;
 
+  #user-info {
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    margin-right: 0.5em;
+    img {
+      margin-right: 0.5em;
+    }
+  }
+
   a {
+    color: #FFFFFF;
+  }
+
+  a#home-link {
     display: flex;
     text-decoration: none;
+    flex-grow: 1;
     h1 {
+      color: #FFFFFF;
       font-size: 1.2em;
       margin: 0;
-      color: #FFFFFF;
     }
   }
 }

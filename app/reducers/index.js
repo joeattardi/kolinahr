@@ -95,3 +95,23 @@ export function dragReducer(state = null, action) {
       return state;
   }
 }
+
+export function authReducer(state = false, action) {
+  switch (action.type) {
+    case types.AUTH_USER:
+      return true;
+    case types.DEAUTH_USER:
+      return false;
+    default:
+      return state;
+  }
+}
+
+export function userReducer(state = {}, action) {
+  switch (action.type) {
+    case types.SET_USER:
+      return action.payload;
+    default:
+      return state;
+  }
+}

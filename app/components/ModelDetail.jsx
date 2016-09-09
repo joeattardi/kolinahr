@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { withRouter } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import autoBind from 'auto-bind';
 
 import SaveButton from './SaveButton';
@@ -20,6 +20,12 @@ class ModelDetail extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+  }
+
+  componentWillMount() {
+    if (!localStorage.getItem('token')) {
+      browserHistory.push('/login');
+    }
   }
 
   componentDidMount() {
