@@ -1,10 +1,264 @@
 import { VIEW_MODE, EDIT_MODE, DEFAULT_COLOR } from '../../app/constants';
 import * as actionTypes from '../../app/actions/types';
 import cardsReducer from '../../app/reducers/cardsReducer';
-
-import { titleReducer, titleModeReducer } from '../../app/reducers';
+import * as offsetReducers from '../../app/reducers/offsetReducers';
+import * as reducers from '../../app/reducers';
+import modelsReducer from '../../app/reducers/modelsReducer';
 
 describe('Reducers', () => {
+  describe('Models Reducer', () => {
+    it('sets the list of models', () => {
+      const models = [
+        { _id: 'abc', cards: {} },
+        { _id: 'def', cards: {} }
+      ];
+
+      expect(modelsReducer([], {
+        type: actionTypes.LOAD_MODEL_LIST,
+        payload: models
+      })).toEqual(models);
+    });
+
+    it('deletes a model', () => {
+      const models = [
+        { _id: 'abc', cards: {} },
+        { _id: 'def', cards: {} }
+      ];
+
+      expect(modelsReducer(models, {
+        type: actionTypes.DELETE_MODEL,
+        payload: 'def'
+      })).toEqual([
+        { _id: 'abc', cards: {} }
+      ]);
+    });
+  });
+
+  describe('User Reducer', () => {
+    it('sets the current user on login', () => {
+      expect(reducers.userReducer({}, {
+        type: actionTypes.SET_USER,
+        payload: { id: '123' }
+      })).toEqual({ id: '123' });
+    });
+  });
+
+  describe('Auth Reducer', () => {
+    it('sets the auth state to true', () => {
+      expect(reducers.authReducer(false, {
+        type: actionTypes.AUTH_USER
+      })).toEqual(true);
+    });
+
+    it('sets the auth state to false', () => {
+      expect(reducers.authReducer(true, {
+        type: actionTypes.DEAUTH_USER
+      })).toEqual(false);
+    });
+  });
+
+  describe('Drag Reducer', () => {
+    it('sets the dragging state when a drag event begins', () => {
+      expect(reducers.dragReducer(null, {
+        type: actionTypes.START_DRAG,
+        payload: { id: 'abc' }
+      })).toEqual({ id: 'abc' });
+    });
+
+    it('clears the dragging state when a drag event ends', () => {
+      expect(reducers.dragReducer({ id: 'abc' }, {
+        type: actionTypes.END_DRAG
+      })).toEqual(null);
+    });
+  });
+
+  describe('Saving Reducer', () => {
+    it('sets the saving state to true when beginning a save operation', () => {
+      expect(reducers.savingReducer(false, { type: actionTypes.SAVE_BEGIN })).toEqual(true);
+    });
+
+    it('sets the saving state to false when completing a save operation', () => {
+      expect(reducers.savingReducer(true, { type: actionTypes.SAVE_COMPLETE })).toEqual(false);
+    });
+  });
+
+  describe('Loading Reducer', () => {
+    it('sets the loading state to true when beginning a load operation', () => {
+      expect(reducers.loadingReducer(false, { type: actionTypes.LOAD_BEGIN })).toEqual(true);
+    });
+
+    it('sets the loading state to false when loading is complete', () => {
+      expect(reducers.loadingReducer(true, { type: actionTypes.LOAD_COMPLETE })).toEqual(false);
+    });
+  });
+
+  describe('Dirty Reducer', () => {
+    it('marks the state as dirty when moving a card', () => {
+      expect(reducers.dirtyReducer(false, { type: actionTypes.MOVE_CARD })).toEqual(true);
+    });
+
+    it('marks the state as dirty when adding a card', () => {
+      expect(reducers.dirtyReducer(false, { type: actionTypes.ADD_CARD })).toEqual(true);
+    });
+
+    it('marks the state as dirty when editing the title', () => {
+      expect(reducers.dirtyReducer(false, { type: actionTypes.EDIT_TITLE })).toEqual(true);
+    });
+
+    it('marks the state as dirty when updating a card', () => {
+      expect(reducers.dirtyReducer(false, { type: actionTypes.UPDATE_CARD })).toEqual(true);
+    });
+
+    it('marks the state as dirty when deleting a card', () => {
+      expect(reducers.dirtyReducer(false, { type: actionTypes.DELETE_CARD })).toEqual(true);
+    });
+
+    it('marks the state as not dirty when saving data', () => {
+      expect(reducers.dirtyReducer(true, { type: actionTypes.SAVE_COMPLETE })).toEqual(false);
+    });
+
+    it('explicitly sets the dirty state to true', () => {
+      expect(reducers.dirtyReducer(false, {
+        type: actionTypes.SET_DIRTY,
+        payload: true
+      })).toEqual(true);
+    });
+
+    it('explicitly sets the dirty state to false', () => {
+      expect(reducers.dirtyReducer(true, {
+        type: actionTypes.SET_DIRTY,
+        payload: false
+      })).toEqual(false);
+    });
+  });
+
+  describe('Notification Reducer', () => {
+    it('sets the notification on SHOW_NOTIFICATION', () => {
+      const state = null;
+      const action = {
+        type: actionTypes.SHOW_NOTIFICATION,
+        payload: {
+          type: 'notification-success',
+          message: 'Successfully saved the logic model.'
+        }
+      };
+
+      const newState = reducers.notificationReducer(state, action);
+      expect(newState).toEqual({
+        type: 'notification-success',
+        message: 'Successfully saved the logic model.'
+      });
+    });
+
+    it('clears the notification on HIDE_NOTIFICATION', () => {
+      const state = {
+        type: 'notification-success',
+        message: 'Successfully saved the logic model.'
+      };
+
+      const action = {
+        type: actionTypes.HIDE_NOTIFICATION
+      };
+
+      const newState = reducers.notificationReducer(state, action);
+      expect(newState).toEqual(null);
+    });
+  });
+
+  describe('Current Model Reducer', () => {
+    it('sets the model ID when data is loaded', () => {
+      const state = 'model-123';
+      const newState = reducers.currentModelReducer(state, {
+        type: actionTypes.LOAD_DATA,
+        payload: {
+          _id: 'model-456'
+        }
+      });
+
+      expect(newState).toEqual('model-456');
+    });
+  });
+
+  describe('Column Offsets Reducer', () => {
+    it('clears out old offset data when a new model is loaded', () => {
+      const state = {
+        inputs: { top: 0, left: 0, width: 100, height: 100 },
+        activities: { top: 0, left: 100, width: 100, height: 100 }
+      };
+
+      const newState = offsetReducers.columnOffsetsReducer(state, { type: actionTypes.LOAD_DATA });
+      expect(newState).toEqual({});
+    });
+
+    it('registers a new offset', () => {
+      const state = {
+        inputs: { top: 0, left: 0, width: 100, height: 100 }
+      };
+
+      const action = {
+        type: actionTypes.REGISTER_COLUMN_OFFSET,
+        payload: {
+          columnId: 'activities',
+          offset: { top: 0, left: 100, width: 100, height: 100 }
+        }
+      };
+
+      const newState = offsetReducers.columnOffsetsReducer(state, action);
+
+      expect(newState).toEqual({
+        inputs: { top: 0, left: 0, width: 100, height: 100 },
+        activities: { top: 0, left: 100, width: 100, height: 100 }
+      });
+    });
+  });
+
+  describe('Card Offsets Reducer', () => {
+    it('clears out old offset data when a new model is loaded', () => {
+      const state = {
+        a: { top: 0, left: 0, width: 100, height: 100 },
+        b: { top: 100, left: 0, width: 100, height: 100 }
+      };
+
+      const newState = offsetReducers.cardOffsetsReducer(state, { type: actionTypes.LOAD_DATA });
+      expect(newState).toEqual({});
+    });
+
+    it('removes the offsets for a deleted card', () => {
+      const state = {
+        a: { top: 0, left: 0, width: 100, height: 100 },
+        b: { top: 100, left: 0, width: 100, height: 100 }
+      };
+
+      const action = {
+        type: actionTypes.DELETE_CARD,
+        payload: { id: 'a' }
+      };
+
+      const newState = offsetReducers.cardOffsetsReducer(state, action);
+      expect(newState).toEqual({
+        b: { top: 100, left: 0, width: 100, height: 100 }
+      });
+    });
+
+    it('adds a newly registered offset', () => {
+      const state = {
+        a: { top: 0, left: 0, width: 100, height: 100 }
+      };
+
+      const action = {
+        type: actionTypes.REGISTER_OFFSET,
+        payload: { cardId: 'b', offset: { top: 100, left: 0, width: 100, height: 100 } }
+      };
+
+      const newState = offsetReducers.cardOffsetsReducer(state, action);
+
+      expect(newState).toEqual({
+        a: { top: 0, left: 0, width: 100, height: 100 },
+        b: { top: 100, left: 0, width: 100, height: 100 }
+      });
+    });
+  });
+
   describe('Card Reducer', () => {
     it('adds a new card in the proper column', () => {
       const expected = {
@@ -163,7 +417,7 @@ describe('Reducers', () => {
         payload: 'new title'
       };
 
-      expect(titleReducer('old title', action)).toEqual('new title');
+      expect(reducers.titleReducer('old title', action)).toEqual('new title');
     });
 
     it('does not update the title when the edit is cancelled', () => {
@@ -171,7 +425,7 @@ describe('Reducers', () => {
         type: actionTypes.EDIT_TITLE_CANCEL
       };
 
-      expect(titleReducer('old title', action)).toEqual('old title');
+      expect(reducers.titleReducer('old title', action)).toEqual('old title');
     });
   });
 
@@ -181,7 +435,7 @@ describe('Reducers', () => {
         type: actionTypes.EDIT_TITLE
       };
 
-      expect(titleModeReducer(VIEW_MODE, action)).toEqual(EDIT_MODE);
+      expect(reducers.titleModeReducer(VIEW_MODE, action)).toEqual(EDIT_MODE);
     });
 
     it('changes to view mode on cancel', () => {
@@ -189,7 +443,7 @@ describe('Reducers', () => {
         type: actionTypes.EDIT_TITLE_CANCEL
       };
 
-      expect(titleModeReducer(EDIT_MODE, action)).toEqual(VIEW_MODE);
+      expect(reducers.titleModeReducer(EDIT_MODE, action)).toEqual(VIEW_MODE);
     });
 
     it('changes to view mode on save', () => {
@@ -197,7 +451,7 @@ describe('Reducers', () => {
         type: actionTypes.EDIT_TITLE_SAVE
       };
 
-      expect(titleModeReducer(EDIT_MODE, action)).toEqual(VIEW_MODE);
+      expect(reducers.titleModeReducer(EDIT_MODE, action)).toEqual(VIEW_MODE);
     });
   });
 });
