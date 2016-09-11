@@ -21,7 +21,9 @@ function copyModel(req, res) {
         const copy = new LogicModel();
         const now = new Date();
         copy.created = now;
+        copy.createdBy = req.user._id;
         copy.updated = now;
+        copy.updatedBy = req.user._id;
         copy.title = req.body.title;
         copy.cards = model.cards;
         copy.save(copyErr => {
@@ -42,6 +44,7 @@ function copyModel(req, res) {
 }
 
 function createModel(req, res) {
+  console.log(req.user);
   if (!req.body.title) {
     res.status(400).json({
       result: 'error',
@@ -52,6 +55,8 @@ function createModel(req, res) {
     const now = new Date();
     model.created = now;
     model.updated = now;
+    model.createdBy = req.user._id;
+    model.updatedBy = req.user._id;
     model.save(err => {
       if (err) {
         handleError(res, err);
@@ -87,13 +92,16 @@ function deleteModel(req, res) {
 }
 
 function getModels(req, res) {
-  LogicModel.find({}, 'title created updated', (err, result) => {
-    if (err) {
-      handleError(res, err);
-    } else {
-      res.json(result);
-    }
-  });
+  LogicModel.find({}, 'title created createdBy updated updatedBy')
+    .populate('createdBy')
+    .populate('updatedBy')
+    .exec((err, result) => {
+      if (err) {
+        handleError(res, err);
+      } else {
+        res.json(result);
+      }
+    });
 }
 
 function getModel(req, res) {
@@ -122,6 +130,7 @@ function updateModel(req, res) {
       model.title = updatedModel.title;
       model.cards = updatedModel.cards;
       model.updated = new Date();
+      model.updatedBy = req.user._id;
       model.save(saveErr => {
         if (saveErr) {
           handleError(res, saveErr);

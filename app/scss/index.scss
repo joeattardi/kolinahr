@@ -36,6 +36,7 @@ header {
     margin-right: 0.5em;
     img {
       margin-right: 0.5em;
+      border-radius: 50%;
     }
   }
 
@@ -92,6 +93,14 @@ footer {
 
   font-size: 1.3em;
 
+  img {
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 0.5em;
+  }
+
   div:nth-child(2) {
     flex-grow: 1;
   }
@@ -117,7 +126,7 @@ footer {
   }
 
   .model-list-item-timestamp {
-    font-size: 0.75em;
+    font-size: 0.7em;
   }
 
   .model-list-item-buttons {
