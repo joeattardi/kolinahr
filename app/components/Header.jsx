@@ -11,7 +11,7 @@ export default function Header(props) {
         <h1>Kolinahr</h1>
       </IndexLink>
       <div id="user-info">
-        <img alt={props.user.name} src={props.user.avatarUrl} width="20" />
+        <img alt={props.user.name} src={props.user.picture} width="20" />
         {props.user.name}
       </div>
       <Link to="/logout">

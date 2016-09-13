@@ -8,18 +8,19 @@ To run Kolinahr, you will need:
  * Node.js 6.x or later
  * MongoDB 3.x or later
 
-## GitHub Authentication
-Kolinahr uses GitHub OAuth for authentication for now. You will need to create a new OAuth app with GitHub at https://github.com/settings/applications/new.
-
-The plan is eventually to use OpenID Connect for authentication.
+## OpenID Connect Authentication
+Kolinahr uses OpenID Connect for authentication.
 
 ## Environment Variables
 All of Kolinahr's core configuration is done using environment variables. You will need to set the following variables:
  * `PORT` - The port number for Kolinahr to listen for incoming connections.
  * `MONGODB_URI` - The full URI to the Kolinahr database on your MongoDB server, e.g. `mongodb://localhost/kolinahr`
- * `GITHUB_CLIENT_ID` - The client ID for your GitHub app
- * `GITHUB_CLIENT_SECRET` - The client secret for your GitHub app
- * `CALLBACK_URL` - The OAuth callback URL. This should be of the form `http://host:port/auth/github/callback`.
+ * `OPENID_CONNECT_AUTHORIZATION_URL` - The authorization URL endpoint for your OpenID Connect provider.
+ * `OPENID_CONNECT_TOKEN_URL` - The token URL endpoint for your OpenID Connect provider.
+ * `OPENID_CONNECT_USER_INFO_URL` - The userinfo URL endpoint for your OpenID Connect provider.
+ * `OPENID_CONNECT_CLIENT_ID` - The client ID for your OpenID Connect provider.
+ * `OPENID_CONNECT_CLIENT_SECRET` - The client secret for your OpenID Connect provider.
+ * `OPENID_CONNECT_CALLBACK_URL` - The callback URL to use with your OpenID Connect provider. This should be of the form `http://host:port/auth/callback`, where `host` and `port` are the host and port Kolinahr is running on.
  * `JWT_SECRET` - The secret to use for signing JSON Web Tokens. This can be any random string of your choosing.
 
 ## Setup

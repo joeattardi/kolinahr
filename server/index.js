@@ -42,13 +42,12 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use('/api', apiRouter);
 
-app.get('/auth/github', passport.authenticate('github', { scope: 'openid email' }));
-app.get('/auth/github/callback', passport.authenticate('github', {
-  session: false, failureRedirect: '/login' }), (req, res) => {
-    const token = jwt.encode({ iat: Date.now(), sub: req.user.githubId }, process.env.JWT_SECRET);
+app.get('/auth', passport.authenticate('openidconnect', { scope: 'openid email' }));
+app.get('/auth/callback', passport.authenticate('openidconnect',
+  { session: false }), (req, res) => {
+    const token = jwt.encode({ iat: Date.now(), sub: req.user._id }, process.env.JWT_SECRET);
     res.redirect(`/?token=${token}`);
   });
-
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'public', 'index.html'));

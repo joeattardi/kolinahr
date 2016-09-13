@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-  githubId: Number,
+  _id: String,
   name: String,
-  avatarUrl: String
+  picture: String
 });
 
 module.exports = mongoose.model('User', userSchema);

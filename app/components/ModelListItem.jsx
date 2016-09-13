@@ -32,10 +32,10 @@ export default class ModelListItem extends React.Component {
           </Link>
           <div className="model-list-item-timestamp">
             Created {moment(model.created).fromNow()} by
-            <img src={model.createdBy.avatarUrl} alt="" />
+            <img src={model.createdBy.picture} alt="" />
             <strong>{model.createdBy.name}</strong><br />
             Updated {moment(model.updated).fromNow()} by
-            <img src={model.updatedBy.avatarUrl} alt="" />
+            <img src={model.updatedBy.picture} alt="" />
             <strong>{model.updatedBy.name}</strong>
           </div>
         </div>
