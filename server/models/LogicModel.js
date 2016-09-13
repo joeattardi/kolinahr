@@ -12,9 +12,9 @@ const cardSchema = mongoose.Schema({
 const logicModelSchema = mongoose.Schema({
   title: String,
   created: Date,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  createdBy: { type: String, ref: 'User' },
   updated: Date,
-  updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  updatedBy: { type: String, ref: 'User' },
   cards: {
     inputs: [cardSchema],
     activities: [cardSchema],
