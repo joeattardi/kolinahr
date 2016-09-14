@@ -44,7 +44,6 @@ function copyModel(req, res) {
 }
 
 function createModel(req, res) {
-  console.log(req.user);
   if (!req.body.title) {
     res.status(400).json({
       result: 'error',
@@ -95,6 +94,7 @@ function getModels(req, res) {
   LogicModel.find({}, 'title created createdBy updated updatedBy')
     .populate('createdBy')
     .populate('updatedBy')
+    .sort('-updated')
     .exec((err, result) => {
       if (err) {
         handleError(res, err);
