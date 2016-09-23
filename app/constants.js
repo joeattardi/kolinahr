@@ -8,7 +8,9 @@ export const EDIT_MODE = 'EDIT_MODE';
 export const VIEW_MODE = 'VIEW_MODE';
 
 export const COLOR_CHOICES = [
-  '#FFFFFF', '#B3ECFF', '#FFB3EC', '#75FF98', '#FFC6B3', '#ECFFB3'
+  '#61BD4F', '#F2D600', '#FFAB4A', '#EB5A46', '#C377E0',
+  '#0079BF', '#00C2E0', '#51E898', '#FF80CE', '#DDDDDD',
+  '#B6BBBF', '#FFFFFF'
 ];
 export const DEFAULT_COLOR = '#FFFFFF';
 
