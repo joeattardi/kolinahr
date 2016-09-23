@@ -94,7 +94,16 @@ footer {
 
   font-size: 1.3em;
 
-  img {
+  .icon {
+    display: flex;
+
+    img {
+      align-self: center;
+      margin-right: 0.5em;
+    }
+  }
+
+  img.user-image {
     vertical-align: middle;
     width: 20px;
     height: 20px;

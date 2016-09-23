@@ -3,6 +3,8 @@ import React from 'react';
 import autoBind from 'auto-bind';
 import { Link } from 'react-router';
 
+import modelIcon from '../images/model.png';
+
 import DropDownMenu from './DropDownMenu';
 import DropDownItem from './DropDownItem';
 
@@ -25,17 +27,17 @@ export default class ModelListItem extends React.Component {
 
     return (
       <div className="model-list-item">
-        <i className="fa fa-file-text-o" />
+        <div className="icon"><img src={modelIcon} alt="Logic Model" width="62" height="51" /></div>
         <div>
           <Link to={`/edit/${model._id}`}>
             {model.title}
           </Link>
           <div className="model-list-item-timestamp">
             Created {moment(model.created).fromNow()} by
-            <img src={model.createdBy.picture} alt="" />
+            <img src={model.createdBy.picture} className="user-image" alt="" />
             <strong>{model.createdBy.name}</strong><br />
             Updated {moment(model.updated).fromNow()} by
-            <img src={model.updatedBy.picture} alt="" />
+            <img src={model.updatedBy.picture} alt="" className="user-image" />
             <strong>{model.updatedBy.name}</strong>
           </div>
         </div>
