@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { browserHistory, withRouter } from 'react-router';
 import autoBind from 'auto-bind';
 
+import EditCardModal from './EditCardModal';
 import SaveButton from './SaveButton';
 import Column from './Column';
 import Title from './Title';
@@ -66,6 +67,7 @@ class ModelDetail extends React.Component {
           <Canvas left="outcomes" right="impact" />
           <Column stateKey="impact" name="Impact" className="column column-dark" />
         </div>
+        <EditCardModal />
       </div>
     );
   }

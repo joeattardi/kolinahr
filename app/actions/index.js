@@ -137,6 +137,22 @@ export function endDrag() {
   };
 }
 
+export function editCard(card, mode) {
+  return {
+    type: types.EDIT_CARD,
+    payload: {
+      card,
+      mode
+    }
+  };
+}
+
+export function editCardCancel() {
+  return {
+    type: types.EDIT_CARD_CANCEL
+  };
+}
+
 export function addCard(column, card) {
   return (dispatch, getState) => {
     dispatch({

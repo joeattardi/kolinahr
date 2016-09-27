@@ -1,51 +1,42 @@
 import React from 'react';
 import Modal from 'react-modal';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import Color from 'color';
 import autoBind from 'auto-bind';
 
+import * as actions from '../actions';
 import ColorPickerModal from './ColorPickerModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LinkCardModal from './LinkCardModal';
 import Tooltip from './Tooltip';
 import {
   ADD_MODE, EDIT_MODE, DEFAULT_COLOR, TITLES, SINGULAR,
-  KEY_ENTER, MAX_ROWS
+  KEY_ENTER, MAX_ROWS, LINK_KEYS
 } from '../constants';
 
-export default class EditCardModal extends React.Component {
+class EditCardModal extends React.Component {
   constructor(props) {
     super(props);
 
-    if (props.mode === EDIT_MODE) {
-      this.state = {
-        text: props.card.text,
-        color: props.card.color,
-        links: props.card.links,
-        show: false,
-        showConfirm: false,
-        showColorPicker: false
-      };
-    } else {
-      this.state = {
-        text: '',
-        color: DEFAULT_COLOR,
-        links: [],
-        show: false,
-        showConfirm: false,
-        showColorPicker: false
-      };
-    }
+    this.state = {
+      text: '',
+      color: DEFAULT_COLOR,
+      links: [],
+      show: false,
+      showConfirm: false,
+      showColorPicker: false
+    };
 
     autoBind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.card) {
+    if (nextProps.editingCard) {
       this.setState({
-        text: nextProps.card.text,
-        color: nextProps.card.color,
-        links: nextProps.card.links
+        text: nextProps.editingCard.text || '',
+        color: nextProps.editingCard.color || DEFAULT_COLOR,
+        links: nextProps.editingCard.links || []
       });
     } else {
       this.setState({
@@ -66,10 +57,6 @@ export default class EditCardModal extends React.Component {
     this.textArea = textArea;
   }
 
-  setModal(modal) {
-    this.modal = modal;
-  }
-
   setConfirmDeleteModal(modal) {
     this.confirmDeleteModal = modal;
   }
@@ -87,14 +74,15 @@ export default class EditCardModal extends React.Component {
   }
 
   getLinkCards() {
-    const { linkKey, cards } = this.props;
+    const linkKey = LINK_KEYS[this.props.editingCard.column];
+    const { cards } = this.props;
     return linkKey && cards[linkKey] ?
       cards[linkKey].filter(card => this.state.links.indexOf(card.id) === -1) : [];
   }
 
   confirmDelete() {
     this.setState({ show: false });
-    this.props.deleteCard(this.props.card.id, this.props.card.column);
+    this.props.deleteCard(this.props.editingCard.id, this.props.editingCard.column);
   }
 
   showConfirmDeleteModal() {
@@ -109,15 +97,6 @@ export default class EditCardModal extends React.Component {
     this.linkCardModal.setState({ show: true });
   }
 
-  showModal() {
-    this.setState({ show: true });
-    _.defer(() => this.textArea.focus());
-  }
-
-  hideModal() {
-    this.setState({ show: false });
-  }
-
   handleKeyUp(event) {
     const rows = event.target.value.split('\n').length;
     if (event.keyCode === KEY_ENTER && rows === this.textArea.rows && rows <= MAX_ROWS) {
@@ -126,34 +105,19 @@ export default class EditCardModal extends React.Component {
   }
 
   cancel() {
-    this.hideModal();
-
-    if (this.props.mode === EDIT_MODE) {
-      this.setState({
-        text: this.props.card.text,
-        color: this.props.card.color,
-        links: this.props.card.links
-      });
-    } else {
-      this.setState({
-        text: '',
-        color: DEFAULT_COLOR,
-        links: []
-      });
-    }
+    this.props.editCardCancel();
   }
 
   saveChanges() {
-    this.hideModal();
-    if (this.props.mode === EDIT_MODE) {
+    if (this.props.cardEditMode === EDIT_MODE) {
       this.props.updateCard({
-        ...this.props.card,
+        ...this.props.editingCard,
         text: this.state.text,
         color: this.state.color,
         links: this.state.links
       });
     } else {
-      this.props.addCard(this.props.stateKey, {
+      this.props.addCard(this.props.editingCard.column, {
         text: this.state.text,
         color: this.state.color,
         links: this.state.links
@@ -177,17 +141,18 @@ export default class EditCardModal extends React.Component {
   }
 
   isLinkError() {
-    return this.props.stateKey !== 'impact' && this.state.links.length === 0;
+    return this.props.editingCard.column !== 'impact' && this.state.links.length === 0;
   }
 
   renderLinksSection() {
-    if (this.props.linkKey) {
+    const linkKey = LINK_KEYS[this.props.editingCard.column];
+    if (linkKey) {
       return (
         <div>
-          <h5>Linked {TITLES[this.props.linkKey]}</h5>
+          <h5>Linked {TITLES[linkKey]}</h5>
           <div className="modal-row">
             <button onClick={this.showLinkCardModal}>
-              <i className="fa fa-link" /> Link {SINGULAR[this.props.linkKey]}
+              <i className="fa fa-link" /> Link {SINGULAR[linkKey]}
             </button>
           </div>
           {this.state.links.map(this.renderLink)}
@@ -199,7 +164,8 @@ export default class EditCardModal extends React.Component {
   }
 
   renderLink(link) {
-    const linkedCard = _.find(this.props.cards[this.props.linkKey], card => card.id === link);
+    const linkedCard = _.find(this.props.cards[LINK_KEYS[this.props.editingCard.column]],
+      card => card.id === link);
     if (linkedCard) {
       return (
         <div key={link} className="modal-row card-link">
@@ -224,7 +190,7 @@ export default class EditCardModal extends React.Component {
   }
 
   renderDelete() {
-    if (this.props.mode === EDIT_MODE) {
+    if (this.props.cardEditMode === EDIT_MODE) {
       return (
         <button
           onClick={this.showConfirmDeleteModal}
@@ -243,8 +209,8 @@ export default class EditCardModal extends React.Component {
       return (
         <div className="banner banner-error">
           <i className="fa fa-exclamation-triangle" />
-          This {SINGULAR[this.props.stateKey]} must be linked to
-          at least one {SINGULAR[this.props.linkKey]}.
+          This {SINGULAR[this.props.editingCard.column]} must be linked to
+          at least one {SINGULAR[LINK_KEYS[this.props.editingCard.column]]}.
         </div>
       );
     }
@@ -258,7 +224,7 @@ export default class EditCardModal extends React.Component {
       return (
         <div className="banner banner-info">
           <i className="fa fa-info-circle" />
-          This {SINGULAR[this.props.stateKey]} is a little long.
+          This {SINGULAR[this.props.editingCard.column]} is a little long.
           You might want to split it up into smaller ones.
         </div>
       );
@@ -276,19 +242,19 @@ export default class EditCardModal extends React.Component {
   }
 
   render() {
-    const { linkKey } = this.props;
+    const { column } = this.props.editingCard;
+    const linkKey = LINK_KEYS[column];
+    const cardType = SINGULAR[column];
     return (
       <div>
         <Modal
-          onRequestClose={this.hideModal}
-          isOpen={this.state.show}
+          isOpen={this.props.editingCard !== false}
           className="edit-card-modal modal-container"
           overlayClassName="modal-overlay"
-          ref={this.setModal}
         >
           <div className="modal-header">
             <h4>
-              {this.props.mode === ADD_MODE ? 'Add' : 'Edit'} {SINGULAR[this.props.stateKey]}
+              {this.props.cardEditMode === ADD_MODE ? 'Add' : 'Edit'} {cardType}
             </h4>
           </div>
           <div className="modal-body">
@@ -330,7 +296,7 @@ export default class EditCardModal extends React.Component {
         <ConfirmDeleteModal
           ref={this.setConfirmDeleteModal}
           onConfirmDelete={this.confirmDelete}
-          type={SINGULAR[this.props.stateKey]}
+          type={SINGULAR[this.props.editingCard.column] || 'card'}
         />
 
         <ColorPickerModal
@@ -351,13 +317,24 @@ export default class EditCardModal extends React.Component {
 }
 
 EditCardModal.propTypes = {
-  mode: React.PropTypes.string.isRequired,
-  card: React.PropTypes.object,
+  editCardCancel: React.PropTypes.func.isRequired,
+  cardEditMode: React.PropTypes.string.isRequired,
+  editingCard: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.object
+  ]),
   addCard: React.PropTypes.func,
   updateCard: React.PropTypes.func,
   deleteCard: React.PropTypes.func,
-  stateKey: React.PropTypes.string,
-  linkKey: React.PropTypes.string,
   cards: React.PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    editingCard: state.editingCard,
+    cardEditMode: state.cardEditMode,
+    cards: state.cards
+  };
+}
+
+export default connect(mapStateToProps, actions)(EditCardModal);

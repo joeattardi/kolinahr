@@ -1,6 +1,29 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function editingCardReducer(state = false, action) {
+  switch (action.type) {
+    case types.EDIT_CARD:
+      return action.payload.card;
+    case types.ADD_CARD:
+    case types.UPDATE_CARD:
+    case types.DELETE_CARD:
+    case types.EDIT_CARD_CANCEL:
+      return false;
+    default:
+      return state;
+  }
+}
+
+export function cardEditModeReducer(state = EDIT_MODE, action) {
+  switch (action.type) {
+    case types.EDIT_CARD:
+      return action.payload.mode || EDIT_MODE;
+    default:
+      return state;
+  }
+}
+
 export function currentModelReducer(state = null, action) {
   switch (action.type) {
     case types.LOAD_DATA:

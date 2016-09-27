@@ -51,8 +51,9 @@ export class Card extends React.Component {
     }
   }
 
-  showModal() {
-    this.modal.showModal();
+  editCard() {
+    this.props.editCard(this.props.card);
+    //this.modal.showModal();
   }
 
   renderText(text) {
@@ -75,7 +76,7 @@ export class Card extends React.Component {
     return this.props.connectDragSource(
       <div
         ref={this.setCardElement}
-        onClick={this.showModal}
+        onClick={this.editCard}
         className={className}
         style={{
           backgroundColor: this.props.card.color,
@@ -104,16 +105,6 @@ export class Card extends React.Component {
     return this.props.connectDropTarget(
       <div className="card-wrapper">
         {validationError ? this.renderCardWithTooltip(validationError) : this.renderCard()}
-        <EditCardModal
-          mode={EDIT_MODE}
-          linkKey={this.props.linkKey}
-          stateKey={this.props.stateKey}
-          cards={this.props.cards}
-          updateCard={this.props.updateCard}
-          deleteCard={this.props.deleteCard}
-          ref={this.setModal}
-          card={this.props.card}
-        />
       </div>
     );
   }
@@ -122,6 +113,8 @@ export class Card extends React.Component {
 Card.propTypes = {
   card: React.PropTypes.object.isRequired,
   cards: React.PropTypes.object.isRequired,
+  editCard: React.PropTypes.func.isRequired,
+  editCardCancel: React.PropTypes.func.isRequired,
   updateCard: React.PropTypes.func.isRequired,
   deleteCard: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,

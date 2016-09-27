@@ -24,7 +24,8 @@ export class Column extends React.Component {
   }
 
   onClickAdd() {
-    this.modal.showModal();
+    const newCard = { column: this.props.stateKey };
+    this.props.editCard(newCard, ADD_MODE);
   }
 
   setColumnElement(element) {
@@ -79,14 +80,6 @@ export class Column extends React.Component {
               </button>
             </Tooltip>
           </div>
-          <EditCardModal
-            mode={ADD_MODE}
-            linkKey={this.props.linkKey}
-            stateKey={this.props.stateKey}
-            cards={this.props.cards}
-            addCard={this.props.addCard}
-            ref={this.setModal}
-          />
         </div>
       </div>
     );

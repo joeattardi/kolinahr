@@ -23,7 +23,9 @@ export default function configureStore() {
     currentModel: reducers.currentModelReducer,
     dirty: reducers.dirtyReducer,
     auth: reducers.authReducer,
-    user: reducers.userReducer
+    user: reducers.userReducer,
+    editingCard: reducers.editingCardReducer,
+    cardEditMode: reducers.cardEditModeReducer
   });
 
   const store = createStore(reducer, {}, compose(

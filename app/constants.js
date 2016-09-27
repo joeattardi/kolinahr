@@ -16,6 +16,13 @@ export const DEFAULT_COLOR = '#FFFFFF';
 
 export const DEFAULT_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
+export const LINK_KEYS = {
+  inputs: 'activities',
+  activities: 'outputs',
+  outputs: 'outcomes',
+  outcomes: 'impact'
+};
+
 export const INCOMING_LINK_NAMES = {
   activities: 'Input',
   outputs: 'Activity',
