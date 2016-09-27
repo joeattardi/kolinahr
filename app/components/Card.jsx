@@ -6,9 +6,7 @@ import Color from 'color';
 import autoBind from 'auto-bind';
 import Markdown from 'react-markdown';
 
-import { EDIT_MODE } from '../constants';
 import * as actions from '../actions';
-import EditCardModal from './EditCardModal';
 import Tooltip from './Tooltip';
 
 export class Card extends React.Component {
@@ -53,7 +51,6 @@ export class Card extends React.Component {
 
   editCard() {
     this.props.editCard(this.props.card);
-    //this.modal.showModal();
   }
 
   renderText(text) {
@@ -115,14 +112,10 @@ Card.propTypes = {
   cards: React.PropTypes.object.isRequired,
   editCard: React.PropTypes.func.isRequired,
   editCardCancel: React.PropTypes.func.isRequired,
-  updateCard: React.PropTypes.func.isRequired,
-  deleteCard: React.PropTypes.func.isRequired,
   connectDragSource: React.PropTypes.func.isRequired,
   connectDropTarget: React.PropTypes.func.isRequired,
   registerOffset: React.PropTypes.func.isRequired,
   isDragging: React.PropTypes.bool.isRequired,
-  stateKey: React.PropTypes.string.isRequired,
-  linkKey: React.PropTypes.string,
   validationErrors: React.PropTypes.object.isRequired
 };
 

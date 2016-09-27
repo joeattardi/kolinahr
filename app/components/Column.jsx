@@ -6,7 +6,6 @@ import { ADD_MODE, SINGULAR } from '../constants';
 import * as actions from '../actions';
 import Card from './Card';
 import Tooltip from './Tooltip';
-import EditCardModal from './EditCardModal';
 
 export class Column extends React.Component {
   constructor(props) {
@@ -47,17 +46,10 @@ export class Column extends React.Component {
     }
   }
 
-  updateCard(card) {
-    actions.updateCard(card);
-  }
-
   renderCard(card) {
     return (
       <Card
-        updateCard={this.props.updateCard}
-        deleteCard={this.props.deleteCard}
         stateKey={this.props.stateKey}
-        linkKey={this.props.linkKey}
         key={card.id}
         card={card}
       />
@@ -90,11 +82,9 @@ Column.propTypes = {
   name: React.PropTypes.string.isRequired,
   stateKey: React.PropTypes.string.isRequired,
   addCard: React.PropTypes.func.isRequired,
+  editCard: React.PropTypes.func.isRequired,
   cards: React.PropTypes.object.isRequired,
-  updateCard: React.PropTypes.func.isRequired,
-  deleteCard: React.PropTypes.func.isRequired,
   registerColumnOffset: React.PropTypes.func.isRequired,
-  linkKey: React.PropTypes.string,
   className: React.PropTypes.string.isRequired
 };
 
