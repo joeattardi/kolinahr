@@ -37,7 +37,7 @@ class Canvas extends React.Component {
       const cardOffset = cardOffsets[Object.keys(cardOffsets)[0]];
 
       if (cardOffset) {
-        const leftVal = 5 + cardOffset.left - columnOffsets[cardOffset.column].left;
+        const leftVal = 15 + cardOffset.left - columnOffsets[cardOffset.column].left;
         this.canvasElement.style.left = `${-1 * leftVal}px`;
 
         const width = (leftVal * 2);
