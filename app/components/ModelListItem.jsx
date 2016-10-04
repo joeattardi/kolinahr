@@ -22,6 +22,25 @@ export default class ModelListItem extends React.Component {
     this.props.copyModel(this.props.model._id);
   }
 
+  renderAction() {
+    if (this.props.auth) {
+      return (
+        <div className="model-list-item-buttons">
+          <DropDownMenu title="Actions">
+            <DropDownItem onClick={this.deleteModel}>
+              <span className="delete"><i className="fa fa-trash-o" /> Delete</span>
+            </DropDownItem>
+            <DropDownItem onClick={this.copyModel}>
+              <i className="fa fa-files-o" /> Copy
+            </DropDownItem>
+          </DropDownMenu>
+        </div>
+      );
+    }
+
+    return <span />;
+  }
+
   render() {
     const { model } = this.props;
 
@@ -41,22 +60,14 @@ export default class ModelListItem extends React.Component {
             <strong>{model.updatedBy.name}</strong>
           </div>
         </div>
-        <div className="model-list-item-buttons">
-          <DropDownMenu title="Actions">
-            <DropDownItem onClick={this.deleteModel}>
-              <span className="delete"><i className="fa fa-trash-o" /> Delete</span>
-            </DropDownItem>
-            <DropDownItem onClick={this.copyModel}>
-              <i className="fa fa-files-o" /> Copy
-            </DropDownItem>
-          </DropDownMenu>
-        </div>
+        {this.renderAction()}
       </div>
     );
   }
 }
 
 ModelListItem.propTypes = {
+  auth: React.PropTypes.bool.isRequired,
   model: React.PropTypes.object.isRequired,
   deleteModel: React.PropTypes.func.isRequired,
   copyModel: React.PropTypes.func.isRequired

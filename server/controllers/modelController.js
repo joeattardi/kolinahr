@@ -1,3 +1,4 @@
+const passport = require('passport');
 const LogicModel = require('../models/LogicModel');
 
 function handleError(res, err) {
@@ -90,33 +91,47 @@ function deleteModel(req, res) {
   });
 }
 
-function getModels(req, res) {
-  LogicModel.find({}, 'title created createdBy updated updatedBy')
-    .populate('createdBy')
-    .populate('updatedBy')
-    .sort('-updated')
-    .exec((err, result) => {
-      if (err) {
-        handleError(res, err);
-      } else {
-        res.json(result);
-      }
-    });
+function getModels(req, res, next) {
+  passport.authenticate('jwt', (err, user, info) => {
+
+    const query = user ? {} : { private: false };
+
+    LogicModel.find(query, 'title created createdBy updated updatedBy')
+      .populate('createdBy')
+      .populate('updatedBy')
+      .sort('-updated')
+      .exec((err, result) => {
+        if (err) {
+          handleError(res, err);
+        } else {
+          res.json(result);
+        }
+      });
+  })(req, res, next);
 }
 
-function getModel(req, res) {
-  LogicModel.findById(req.params.modelId, (err, model) => {
-    if (err) {
-      handleError(res, err);
-    } else if (model) {
-      res.json(model);
-    } else {
-      res.status(404).json({
-        result: 'error',
-        message: `Model not found with ID ${req.params.modelId}.`
-      });
-    }
-  });
+function getModel(req, res, next) {
+  passport.authenticate('jwt', (err, user, info) => {
+    LogicModel.findById(req.params.modelId, (err, model) => {
+      if (err) {
+        handleError(res, err);
+      } else if (model) {
+        if (!user && model.private) {
+          res.status(401).json({
+            result: 'error',
+            message: 'You must be logged in to view this model'
+          });
+        } else {
+          res.json(model);
+        }
+      } else {
+        res.status(404).json({
+          result: 'error',
+          message: `Model not found with ID ${req.params.modelId}.`
+        });
+      }
+    });
+  })(req, res, next);
 }
 
 function updateModel(req, res) {
@@ -129,6 +144,7 @@ function updateModel(req, res) {
     } else if (model) {
       model.title = updatedModel.title;
       model.cards = updatedModel.cards;
+      model.private = updatedModel.private;
       model.updated = new Date();
       model.updatedBy = req.user._id;
       model.save(saveErr => {

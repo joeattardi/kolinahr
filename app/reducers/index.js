@@ -1,6 +1,17 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function privateModelReducer(state = false, action) {
+  switch (action.type) {
+    case types.LOAD_DATA:
+      return action.payload.private;
+    case types.SET_PRIVATE:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export function editingCardReducer(state = false, action) {
   switch (action.type) {
     case types.EDIT_CARD:
@@ -51,6 +62,7 @@ export function dirtyReducer(state = false, action) {
     case types.EDIT_TITLE:
     case types.UPDATE_CARD:
     case types.DELETE_CARD:
+    case types.SET_PRIVATE:
       return true;
     case types.SAVE_COMPLETE:
       return false;
@@ -134,6 +146,8 @@ export function userReducer(state = {}, action) {
   switch (action.type) {
     case types.SET_USER:
       return action.payload;
+    case types.DEAUTH_USER:
+      return {};
     default:
       return state;
   }

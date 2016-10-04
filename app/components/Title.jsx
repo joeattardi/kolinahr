@@ -52,6 +52,10 @@ class Title extends React.Component {
   }
 
   renderTitle() {
+    if (!this.props.auth) {
+      return <h2>{this.props.title}</h2>;
+    }
+
     if (this.props.titleMode === VIEW_MODE) {
       return this.renderStaticTitle();
     }
@@ -108,6 +112,7 @@ class Title extends React.Component {
 }
 
 Title.propTypes = {
+  auth: React.PropTypes.bool.isRequired,
   title: React.PropTypes.string.isRequired,
   titleMode: React.PropTypes.string.isRequired,
   editTitle: React.PropTypes.func.isRequired,
@@ -118,7 +123,8 @@ Title.propTypes = {
 function mapStateToProps(state) {
   return {
     title: state.title,
-    titleMode: state.titleMode
+    titleMode: state.titleMode,
+    auth: state.auth
   };
 }
 

@@ -11,6 +11,7 @@ const cardSchema = mongoose.Schema({
 
 const logicModelSchema = mongoose.Schema({
   title: String,
+  private: Boolean,
   created: Date,
   createdBy: { type: String, ref: 'User' },
   updated: Date,

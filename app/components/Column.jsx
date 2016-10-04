@@ -56,22 +56,32 @@ export class Column extends React.Component {
     );
   }
 
+  renderAddButton() {
+    if (this.props.auth) {
+      return (
+        <div className="add-button-container">
+          <Tooltip text={`Add a new ${SINGULAR[this.props.stateKey]}`}>
+            <button
+              onClick={this.onClickAdd}
+              className="add-button"
+            >
+              <i className="fa fa-plus" />
+            </button>
+          </Tooltip>
+        </div>
+      );
+    }
+
+    return <div style={{ height: '3em' }} />;
+  }
+
   render() {
     return (
       <div className={this.props.className}>
         <h3>{this.props.name}</h3>
         <div ref={this.setColumnElement} className="column-body">
           {this.props.cards[this.props.stateKey].map(this.renderCard)}
-          <div className="add-button-container">
-            <Tooltip text={`Add a new ${SINGULAR[this.props.stateKey]}`}>
-              <button
-                onClick={this.onClickAdd}
-                className="add-button"
-              >
-                <i className="fa fa-plus" />
-              </button>
-            </Tooltip>
-          </div>
+          {this.renderAddButton()}
         </div>
       </div>
     );
@@ -79,6 +89,7 @@ export class Column extends React.Component {
 }
 
 Column.propTypes = {
+  auth: React.PropTypes.bool.isRequired,
   name: React.PropTypes.string.isRequired,
   stateKey: React.PropTypes.string.isRequired,
   addCard: React.PropTypes.func.isRequired,
@@ -90,7 +101,8 @@ Column.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    cards: state.cards
+    cards: state.cards,
+    auth: state.auth
   };
 }
 

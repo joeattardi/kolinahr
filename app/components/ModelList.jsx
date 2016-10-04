@@ -24,12 +24,7 @@ class ModelList extends React.Component {
       browserHistory.push('/');
     }
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.props.loadModels();
-    } else {
-      browserHistory.push('/login');
-    }
+    this.props.loadModels();
   }
 
   setNewModelModal(modal) {
@@ -67,8 +62,21 @@ class ModelList extends React.Component {
         key={model._id}
         model={model}
         deleteModel={this.deleteModel} copyModel={this.copyModel}
+        auth={this.props.auth}
       />
     );
+  }
+
+  renderCreateButton() {
+    if (this.props.auth) {
+      return (
+        <button className="button-primary" onClick={this.createNewModel}>
+          <i className="fa fa-plus" /> New
+        </button>
+      );
+    }
+
+    return <span />;
   }
 
   render() {
@@ -78,9 +86,7 @@ class ModelList extends React.Component {
 
     return (
       <div>
-        <button className="button-primary" onClick={this.createNewModel}>
-          <i className="fa fa-plus" /> New
-        </button>
+        {this.renderCreateButton()}
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
         <div id="model-list">
           <h2>Logic Models</h2>
@@ -102,6 +108,7 @@ class ModelList extends React.Component {
 }
 
 ModelList.propTypes = {
+  auth: React.PropTypes.bool.isRequired,
   loadModels: React.PropTypes.func.isRequired,
   deleteModel: React.PropTypes.func.isRequired,
   createModel: React.PropTypes.func.isRequired,
@@ -115,7 +122,8 @@ ModelList.propTypes = {
 function mapStateToProps(state) {
   return {
     models: state.allModels,
-    loading: state.loading
+    loading: state.loading,
+    auth: state.auth
   };
 }
 

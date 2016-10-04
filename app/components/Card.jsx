@@ -50,7 +50,9 @@ export class Card extends React.Component {
   }
 
   editCard() {
-    this.props.editCard(this.props.card);
+    if (this.props.auth) {
+      this.props.editCard(this.props.card);
+    }
   }
 
   renderText(text) {
@@ -70,7 +72,7 @@ export class Card extends React.Component {
       className += ' error';
     }
 
-    return this.props.connectDragSource(
+    const cardMarkup = (
       <div
         ref={this.setCardElement}
         onClick={this.editCard}
@@ -87,6 +89,12 @@ export class Card extends React.Component {
         {this.props.isDragging}
       </div>
     );
+
+    if (this.props.auth) {
+      return this.props.connectDragSource(cardMarkup);
+    }
+
+    return cardMarkup;
   }
 
   renderCardWithTooltip(validationError) {
@@ -108,6 +116,7 @@ export class Card extends React.Component {
 }
 
 Card.propTypes = {
+  auth: React.PropTypes.bool.isRequired,
   card: React.PropTypes.object.isRequired,
   cards: React.PropTypes.object.isRequired,
   editCard: React.PropTypes.func.isRequired,
@@ -171,7 +180,8 @@ function dropCollect(connect) {
 function mapStateToProps(state) {
   return {
     cards: state.cards,
-    validationErrors: state.validationErrors
+    validationErrors: state.validationErrors,
+    auth: state.auth
   };
 }
 

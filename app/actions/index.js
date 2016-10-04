@@ -102,6 +102,7 @@ export function saveData() {
     const state = getState();
     const payload = {
       _id: state.currentModel,
+      private: state.privateModel,
       title: state.title,
       cards: state.cards
     };
@@ -263,6 +264,19 @@ export function setDirty(dirty) {
   };
 }
 
+export function deauthUser() {
+  return {
+    type: types.DEAUTH_USER
+  };
+}
+
+export function setPrivate(privateModel) {
+  return {
+    type: types.SET_PRIVATE,
+    payload: privateModel
+  };
+}
+
 export function getUser() {
   return dispatch => {
     axios.get('/api/user', {
@@ -271,6 +285,9 @@ export function getUser() {
       dispatch({
         type: types.SET_USER,
         payload: response.data
+      });
+      dispatch({
+        type: types.AUTH_USER
       });
     });
   };

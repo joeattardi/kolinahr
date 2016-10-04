@@ -37,7 +37,7 @@ class Notification extends React.Component {
   }
 
   hideNotification() {
-    if (this.props.notification) {
+    if (this.props.notification && this.element) {
       this.element.className = `notification notification-exit ${this.props.notification.type}`;
       setTimeout(this.props.hideNotification, NOTIFICATION_ANIMATION_DURATION);
     }

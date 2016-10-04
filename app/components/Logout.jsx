@@ -1,10 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-export default class Logout extends React.Component {
+import { deauthUser, hideNotification } from '../actions';
+
+class Logout extends React.Component {
   componentDidMount() {
     localStorage.removeItem('token');
-    browserHistory.push('/login');
+    browserHistory.push('/');
+    this.props.deauthUser();
+    this.props.hideNotification();
   }
 
   render() {
@@ -12,3 +17,9 @@ export default class Logout extends React.Component {
   }
 }
 
+Logout.propTypes = {
+  deauthUser: React.PropTypes.func.isRequired,
+  hideNotification: React.PropTypes.func.isRequired
+};
+
+export default connect(null, { deauthUser, hideNotification })(Logout);
