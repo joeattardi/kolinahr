@@ -1,4 +1,5 @@
 import React from 'react';
+import Color from 'color';
 import { connect } from 'react-redux';
 import autoBind from 'auto-bind';
 
@@ -87,7 +88,7 @@ class Canvas extends React.Component {
                 const destX = this.canvasElement.offsetWidth - 1;
                 const destY = this.getYCoordinate(destOffset);
 
-                this.drawArrow(ctx, srcX, srcY, destX, destY);
+                this.drawArrow(ctx, card.color, srcX, srcY, destX, destY);
 
                 ctx.closePath();
               }
@@ -98,9 +99,16 @@ class Canvas extends React.Component {
     }
   }
 
-  drawArrow(context, fromx, fromy, tox, toy) {
+  drawArrow(context, color, fromx, fromy, tox, toy) {
     const headlen = 10;   // length of head in pixels
     const angle = Math.atan2(toy - fromy, tox - fromx);
+
+    if (color === '#FFFFFF') {
+      context.strokeStyle = '#000000';
+    } else {
+      context.strokeStyle = Color(color).darken(0.25).hslString();
+    }
+
     context.beginPath();
     context.moveTo(fromx, fromy);
     context.lineTo(tox, toy);
