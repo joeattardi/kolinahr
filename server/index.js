@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use('/api', apiRouter);
 
-app.get('/auth', passport.authenticate('openidconnect', { scope: 'openid email' }));
+app.get('/auth', passport.authenticate('openidconnect', { scope: 'openid email profile' }));
 app.get('/auth/callback', passport.authenticate('openidconnect',
   { session: false }), (req, res) => {
     const token = jwt.encode({ iat: Date.now(), sub: req.user._id }, process.env.JWT_SECRET);
