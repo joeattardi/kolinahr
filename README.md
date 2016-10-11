@@ -13,7 +13,7 @@ Kolinahr uses OpenID Connect for authentication.
 
 ## Environment Variables
 All of Kolinahr's core configuration is done using environment variables. You will need to set the following variables:
- * `PORT` - The port number for Kolinahr to listen for incoming connections.
+ * `PORT` - The port number for Kolinahr to listen for incoming HTTP connections.
  * `MONGODB_URI` - The full URI to the Kolinahr database on your MongoDB server, e.g. `mongodb://localhost/kolinahr`
  * `OPENID_CONNECT_AUTHORIZATION_URL` - The authorization URL endpoint for your OpenID Connect provider.
  * `OPENID_CONNECT_TOKEN_URL` - The token URL endpoint for your OpenID Connect provider.
@@ -22,6 +22,10 @@ All of Kolinahr's core configuration is done using environment variables. You wi
  * `OPENID_CONNECT_CLIENT_SECRET` - The client secret for your OpenID Connect provider.
  * `OPENID_CONNECT_CALLBACK_URL` - The callback URL to use with your OpenID Connect provider. This should be of the form `http://host:port/auth/callback`, where `host` and `port` are the host and port Kolinahr is running on.
  * `JWT_SECRET` - The secret to use for signing JSON Web Tokens. This can be any random string of your choosing.
+ * `SSL_PORT` - The port number for Kolinahr to listen for incoming HTTPS connections.
+ * `SSL_KEY` - The path to your SSL private key file.
+ * `SSL_CERT` - The path to your SSL certificate file.
+ * `SSL_PASSPHRASE` - The passphrase for your SSL private key.
 
 ## Setup
  * Run `npm install` to install all dependencies.
