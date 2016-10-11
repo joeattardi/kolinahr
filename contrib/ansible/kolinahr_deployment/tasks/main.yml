@@ -1,0 +1,88 @@
+---
+- name: Install packages from stable repo
+  dnf: name={{ item }} state=latest
+  with_items:
+    - git-core
+    - mongodb-server
+    - fedora-repos-rawhide
+    - nginx
+    - libselinux-python
+    - libsemanage-python
+    - tar
+    - bzip2
+    - gzip
+    - certbot
+
+- name: Install packages from Rawhide
+  dnf: name=npm state=latest enablerepo=rawhide
+
+- name: Create a non-privileged Kolinahr user
+  user: name=kolinahr shell=/sbin/nologin createhome=yes
+
+- name: Give the kolinahr user privilege on /srv
+  file: path=/srv group=kolinahr mode=u=rwx,g=rwx,o=rx
+
+- name: Check out the Kolinahr repository
+  git: repo=https://github.com/joeattardi/kolinahr.git
+       dest=/srv/kolinahr
+       version={{ kolinahr_commitish }}
+  become: yes
+  become_user: kolinahr
+
+- name: Install npm packages for Kolinahr
+  npm: path=/srv/kolinahr state=present
+  become: yes
+  become_user: kolinahr
+
+- name: Build Kolinahr
+  command: /usr/bin/npm run build
+  args:
+    chdir: /srv/kolinahr
+  become: yes
+  become_user: kolinahr
+
+- name: Kolinahr post-build
+  command: /srv/kolinahr/node_modules/.bin/webpack -p
+  args:
+    chdir: /srv/kolinahr
+  become: yes
+  become_user: kolinahr
+
+- name: Create service unit for Kolinahr
+  template:
+    src=kolinahr_deployment/files/kolinahr.service.tmpl
+    dest=/etc/systemd/system/kolinahr.service
+    force=yes
+
+- name: Create environment file for Kolinahr
+  template:
+    src=kolinahr_deployment/files/kolinahr.env.tmpl
+    dest=/etc/sysconfig/kolinahr
+    mode=0600
+
+- name: Create directory for ACME challenge
+  file: dest=/srv/web/acme-challenge state=directory owner=root group=root mode=755
+
+- name: Set SELinux boolean for nginx
+  seboolean: name=httpd_can_network_relay state=yes persistent=yes
+
+- name: Create nginx reverse proxy configuration
+  template:
+    src=kolinahr_deployment/files/nginx.tmpl
+    dest=/etc/nginx/conf.d/kolinahr.conf
+    force=yes
+
+- name: systemctl daemon-reload
+  command: /usr/bin/systemctl daemon-reload
+
+- name: Enable and start MongoDB
+  service: name=mongod.service state=started enabled=yes
+
+- name: Enable and start nginx
+  service: name=nginx.service state=restarted enabled=yes
+
+- name: Enable and start Kolinahr
+  service: name=kolinahr.service state=restarted enabled=yes
+
+- name: Certbot renewal cron
+  cron: name=certbot-renew special_time=monthly job="certbot renew --pre-hook \"systemctl stop nginx\" --post-hook \"systemctl start nginx\""

@@ -1,0 +1,13 @@
+[Unit]
+Description=Kolinahr - Kellogg Logic Model Application
+
+After=network.target
+
+[Service]
+User=kolinahr
+WorkingDirectory=/srv/kolinahr
+ExecStart=/usr/bin/node server/index.js
+EnvironmentFile=/etc/sysconfig/kolinahr
+
+[Install]
+WantedBy=multi-user.target
