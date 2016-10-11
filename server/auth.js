@@ -21,13 +21,26 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
       done(err, false);
     } else if (user) {
       logger.debug('Received profile', profile);
-      done(null, user);
+
+      user.name = profile._json.name;
+      user.picture = profile._json.picture;
+      user.email = profile._json.email;
+
+      user.save(saveErr => {
+        if (saveErr) {
+          logger.error(`Error updating user ${profile.id}`, saveErr);
+          done(saveErr, false);
+        } else {
+          done(null, user);
+        }
+      });
     } else {
       logger.debug('No user record for this user, creating new User');
       const newUser = new User({
         _id: profile.id,
         name: profile._json.name,
-        picture: profile._json.picture
+        picture: profile._json.picture,
+        email: profile._json.email
       });
 
       newUser.save(saveErr => {
