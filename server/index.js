@@ -1,3 +1,6 @@
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -49,7 +52,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'public', 'index.html'));
 });
 
-app.listen(port, () => {
-  logger.info(`Kolinahr listening on port ${port}`);
+http.createServer(app).listen(port, () => {
+  logger.info(`Kolinahr listening on port ${port} (http)`);
 });
 
+if (process.env.SSL_PORT && process.env.SSL_KEY && process.env.SSL_CERT) {
+  https.createServer({
+    key: fs.readFileSync(process.env.SSL_KEY),
+    cert: fs.readFileSync(process.env.SSL_CERT),
+    passphrase: process.env.SSL_PASSPHRASE
+  }, app).listen(process.env.SSL_PORT, () => {
+    logger.info(`Kolinahr listening on port ${process.env.SSL_PORT} (https)`);
+  });
+}
