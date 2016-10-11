@@ -4,36 +4,32 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const winston = require('winston');
 const passport = require('passport');
 const jwt = require('jwt-simple');
 
-const config = require('./config');
 const webpackConfig = require('../webpack.config');
 const apiRouter = require('./routers/apiRouter');
+const logger = require('./logger');
 require('./auth');
-
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
-winston.level = config.logLevel;
-
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    winston.info('Connected to MongoDB');
+    logger.debug('Connected to MongoDB');
   })
   .catch(err => {
-    winston.error(`Failed to connect to MongoDB: ${err.message}`);
+    logger.error(`Failed to connect to MongoDB: ${err.message}`);
     process.exit(1);
   });
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve('dist', 'public')));
 } else {
-  winston.info('Running in development mode');
+  logger.info('Running in development mode');
   const compiler = webpack(webpackConfig);
   app.use(webpackDevMiddleware(compiler));
 }
@@ -54,6 +50,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  winston.info(`Kolinahr listening on port ${port}`);
+  logger.info(`Kolinahr listening on port ${port}`);
 });
 

@@ -3,6 +3,7 @@ const OpenIDConnectStrategy = require('passport-openidconnect').Strategy;
 const jwt = require('passport-jwt');
 const JwtStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
+const logger = require('./logger');
 const User = require('./models/User');
 
 passport.use('openidconnect', new OpenIDConnectStrategy({
@@ -16,11 +17,13 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
 (accessToken, refreshToken, profile, done) => {
   User.findOne({ _id: profile.id }, (err, user) => {
     if (err) {
-      console.log(err);
+      logger.error(`Error loading user with ID ${profile.id}`, err);
       done(err, false);
     } else if (user) {
+      logger.debug('Received profile', profile);
       done(null, user);
     } else {
+      logger.debug('No user record for this user, creating new User');
       const newUser = new User({
         _id: profile.id,
         name: profile._json.name,
@@ -29,6 +32,7 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
 
       newUser.save(saveErr => {
         if (saveErr) {
+          logger.error(`Error saving new user with ID ${profile.id}`, saveErr);
           done(saveErr, false);
         } else {
           done(null, newUser);
