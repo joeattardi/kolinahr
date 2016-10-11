@@ -55,6 +55,7 @@ function createModel(req, res) {
     const now = new Date();
     model.created = now;
     model.updated = now;
+    model.private = false;
     model.createdBy = req.user._id;
     model.updatedBy = req.user._id;
     model.save(err => {
