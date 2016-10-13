@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import './scss/index.scss';
 import './images/logo.png';
+import './images/blankPhoto.png';
 
 const store = configureStore();
 

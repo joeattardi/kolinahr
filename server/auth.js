@@ -23,7 +23,7 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
       logger.debug('Received profile', profile);
 
       user.name = profile._json.name;
-      user.picture = profile._json.picture;
+      user.picture = profile._json.picture || '/blankPhoto.png';
       user.email = profile._json.email;
 
       user.save(saveErr => {
@@ -39,7 +39,7 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
       const newUser = new User({
         _id: profile.id,
         name: profile._json.name,
-        picture: profile._json.picture,
+        picture: profile._json.picture || '/blankPhoto.png',
         email: profile._json.email
       });
 
