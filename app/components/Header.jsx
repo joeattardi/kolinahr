@@ -32,8 +32,7 @@ export default function Header(props) {
   return (
     <header>
       <IndexLink id="home-link" to="/">
-        <img src={logo} width="25" height="25" alt="Kolinahr logo" />
-        <h1>Kolinahr</h1>
+        <img src={logo} height="35" alt="Kolinahr logo" />
       </IndexLink>
       {props.user._id ? renderUser() : ''}
       {props.user._id ? renderLogout() : renderLogin()}
