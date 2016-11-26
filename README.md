@@ -2,8 +2,6 @@
 
 A tool for building Kellogg Logic Models.
 
-Demo: [http://kolinahr.herokuapp.com](http://kolinahr.herokuapp.com)
-
 # Instructions
 To run Kolinahr, you will need:
  * Node.js 6.x or later
@@ -12,25 +10,33 @@ To run Kolinahr, you will need:
 ## OpenID Connect Authentication
 Kolinahr uses OpenID Connect for authentication.
 
-## Environment Variables
-All of Kolinahr's core configuration is done using environment variables. You will need to set the following variables:
- * `PORT` - The port number for Kolinahr to listen for incoming HTTP connections.
- * `MONGODB_URI` - The full URI to the Kolinahr database on your MongoDB server, e.g. `mongodb://localhost/kolinahr`
- * `OPENID_CONNECT_AUTHORIZATION_URL` - The authorization URL endpoint for your OpenID Connect provider.
- * `OPENID_CONNECT_TOKEN_URL` - The token URL endpoint for your OpenID Connect provider.
- * `OPENID_CONNECT_USER_INFO_URL` - The userinfo URL endpoint for your OpenID Connect provider.
- * `OPENID_CONNECT_CLIENT_ID` - The client ID for your OpenID Connect provider.
- * `OPENID_CONNECT_CLIENT_SECRET` - The client secret for your OpenID Connect provider.
- * `OPENID_CONNECT_CALLBACK_URL` - The callback URL to use with your OpenID Connect provider. This should be of the form `http://host:port/auth/callback`, where `host` and `port` are the host and port Kolinahr is running on.
- * `JWT_SECRET` - The secret to use for signing JSON Web Tokens. This can be any random string of your choosing.
- * `SSL_PORT` - The port number for Kolinahr to listen for incoming HTTPS connections.
- * `SSL_KEY` - The path to your SSL private key file.
- * `SSL_CERT` - The path to your SSL certificate file.
- * `SSL_PASSPHRASE` - The passphrase for your SSL private key.
+## Configuration
+All of Kolinahr's core configuration is stored in `conf/config.json`. Here is an example configuration showing all of the available options:
+
+    {
+      "port": 3000,
+      "logLevel": "info",
+      "mongoDbUri": "mongodb://localhost/kolinahr",
+      "openIdConnect": {
+        "authUrl": "https://accounts.google.com/o/oauth2/v2/auth",
+        "tokenUrl": "https://www.googleapis.com/oauth2/v4/token",
+        "userInfoUrl": "https://www.googleapis.com/oauth2/v3/userinfo",
+        "clientId": "myclientid.apps.googleusercontent.com",
+        "clientSecret": "myclientsecret",
+        "callbackUrl": "http://localhost:3000/auth/callback"
+      },
+      "ssl": {
+        "port": 3443,
+        "key": "/path/to/key",
+        "cert": "/path/to/cert",
+        "passphrase": "password",
+      },
+      "jwtSecret": "myjwtsecret"
+    }
 
 ## Setup
  * Run `npm install` to install all dependencies.
- * Set your environment variables (see above).
+ * Set the `NODE_ENV` environment variable to either `"development"` or `"production"`.
  * Run `npm start` to build the client app and start the server.
 
 # Why "Kolinahr"?
