@@ -1,4 +1,5 @@
-# kolinahr
+![](https://raw.githubusercontent.com/joeattardi/kolinahr/master/title.png)
+
 A tool for building Kellogg Logic Models.
 
 Demo: [http://kolinahr.herokuapp.com](http://kolinahr.herokuapp.com)
