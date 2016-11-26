@@ -1,6 +1,6 @@
 const fs = require('fs');
 const winston = require('winston');
-const config = require('./config');
+const config = require('../conf/config.json');
 
 try {
   fs.statSync('logs');
@@ -9,7 +9,7 @@ try {
 }
 
 const logger = new (winston.Logger)({
-  level: process.env.LOG_LEVEL || config.logLevel,
+  level: config.logLevel || 'info',
   transports: [
     new (winston.transports.Console)({ timestamp: true }),
     new (winston.transports.File)({ filename: 'logs/kolinahr.log', timestamp: true })

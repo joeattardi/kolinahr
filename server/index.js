@@ -10,17 +10,18 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const jwt = require('jwt-simple');
 
+const config = require('../conf/config.json');
 const webpackConfig = require('../webpack.config');
 const apiRouter = require('./routers/apiRouter');
 const logger = require('./logger');
 require('./auth');
 
-const port = process.env.PORT || 3000;
+const port = config.port || 3000;
 
 const app = express();
 
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(config.mongoDbUri)
   .then(() => {
     logger.debug('Connected to MongoDB');
   })
@@ -44,7 +45,7 @@ app.use('/api', apiRouter);
 app.get('/auth', passport.authenticate('openidconnect', { scope: 'openid email profile' }));
 app.get('/auth/callback', passport.authenticate('openidconnect',
   { session: false }), (req, res) => {
-    const token = jwt.encode({ iat: Date.now(), sub: req.user._id }, process.env.JWT_SECRET);
+    const token = jwt.encode({ iat: Date.now(), sub: req.user._id }, config.jwtSecret);
     res.redirect(`/?token=${token}`);
   });
 
@@ -56,12 +57,12 @@ http.createServer(app).listen(port, () => {
   logger.info(`Kolinahr listening on port ${port} (http)`);
 });
 
-if (process.env.SSL_PORT && process.env.SSL_KEY && process.env.SSL_CERT) {
+if (config.ssl && config.ssl.port && config.ssl.key && config.ssl.cert) {
   https.createServer({
-    key: fs.readFileSync(process.env.SSL_KEY),
-    cert: fs.readFileSync(process.env.SSL_CERT),
-    passphrase: process.env.SSL_PASSPHRASE
-  }, app).listen(process.env.SSL_PORT, () => {
-    logger.info(`Kolinahr listening on port ${process.env.SSL_PORT} (https)`);
+    key: fs.readFileSync(config.ssl.key),
+    cert: fs.readFileSync(config.ssl.cert),
+    passphrase: config.ssl.passphrase
+  }, app).listen(config.ssl.port, () => {
+    logger.info(`Kolinahr listening on port ${config.ssl.port} (https)`);
   });
 }

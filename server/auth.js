@@ -5,14 +5,15 @@ const JwtStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
 const logger = require('./logger');
 const User = require('./models/User');
+const config = require('../conf/config.json');
 
 passport.use('openidconnect', new OpenIDConnectStrategy({
-  authorizationURL: process.env.OPENID_CONNECT_AUTHORIZATION_URL,
-  tokenURL: process.env.OPENID_CONNECT_TOKEN_URL,
-  userInfoURL: process.env.OPENID_CONNECT_USER_INFO_URL,
-  clientID: process.env.OPENID_CONNECT_CLIENT_ID,
-  clientSecret: process.env.OPENID_CONNECT_CLIENT_SECRET,
-  callbackURL: process.env.OPENID_CONNECT_CALLBACK_URL
+  authorizationURL: config.openIdConnect.authUrl,
+  tokenURL: config.openIdConnect.tokenUrl,
+  userInfoURL: config.openIdConnect.userInfoUrl,
+  clientID: config.openIdConnect.clientId,
+  clientSecret: config.openIdConnect.clientSecret,
+  callbackURL: config.openIdConnect.callbackUrl
 },
 (accessToken, refreshToken, profile, done) => {
   User.findOne({ _id: profile.id }, (err, user) => {
@@ -57,7 +58,7 @@ passport.use('openidconnect', new OpenIDConnectStrategy({
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: config.jwtSecret
 };
 
 passport.use('jwt', new JwtStrategy(jwtOptions, (payload, done) => {
