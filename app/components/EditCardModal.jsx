@@ -208,7 +208,6 @@ class EditCardModal extends React.Component {
     if (this.isLinkError()) {
       return (
         <div className="banner banner-error">
-          <i className="fa fa-exclamation-triangle" />
           This {SINGULAR[this.props.editingCard.column]} must be linked to
           at least one {SINGULAR[LINK_KEYS[this.props.editingCard.column]]}.
         </div>
@@ -223,7 +222,6 @@ class EditCardModal extends React.Component {
     if (rows > MAX_ROWS) {
       return (
         <div className="banner banner-info">
-          <i className="fa fa-info-circle" />
           This {SINGULAR[this.props.editingCard.column]} is a little long.
           You might want to split it up into smaller ones.
         </div>
@@ -235,7 +233,9 @@ class EditCardModal extends React.Component {
 
   renderSaveButton() {
     if (this.isLinkError() || this.state.text === '') {
-      return <button disabled className="button-primary-disabled">Save</button>;
+      return (
+        <button disabled className="button button-primary button-primary-disabled">Save</button>
+      );
     }
 
     return <button className="button-primary" onClick={this.saveChanges}>Save</button>;

@@ -2,29 +2,25 @@ button {
   outline: none;
   cursor: pointer;
   background: $button-color;
-  background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
-  border: 1px solid darken($button-color, 5%);
+  border: 1px solid darken($button-color, 10%);
   color: darken($button-color, 50%);
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 0.5em 2em;
   font-size: 0.8em;
   margin: 0.5em;
 
   &:hover {
     background: $button-hover-color;
-    background: linear-gradient(to bottom, $button-hover-color, $button-color);
   }
 
   &.button-delete {
     background: $delete-button-color;
-    background: linear-gradient(to bottom, $delete-button-color, darken($delete-button-color, 5%));
     border: 1px solid darken($delete-button-color, 5%);
     color: #FFFFFF; 
     transition: all $button-transition-duration;
 
     &:hover {
       background: $delete-button-hover-color;
-      background: linear-gradient(to bottom, $delete-button-hover-color, $delete-button-color);
       border-color: $delete-button-color;
       transition: all $button-transition-duration;
     }
@@ -32,25 +28,21 @@ button {
 
   &.button-primary {
     background: $primary-button-color;
-    background: linear-gradient(to bottom, $primary-button-color, darken($primary-button-color, 5%));
     border-color: darken($primary-button-color, 5%);
     color: #FFFFFF;
 
     &:hover {
       background: $primary-button-hover-color;
-      background: linear-gradient(to bottom, lighten($primary-button-hover-color, 5%), $primary-button-color);
       border-color: $primary-button-color;
     }
   }
 
   &.button-primary-disabled {
     opacity: 0.4;
-    color: gray;
     cursor: not-allowed !important;
-
+    
     &:hover {
-      background: $button-color;
-      background: linear-gradient(to bottom, $button-color, darken($button-color, 10%));
+      background: $primary-button-color;
     }
   }
 }

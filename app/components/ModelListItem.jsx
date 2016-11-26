@@ -3,8 +3,6 @@ import React from 'react';
 import autoBind from 'auto-bind';
 import { Link } from 'react-router';
 
-import modelIcon from '../images/model.png';
-
 import DropDownMenu from './DropDownMenu';
 import DropDownItem from './DropDownItem';
 
@@ -27,8 +25,8 @@ export default class ModelListItem extends React.Component {
       return (
         <div className="model-list-item-buttons">
           <DropDownMenu title="Actions">
-            <DropDownItem onClick={this.deleteModel}>
-              <span className="delete"><i className="fa fa-trash-o" /> Delete</span>
+            <DropDownItem className="button-delete" onClick={this.deleteModel}>
+              <i className="fa fa-trash-o" /> Delete
             </DropDownItem>
             <DropDownItem onClick={this.copyModel}>
               <i className="fa fa-files-o" /> Copy
@@ -46,7 +44,6 @@ export default class ModelListItem extends React.Component {
 
     return (
       <div className="model-list-item">
-        <div className="icon"><img src={modelIcon} alt="Logic Model" width="62" height="51" /></div>
         <div>
           <Link to={`/edit/${model._id}`}>
             {model.title}

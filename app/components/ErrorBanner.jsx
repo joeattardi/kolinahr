@@ -5,8 +5,8 @@ function ErrorBanner(props) {
   if (Object.keys(props.validationErrors).length > 0) {
     return (
       <div className="banner banner-error">
-        <i className="fa fa-exclamation-triangle" />
-        <strong>The logic model is not complete.</strong> One or more cards are missing links.
+        <h2>The logic model is not complete.</h2>
+        One or more cards are missing links.
       </div>
     );
   }
