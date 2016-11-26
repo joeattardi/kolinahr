@@ -49,6 +49,14 @@ export class Card extends React.Component {
     }
   }
 
+  startHover() {
+    this.props.startHover(this.props.card.id);
+  }
+
+  endHover() {
+    this.props.endHover(this.props.card.id);
+  }
+
   editCard() {
     if (this.props.auth) {
       this.props.editCard(this.props.card);
@@ -76,6 +84,8 @@ export class Card extends React.Component {
       <div
         ref={this.setCardElement}
         onClick={this.editCard}
+        onMouseOver={this.startHover}
+        onMouseOut={this.endHover}
         className={className}
         style={{
           backgroundColor: this.props.card.color,
@@ -125,7 +135,9 @@ Card.propTypes = {
   connectDropTarget: React.PropTypes.func.isRequired,
   registerOffset: React.PropTypes.func.isRequired,
   isDragging: React.PropTypes.bool.isRequired,
-  validationErrors: React.PropTypes.object.isRequired
+  validationErrors: React.PropTypes.object.isRequired,
+  startHover: React.PropTypes.func.isRequired,
+  endHover: React.PropTypes.func.isRequired
 };
 
 const cardSource = {

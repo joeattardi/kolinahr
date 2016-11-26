@@ -120,6 +120,17 @@ export function titleModeReducer(state = VIEW_MODE, action) {
   }
 }
 
+export function hoverReducer(state = null, action) {
+  switch (action.type) {
+    case types.START_HOVER:
+      return action.payload;
+    case types.END_HOVER:
+      return null;
+    default:
+      return state;
+  }
+}
+
 export function dragReducer(state = null, action) {
   switch (action.type) {
     case types.START_DRAG:

@@ -89,7 +89,6 @@ class ModelList extends React.Component {
         {this.renderCreateButton()}
         <button onClick={this.props.loadModels}><i className="fa fa-refresh" /> Refresh</button>
         <div id="model-list">
-          <h2>Logic Models</h2>
           {this.props.models.map(this.renderModel)}
         </div>
         <NewModelModal

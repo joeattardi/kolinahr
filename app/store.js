@@ -14,6 +14,7 @@ export default function configureStore() {
     title: reducers.titleReducer,
     cardOffsets: cardOffsetsReducer,
     columnOffsets: columnOffsetsReducer,
+    hovering: reducers.hoverReducer,
     dragging: reducers.dragReducer,
     validationErrors: validationReducer,
     saving: reducers.savingReducer,

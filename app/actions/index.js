@@ -125,6 +125,20 @@ export function saveData() {
   };
 }
 
+export function startHover(cardId) {
+  return {
+    type: types.START_HOVER,
+    payload: cardId
+  };
+}
+
+export function endHover(cardId) {
+  return {
+    type: types.END_HOVER,
+    payload: cardId
+  };
+}
+
 export function startDrag(cardId) {
   return {
     type: types.START_DRAG,

@@ -3,6 +3,12 @@ import Color from 'color';
 import { connect } from 'react-redux';
 import autoBind from 'auto-bind';
 
+const LINE_WIDTH_NORMAL = 3;
+const LINE_WIDTH_HOVERED = 5;
+
+const OPACITY_NORMAL = 1;
+const OPACITY_INACTIVE = 0.2;
+
 class Canvas extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +68,6 @@ class Canvas extends React.Component {
   drawLines() {
     if (this.canvasElement) {
       const ctx = this.canvasElement.getContext('2d');
-      ctx.lineWidth = 3;
       ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
       const { left, cards, cardOffsets, columnOffsets } = this.props;
@@ -76,6 +81,14 @@ class Canvas extends React.Component {
       cards[left].forEach(card => {
         if (card.links) {
           card.links.forEach(link => {
+            ctx.lineWidth =
+              this.props.hovering === card.id ? LINE_WIDTH_HOVERED : LINE_WIDTH_NORMAL;
+            ctx.globalAlpha = OPACITY_NORMAL;
+
+            if (this.props.hovering && this.props.hovering !== card.id) {
+              ctx.globalAlpha = OPACITY_INACTIVE;
+            }
+
             if (this.props.dragging !== card.id && this.props.dragging !== link) {
               const srcOffset = cardOffsets[card.id];
               const destOffset = cardOffsets[link];
@@ -135,7 +148,8 @@ Canvas.propTypes = {
   cardOffsets: React.PropTypes.object.isRequired,
   columnOffsets: React.PropTypes.object.isRequired,
   cards: React.PropTypes.object.isRequired,
-  dragging: React.PropTypes.string
+  dragging: React.PropTypes.string,
+  hovering: React.PropTypes.string
 };
 
 function mapStateToProps(state) {
@@ -143,7 +157,8 @@ function mapStateToProps(state) {
     cards: state.cards,
     cardOffsets: state.cardOffsets,
     columnOffsets: state.columnOffsets,
-    dragging: state.dragging
+    dragging: state.dragging,
+    hovering: state.hovering
   };
 }
 
