@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import autoBind from 'auto-bind';
 
-import { deleteModel, createModel, copyModel, loadModels, setDirty } from '../actions';
+import { deleteModel, createModel, copyModel, loadModels } from '../actions';
 import NewModelModal from './NewModelModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import ModelListItem from './ModelListItem';
@@ -17,7 +17,6 @@ class ModelList extends React.Component {
 
   componentWillMount() {
     document.title = TITLE;
-    this.props.setDirty(false);
 
     if (this.props.location.query.token) {
       localStorage.setItem('token', this.props.location.query.token);
@@ -112,7 +111,6 @@ ModelList.propTypes = {
   deleteModel: React.PropTypes.func.isRequired,
   createModel: React.PropTypes.func.isRequired,
   copyModel: React.PropTypes.func.isRequired,
-  setDirty: React.PropTypes.func.isRequired,
   models: React.PropTypes.array.isRequired,
   loading: React.PropTypes.bool.isRequired,
   location: React.PropTypes.object.isRequired
@@ -127,4 +125,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  deleteModel, createModel, copyModel, loadModels, setDirty })(ModelList);
+  deleteModel, createModel, copyModel, loadModels })(ModelList);

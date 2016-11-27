@@ -192,6 +192,8 @@ export function addCard(column, card) {
     };
     dispatch(validateAction);
     socketClient.emitAction(validateAction);
+
+    dispatch(saveData());
   };
 }
 
@@ -210,6 +212,8 @@ export function updateCard(card) {
     };
     dispatch(validateAction);
     socketClient.emitAction(validateAction);
+
+    dispatch(saveData());
   };
 }
 
@@ -231,11 +235,13 @@ export function deleteCard(id, column) {
     };
     dispatch(validateAction);
     socketClient.emitAction(validateAction);
+
+    dispatch(saveData());
   };
 }
 
 export function moveCard(sourceColumn, sourceId, targetColumn, targetId) {
-  return {
+  const action = {
     type: types.MOVE_CARD,
     payload: {
       sourceColumn,
@@ -244,6 +250,10 @@ export function moveCard(sourceColumn, sourceId, targetColumn, targetId) {
       targetId
     }
   };
+
+  socketClient.emitAction(action);
+
+  return action;
 }
 
 export function registerColumnOffset(columnId, offset) {
@@ -283,13 +293,6 @@ export function editTitleSave(newTitle) {
 export function editTitleCancel() {
   return {
     type: types.EDIT_TITLE_CANCEL
-  };
-}
-
-export function setDirty(dirty) {
-  return {
-    type: types.SET_DIRTY,
-    payload: dirty
   };
 }
 

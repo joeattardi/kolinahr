@@ -157,6 +157,7 @@ const cardSource = {
   endDrag(props, monitor, card) {
     card.props.endDrag();
     card.registerOffset();
+    card.props.saveData();
   },
 
   isDragging(props, monitor) {

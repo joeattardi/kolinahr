@@ -22,7 +22,6 @@ export default function configureStore() {
     notification: reducers.notificationReducer,
     allModels: modelsReducer,
     currentModel: reducers.currentModelReducer,
-    dirty: reducers.dirtyReducer,
     auth: reducers.authReducer,
     user: reducers.userReducer,
     editingCard: reducers.editingCardReducer,

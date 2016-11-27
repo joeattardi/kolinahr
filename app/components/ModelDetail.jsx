@@ -36,14 +36,6 @@ class ModelDetail extends React.Component {
     socketClient.stopEditing(this.props.routeParams.modelId);
   }
 
-  routerWillLeave() {
-    if (this.props.dirty) {
-      return 'You have unsaved changes. Are you sure you want to leave?';
-    }
-
-    return true;
-  }
-
   togglePrivate() {
     this.props.setPrivate(!this.props.privateModel);
   }
@@ -111,13 +103,11 @@ ModelDetail.propTypes = {
   loading: React.PropTypes.bool.isRequired,
   router: React.PropTypes.object.isRequired,
   route: React.PropTypes.object.isRequired,
-  dirty: React.PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     loading: state.loading,
-    dirty: state.dirty,
     auth: state.auth,
     privateModel: state.privateModel
   };
