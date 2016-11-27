@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { withRouter } from 'react-router';
 import autoBind from 'auto-bind';
 
 import DocumentUserList from './DocumentUserList';
@@ -105,6 +104,7 @@ ModelDetail.propTypes = {
   routeParams: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
   route: React.PropTypes.object.isRequired,
+  userList: React.PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
