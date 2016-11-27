@@ -22,6 +22,13 @@ export function hideNotification() {
   };
 }
 
+export function updateUserList(userList) {
+  return {
+    type: types.UPDATE_USER_LIST,
+    payload: userList
+  };
+}
+
 export function loadModels() {
   return (dispatch) => {
     dispatch({ type: types.LOAD_BEGIN });

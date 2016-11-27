@@ -7,7 +7,7 @@ export default function Header(props) {
   function renderUser() {
     return (
       <div id="user-info">
-        <img alt={props.user.name} src={props.user.picture} width="20" />
+        <img alt={props.user.name} src={props.user.picture} width="30" />
         {props.user.name}
       </div>
     );

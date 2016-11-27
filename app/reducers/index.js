@@ -1,6 +1,15 @@
 import { VIEW_MODE, EDIT_MODE } from '../constants';
 import * as types from '../actions/types';
 
+export function userListReducer(state = [], action) {
+  switch (action.type) {
+    case types.UPDATE_USER_LIST:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export function privateModelReducer(state = false, action) {
   switch (action.type) {
     case types.LOAD_DATA:

@@ -1,13 +1,19 @@
 import io from 'socket.io-client';
+import { updateUserList } from './actions';
 
 export default {
   init(store) {
     this.socket = io();
-    this.store = store;
 
     this.socket.on('editAction', action => {
-      this.store.dispatch(action);
+      store.dispatch(action);
     });
+
+    this.socket.on('userList', userList => {
+      store.dispatch(updateUserList(userList));
+    });
+
+    this.socket.emit('identify', localStorage.getItem('token'));
   },
 
   emitAction(action) {

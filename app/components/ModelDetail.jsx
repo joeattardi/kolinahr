@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { withRouter } from 'react-router';
 import autoBind from 'auto-bind';
 
+import DocumentUserList from './DocumentUserList';
 import EditCardModal from './EditCardModal';
 import SaveButton from './SaveButton';
 import Column from './Column';
@@ -27,7 +28,6 @@ class ModelDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
     this.props.loadModel(this.props.routeParams.modelId);
     socketClient.startEditing(this.props.routeParams.modelId);
   }
@@ -69,6 +69,7 @@ class ModelDetail extends React.Component {
     }
     return (
       <div id="model-detail">
+        <DocumentUserList users={this.props.userList} />
         <div className="title-area">
           <Title />
           {this.renderPrivate()}
@@ -103,7 +104,6 @@ ModelDetail.propTypes = {
   setPrivate: React.PropTypes.func.isRequired,
   routeParams: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
-  router: React.PropTypes.object.isRequired,
   route: React.PropTypes.object.isRequired,
 };
 
@@ -111,12 +111,13 @@ function mapStateToProps(state) {
   return {
     loading: state.loading,
     auth: state.auth,
-    privateModel: state.privateModel
+    privateModel: state.privateModel,
+    userList: state.userList
   };
 }
 
 export default compose(
   DragDropContext(HTML5Backend),
   connect(mapStateToProps, { loadModel, setPrivate, saveData })
-)(withRouter(ModelDetail));
+)(ModelDetail);
 

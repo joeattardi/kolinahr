@@ -28,3 +28,4 @@ export const AUTH_USER = 'AUTH_USER';
 export const DEAUTH_USER = 'DEAUTH_USER';
 export const SET_USER = 'SET_USER';
 export const SET_PRIVATE = 'SET_PRIVATE';
+export const UPDATE_USER_LIST = 'UPDATE_USER_LIST';

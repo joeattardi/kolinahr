@@ -24,6 +24,7 @@ export default function configureStore() {
     currentModel: reducers.currentModelReducer,
     auth: reducers.authReducer,
     user: reducers.userReducer,
+    userList: reducers.userListReducer,
     editingCard: reducers.editingCardReducer,
     cardEditMode: reducers.cardEditModeReducer,
     privateModel: reducers.privateModelReducer

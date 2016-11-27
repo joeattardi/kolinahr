@@ -62,6 +62,29 @@ header {
   padding: 5px;
 }
 
+#document-user-list {
+  font-size: 0.8em;
+  font-weight: bold;
+
+  div {
+    display: inline-block;
+
+    &.arrow {
+      display: block;
+    }
+  }
+
+  .tooltip {
+    font-size: 1em;
+  }
+
+  img {
+    border-radius: 50%;
+    margin: 0.25em;
+    vertical-align: middle;
+  }
+}
+
 footer {
   background-color: $footer-background-color;
   color: #FFFFFF;
