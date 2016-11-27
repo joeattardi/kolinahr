@@ -109,12 +109,17 @@ footer {
   }
 
   div:nth-child(1) {
+    align-self: center;
+    text-align: center;
+  }
+
+  div:nth-child(2) {
     flex-grow: 1;
   }
 
   i.fa-file-text-o {
     font-size: 2em;
-    margin-right: 0.5em;
+    margin-right: 0.25em;
     align-self: center;
   }
 

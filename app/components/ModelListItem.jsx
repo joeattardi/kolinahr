@@ -45,6 +45,9 @@ export default class ModelListItem extends React.Component {
     return (
       <div className="model-list-item">
         <div>
+          <i className="fa fa-file-text-o fa-2x" />
+        </div>
+        <div>
           <Link to={`/edit/${model._id}`}>
             {model.title}
           </Link>
