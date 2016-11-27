@@ -2,6 +2,7 @@ import uuid from 'uuid';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
+import socketClient from '../socketClient';
 import * as types from './types';
 import { TITLE, NOTIFICATION_SUCCESS, NOTIFICATION_ERROR } from '../constants';
 
@@ -170,52 +171,66 @@ export function editCardCancel() {
 
 export function addCard(column, card) {
   return (dispatch, getState) => {
-    dispatch({
-      type: types.ADD_CARD,
-      payload: {
-        column,
-        id: uuid.v4(),
-        color: card.color,
-        text: card.text,
-        links: card.links
-      }
-    });
+    const newCard = {
+      column,
+      id: uuid.v4(),
+      color: card.color,
+      text: card.text,
+      links: card.links
+    };
 
-    dispatch({
+    const addAction = {
+      type: types.ADD_CARD,
+      payload: newCard
+    };
+    dispatch(addAction);
+    socketClient.emitAction(addAction);
+
+    const validateAction = {
       type: types.VALIDATE_MODEL,
       payload: getState().cards
-    });
+    };
+    dispatch(validateAction);
+    socketClient.emitAction(validateAction);
   };
 }
 
 export function updateCard(card) {
   return (dispatch, getState) => {
-    dispatch({
+    const updateAction = {
       type: types.UPDATE_CARD,
       payload: card
-    });
+    };
+    dispatch(updateAction);
+    socketClient.emitAction(updateAction);
 
-    dispatch({
+    const validateAction = {
       type: types.VALIDATE_MODEL,
       payload: getState().cards
-    });
+    };
+    dispatch(validateAction);
+    socketClient.emitAction(validateAction);
   };
 }
 
 export function deleteCard(id, column) {
   return (dispatch, getState) => {
-    dispatch({
+    const deleteAction = {
       type: types.DELETE_CARD,
       payload: {
         id,
         column
       }
-    });
+    };
+    dispatch(deleteAction);
+    socketClient.emitAction(deleteAction);
 
-    dispatch({
+    const validateAction = {
       type: types.VALIDATE_MODEL,
       payload: getState().cards
-    });
+    };
+    dispatch(validateAction);
+    socketClient.emitAction(validateAction);
   };
 }
 

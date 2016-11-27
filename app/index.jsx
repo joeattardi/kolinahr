@@ -9,6 +9,7 @@ import ModelDetail from './components/ModelDetail';
 import ModelList from './components/ModelList';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import socketClient from './socketClient';
 import './scss/index.scss';
 import './images/logo.png';
 import './images/favicon.png';
@@ -32,6 +33,8 @@ store.subscribe(() => {
     document.title = document.title.substring(2);
   }
 });
+
+socketClient.init(store);
 
 ReactDOM.render(
   <Provider store={store}>

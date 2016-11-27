@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const jwt = require('jwt-simple');
+const socketIo = require('socket.io');
 
 const config = require('../conf/config.json');
 const webpackConfig = require('../webpack.config');
@@ -53,7 +54,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve('dist', 'public', 'index.html'));
 });
 
-http.createServer(app).listen(port, () => {
+const server = http.createServer(app);
+const io = socketIo(server);
+server.listen(port, () => {
   logger.info(`Kolinahr listening on port ${port} (http)`);
 });
 
@@ -66,3 +69,23 @@ if (config.ssl && config.ssl.port && config.ssl.key && config.ssl.cert) {
     logger.info(`Kolinahr listening on port ${config.ssl.port} (https)`);
   });
 }
+
+io.on('connection', socket => {
+  let room = null;
+
+  socket.on('startEditing', modelId => {
+    room = modelId;
+    socket.join(modelId);
+  });
+
+  socket.on('stopEditing', modelId => {
+    room = null;
+    socket.leave(modelId);
+  });
+
+  socket.on('editAction', action => {
+    if (room) {
+      socket.broadcast.to(room).emit('editAction', action);
+    }
+  });
+});

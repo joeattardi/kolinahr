@@ -15,6 +15,7 @@ import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
 import Tooltip from './Tooltip';
 import { loadModel, setPrivate } from '../actions';
+import socketClient from '../socketClient';
 
 import '../images/loading.gif';
 
@@ -28,6 +29,11 @@ class ModelDetail extends React.Component {
   componentDidMount() {
     this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
     this.props.loadModel(this.props.routeParams.modelId);
+    socketClient.startEditing(this.props.routeParams.modelId);
+  }
+
+  componentWillUnmount() {
+    socketClient.stopEditing(this.props.routeParams.modelId);
   }
 
   routerWillLeave() {
