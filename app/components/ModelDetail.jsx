@@ -14,7 +14,7 @@ import Canvas from './Canvas';
 import ErrorBanner from './ErrorBanner';
 import EmptyBanner from './EmptyBanner';
 import Tooltip from './Tooltip';
-import { loadModel, setPrivate } from '../actions';
+import { loadModel, setPrivate, saveData } from '../actions';
 import socketClient from '../socketClient';
 
 import '../images/loading.gif';
@@ -38,6 +38,7 @@ class ModelDetail extends React.Component {
 
   togglePrivate() {
     this.props.setPrivate(!this.props.privateModel);
+    this.props.saveData();
   }
 
   renderSave() {
@@ -98,6 +99,7 @@ ModelDetail.propTypes = {
   privateModel: React.PropTypes.bool.isRequired,
   auth: React.PropTypes.bool.isRequired,
   loadModel: React.PropTypes.func.isRequired,
+  saveData: React.PropTypes.func.isRequired,
   setPrivate: React.PropTypes.func.isRequired,
   routeParams: React.PropTypes.object.isRequired,
   loading: React.PropTypes.bool.isRequired,
@@ -115,6 +117,6 @@ function mapStateToProps(state) {
 
 export default compose(
   DragDropContext(HTML5Backend),
-  connect(mapStateToProps, { loadModel, setPrivate })
+  connect(mapStateToProps, { loadModel, setPrivate, saveData })
 )(withRouter(ModelDetail));
 

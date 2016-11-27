@@ -303,10 +303,14 @@ export function deauthUser() {
 }
 
 export function setPrivate(privateModel) {
-  return {
+  const action = {
     type: types.SET_PRIVATE,
     payload: privateModel
   };
+
+  socketClient.emitAction(action);
+
+  return action;
 }
 
 export function getUser() {
