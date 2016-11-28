@@ -72,7 +72,6 @@ class ModelDetail extends React.Component {
         <div className="title-area">
           <Title />
           {this.renderPrivate()}
-          {this.renderSave()}
         </div>
         <ErrorBanner />
         <EmptyBanner />
