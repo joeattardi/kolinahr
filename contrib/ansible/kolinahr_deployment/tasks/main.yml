@@ -54,11 +54,16 @@
     dest=/etc/systemd/system/kolinahr.service
     force=yes
 
-- name: Create environment file for Kolinahr
+- name: Create directory for Kolinahr configuration
+  file: dest=/srv/kolinahr/conf state=directory owner=kolinahr group=root mode=755
+
+- name: Create configuration file for Kolinahr
   template:
-    src=kolinahr_deployment/files/kolinahr.env.tmpl
-    dest=/etc/sysconfig/kolinahr
+    src=kolinahr_deployment/files/config.json.tmpl
+    dest=/srv/kolinahr/conf/config.json
     mode=0600
+  become: yes
+  become_user: kolinahr
 
 - name: Create directory for ACME challenge
   file: dest=/srv/web/acme-challenge state=directory owner=root group=root mode=755
