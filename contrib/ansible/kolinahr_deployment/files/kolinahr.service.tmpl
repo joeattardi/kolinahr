@@ -8,6 +8,7 @@ User=kolinahr
 WorkingDirectory=/srv/kolinahr
 ExecStart=/usr/bin/node server/index.js
 EnvironmentFile=/etc/sysconfig/kolinahr
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
